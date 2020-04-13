@@ -33,8 +33,7 @@ public class IGWApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initConfig();
-        context = this;
+        initConfig();        context = this;
         initLogConfig();
 
     }
