@@ -15,8 +15,12 @@ import com.igw.igw.fragment.CityFragment;
 import com.igw.igw.fragment.HomeFragment;
 import com.igw.igw.fragment.MessageFragment;
 import com.igw.igw.fragment.MyFragment;
+import com.igw.igw.utils.LogUtils;
 
 public class MainActivity extends BaseActivity {
+
+
+    public static final String TAG = "MainActivity";
 
     private FragmentManager fragmentManager;
 
@@ -44,6 +48,7 @@ public class MainActivity extends BaseActivity {
         initViews();
         showPagerDependButton(R.id.ll_main_home);
 
+        LogUtils.d(TAG,"添加 log 功能");
 
         for (int i = 0; i < array.length - 1; i++) {
             int flag = 0;

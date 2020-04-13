@@ -6,7 +6,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+
+import com.igw.igw.BuildConfig;
 import com.igw.igw.utils.ConfigUtil;
+import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.Constants;
 
 /**
@@ -23,11 +26,33 @@ public class IGWApplication extends Application {
 
     public static final int ENVIRONMENT = Constants.ENVIRONMENT_DEBUG;
 
+
+
+    public static LogUtils.Config logConfig;
+
     @Override
     public void onCreate() {
         super.onCreate();
         initConfig();
         context = this;
+        initLogConfig();
+
+    }
+
+    private void initLogConfig() {
+
+        logConfig = LogUtils.getConfig()
+                .setLogSwitch(true)
+                .setConsoleSwitch(BuildConfig.DEBUG)
+                .setGlobalTag("ZZZ")
+                .setLog2FileSwitch(false)
+                .setSingleTagSwitch(true)
+                .setLogHeadSwitch(true)
+                .setBorderSwitch(true)
+                .setConsoleFilter(LogUtils.V)
+                .setFileFilter(LogUtils.V);
+
+
 
     }
 

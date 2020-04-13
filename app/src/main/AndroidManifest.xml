@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.igw.igw">
+    package="com.igw.igw">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-            android:name=".app.IGWApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/igw_logo"
-            android:label="@string/app_name"
-            android:networkSecurityConfig="@xml/network_security_config"
-            android:roundIcon="@mipmap/igw_logo"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+        android:name=".app.IGWApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/igw_logo"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/igw_logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".modoule.login.LoginActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CityStationActivity">
-        </activity>
-        <activity android:name=".activity.CommunicationLinkActivity"
-                  android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+        <activity android:name=".activity.CityStationActivity"></activity>
+        <activity
+            android:name=".activity.CommunicationLinkActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
     </application>
 
 </manifest>
