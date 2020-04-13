@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorf4f"
+>
+
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:scaleType="fitXY"
+               android:id="@+id/iv_base_background"
+    />
+
+    <com.igw.igw.utils.statusbarutils.StatusBarHeightView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:use_type="use_padding_top"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+            <include
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_44"
+                    layout="@layout/base_title"
+            />
+            <FrameLayout android:id="@+id/fl_baselayout"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:background="@color/colorf4f"></FrameLayout>
+        </LinearLayout>
+    </com.igw.igw.utils.statusbarutils.StatusBarHeightView>
+</RelativeLayout>
