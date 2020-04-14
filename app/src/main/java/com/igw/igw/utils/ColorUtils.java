@@ -2,6 +2,7 @@ package com.igw.igw.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 
 /**
@@ -13,11 +14,16 @@ import android.graphics.drawable.Drawable;
 public class ColorUtils {
 
     public static int getTextColor(Context context, int color) {
+
+//        return context.getResources().getColor()
+
         return context.getResources().getColor(color);
     }
 
     public static Drawable getDrawable(Context context, int color) {
-        return context.getResources().getDrawable(color);
+
+        return  ContextCompat.getDrawable(context,color);
+//        return context.getResources().getDrawable(color);
     }
 
 }

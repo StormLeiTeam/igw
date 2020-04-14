@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_title">I-GW</string>
+    <string name="check_locale">中/en</string>
+    <string name="login_code_hint">Verification code</string>
+    <string name="login_send_code">Send verification code</string>
+    <string name="login_email_hint">e-mail</string>
+    <string name="login_mode_email_acccent">e-mail Verification code</string>\
+    <string name="login_mode_pwd_acccent">Account password login</string>
+    <string name="login_pwd_hint">password</string>
+    <string name="login_account_hint">account</string>
+    <string name="forget_pwd">Forget Password</string>
+    <string name="login_submit">login</string>
+    <string name="login_register">register</string>
+</resources>

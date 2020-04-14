@@ -3,7 +3,6 @@
     package="com.igw.igw">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -16,18 +15,26 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.login.LoginActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".modoule.login.RegisterActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".modoule.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CityStationActivity"></activity>
+        <activity android:name=".activity.CityStationActivity" />
         <activity
             android:name=".activity.CommunicationLinkActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
     </application>
 
 </manifest>

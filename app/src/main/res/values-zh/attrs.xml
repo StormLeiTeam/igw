@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="StatusBarView" >
+
+        <attr name="statusBarVisible" format="boolean" />
+        <attr name="appActionBarVisible" format="boolean" />
+        <attr name="backVisible" format="boolean"/>
+        <attr name="menuVisible" format="boolean"/>
+        <attr name="doVisible" format="boolean" />
+        <attr name="backImageVisible" format="boolean"/>
+        <attr name="backTitleVisible" format="boolean"/>
+        <attr name="menuImageVisible" format="boolean"/>
+        <attr name="menuTitleVisible" format="boolean"/>
+        <attr name="isShowMenu" format="boolean" />
+        <attr name="showTitle" format="boolean" />
+
+        <attr name="shareVisible" format="boolean" />
+        <attr name="confirmVisible" format="boolean" />
+
+
+
+        <attr name="statusBarColor" format="color"/>
+        <attr name="appActionBarColor" format="color"/>
+
+        <attr name="backTextColor" format="color" />
+        <attr name="menuTextColor" format="color" />
+        <attr name="subTitleColor" format="color" />
+        <attr name="statusTitleColor" format="color" />
+        <attr name="confirmTextColor" format="color" />
+
+        <attr name="backTextSize" format="dimension" />
+        <attr name="menuTextSize" format="dimension"/>
+        <attr name="titleSize" format="dimension" />
+        <attr name="subTitleSize" format="dimension" />
+        <attr name="confirmTextSize" format="dimension" />
+
+
+        <attr name="appActionBarHeight" format="dimension"/>
+
+
+        <attr name="backImageRes" format="reference" />
+        <attr name="menuImageRes" format="reference" />
+        <attr name="subTitleRes" format="reference" />
+        <attr name="doTitleRes" format="reference" />
+        <attr name="shareRes" format="reference" />
+
+        <attr name="backText" format="string" />
+        <attr name="menuText" format="string"/>
+        <attr name="statusTitle" format="string" />
+        <attr name="subTitle" format="string" />
+        <attr name="confirmText" format="string" />
+
+
+
+
+    </declare-styleable>
+
+</resources>
