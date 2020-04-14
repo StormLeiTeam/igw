@@ -18,5 +18,8 @@
     <color name="black_FF333333">#FF333333</color>
     <color name="black_ff666666">#ff666666</color>
     <color name="red_FFF33A39">#fff33a39</color>
+    <color name="black_666666">#666666</color>
+    <color name="black_FF999999">#ff999999</color>
+    <color name="color_line">#ffcccccc</color>
 
 </resources>

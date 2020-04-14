@@ -46,7 +46,7 @@ class LoginActivity : BaseActivity<BasePresenter<IBaseView>>()  {
         btn_register.setOnClickListener {
             // 跳转到注册模块
 
-
+            RegisterActivity.startSelf(this)
 
         }
 
