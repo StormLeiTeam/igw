@@ -2,6 +2,7 @@ package com.igw.igw.modoule.login.presenter
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.modoule.login.RegisterContract
+import com.igw.igw.modoule.login.view.RegisterActivity
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
 import com.igw.igw.utils.LogUtils
@@ -38,7 +39,15 @@ class RegisterPresenter(model: RegisterContract.Model)
 //                val toString = m?.countrys.toString()
 
 
-                LogUtils.d(TAG,"--->  $${m?.countrys?.get(0)?.countryCnName}")
+//                LogUtils.d(TAG,"--->  $${m?.countrys?.get(0)?.countryCnName}")
+
+
+                m?.let {
+                    (rootView as RegisterActivity).showNationality(it.countrys)
+                }
+
+
+
             }
 
             override fun onFail(code: String?, msg: String?) {

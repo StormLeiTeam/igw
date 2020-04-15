@@ -22,7 +22,7 @@ public abstract class BasePresenter<V extends IBaseView, M extends IBaseModel> i
     protected M mModel;
 
 
-    public WeakReference<V> mRootViewRef;
+    private WeakReference<V> mRootViewRef;
 
 
     public BasePresenter(M mModel) {
@@ -30,14 +30,9 @@ public abstract class BasePresenter<V extends IBaseView, M extends IBaseModel> i
     }
 
 
-    public V attachView(V rootView) {
+    public void attachView(V rootView) {
 
-        if (isViewAttach()) {
-            if(mRootViewRef != null) {
-                return mRootViewRef.get();
-            }
-        }
-        return null;
+        mRootViewRef = new WeakReference<V>(rootView);
 
     }
 
@@ -62,10 +57,21 @@ public abstract class BasePresenter<V extends IBaseView, M extends IBaseModel> i
     }
 
 
-    protected void   detachView(){
+    protected V getRootView() {
+        if (isViewAttach()) {
+            if (mRootViewRef != null) {
+                return mRootViewRef.get();
+            }
+        }
+        return null;
 
 
-        if(mRootViewRef != null) {
+    }
+
+    protected void detachView() {
+
+
+        if (mRootViewRef != null) {
             mRootViewRef.clear();
             mRootViewRef = null;
 
