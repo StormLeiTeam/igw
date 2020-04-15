@@ -1,7 +1,10 @@
 package com.shengshijingu.yashiji.common.net;
 
 
+import java.util.NavigableMap;
+
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -27,4 +30,11 @@ public interface ApiService {
     @POST("/api/contact/addContact")
     Observable<ResponseBody> addContact(@Body RequestBody requestBody);
 
+
+    /**
+     * 获取城市列表
+     * @return
+     */
+    @POST("/api/common/countryList")
+    Observable<ResponseBody> getNationality(@Body RequestBody requestBody);
 }

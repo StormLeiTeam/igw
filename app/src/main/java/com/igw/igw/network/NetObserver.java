@@ -20,9 +20,14 @@ public abstract class NetObserver<M> implements Observer<ResponseBody> {
 
     private String tag = "";
 
+    private Gson mGson;
+
     protected NetObserver(Class<M> beanType) {
         this.beanType = beanType;
+
+        mGson = new Gson();
     }
+
 
     /**
      * 请求成功
@@ -53,13 +58,31 @@ public abstract class NetObserver<M> implements Observer<ResponseBody> {
     public void onNext(final ResponseBody responseBody) {
         new Handler().postDelayed(() -> {
             try {
-                Gson gson = new Gson();
-                Response response = gson.fromJson(responseBody.string(), Response.class);
-                if (response.isSuccess()) {
-                    onSuccess(gson.fromJson(response.getResult().toString(), beanType));
-                } else {
-                    onFail(response.getCode(), response.getErrorMessage());
+//                Gson gson = new Gson();
+//                Response response = gson.fromJson(responseBody.string(), Response.class);
+//
+//                if (response.isSuccess()) {
+//                    onSuccess(gson.fromJson(response.getResult().toString(), beanType));
+//                } else {
+//                    onFail(response.getCode(), response.getErrorMessage());
+//                }
+
+
+                Response response = mGson.fromJson(responseBody.string(), Response.class);
+
+
+                if(response.isSuccess()) {
+
+                    onSuccess(mGson.fromJson(response.getData().toString(),beanType));
+
+                }else {
+
+                    onFail(response.getCode(),response.getMsg());
                 }
+
+
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {

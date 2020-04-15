@@ -1,20 +1,77 @@
 package com.igw.igw.mvp.presenter;
 
 import android.content.Context;
+
+import com.igw.igw.mvp.model.IBaseModel;
 import com.igw.igw.mvp.view.IBaseView;
 
+import java.io.PushbackInputStream;
+import java.lang.ref.WeakReference;
 
-public abstract class BasePresenter<V extends IBaseView> {
+
+public abstract class BasePresenter<V extends IBaseView, M extends IBaseModel> implements IBasePresenter {
+
 
     //Presenter持有的View
-    protected V mView;
+    protected V mRootView;
     //上下文
     protected Context mContext;
 
     //构造方法让Presenter层持有View层的引用
-    public BasePresenter(Context context, V view){
-        this.mContext = context;
-        this.mView = view;
+
+    protected M mModel;
+
+
+    public WeakReference<V> mRootViewRef;
+
+
+    public BasePresenter(M mModel) {
+        this.mModel = mModel;
+    }
+
+
+    public V attachView(V rootView) {
+
+        if (isViewAttach()) {
+            if(mRootViewRef != null) {
+                return mRootViewRef.get();
+            }
+        }
+        return null;
+
+    }
+
+
+    /**
+     * view 是否建立连接
+     *
+     * @return
+     */
+    protected boolean isViewAttach() {
+
+
+        if (mRootViewRef != null) {
+
+            return mRootViewRef.get() != null;
+
+        } else {
+            return false;
+        }
+
+
+    }
+
+
+    protected void   detachView(){
+
+
+        if(mRootViewRef != null) {
+            mRootViewRef.clear();
+            mRootViewRef = null;
+
+            mModel = null;
+        }
+
     }
 
     /**

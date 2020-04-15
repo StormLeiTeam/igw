@@ -8,6 +8,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.igw.igw.BuildConfig;
+import com.igw.igw.httpclient.HttpClientManager;
 import com.igw.igw.utils.ConfigUtil;
 import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.Constants;
@@ -35,6 +36,7 @@ public class IGWApplication extends Application {
         super.onCreate();
         initConfig();        context = this;
         initLogConfig();
+       ;
 
     }
 
@@ -108,6 +110,7 @@ public class IGWApplication extends Application {
             case Constants.ENVIRONMENT_DEBUG:
                 Constants.BASE_URL = config.getProperty("BASE_URL_DEBUG");
                 Constants.HTML_BASE_URL = config.getProperty("HTML_BASE_URL_DEBUG");
+                HttpClientManager.Companion.initBaseUrl( config.getProperty("BASE_URL_DEBUG"));
                 break;
             case Constants.ENVIRONMENT_RELEASE:
                 Constants.BASE_URL = config.getProperty("BASE_URL_RELEASE");

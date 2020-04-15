@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.igw.igw.utils.ColorUtils;
 import com.igw.igw.utils.statusbarutils.StatusBarUtil;
 import com.shengshijingu.yashiji.common.dialog.LoadingDialog;
 
-public abstract class BaseActivity<P extends BasePresenter> extends FragmentActivity implements OnClickListener {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements OnClickListener {
 
     protected P mPresenter;
 

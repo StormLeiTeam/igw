@@ -11,7 +11,7 @@
     app:statusBarColor="@color/white"
     app:statusBarVisible="true"
     app:statusTitle=""
-    app:statusTitleColor="@color/white"
+    app:statusTitleColor="@color/black_000000"
     app:titleSize="17sp">
 
 </com.igw.igw.widget.storm.StatusBarView>

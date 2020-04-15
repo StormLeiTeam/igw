@@ -37,10 +37,10 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     api 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.github.Dovar66:DToast:1.1.5'
-    api 'com.squareup.okhttp3:okhttp:3.9.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    api 'com.squareup.okhttp3:okhttp:3.14.1'
+    api 'com.squareup.okhttp3:logging-interceptor:3.14.1'
     api 'org.greenrobot:eventbus:3.0.0'
 
     api project(':xrecyclerview')

@@ -8,7 +8,7 @@ import com.igw.igw.mvp.view.IBaseView;
  * @email zq329051@outlook.com
  * @Describe
  */
-public interface IBasePresenter<V extends IBaseView> {
+public interface IBasePresenter {
 
 
 

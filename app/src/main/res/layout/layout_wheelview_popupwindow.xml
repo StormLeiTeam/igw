@@ -54,7 +54,7 @@
 
         </RelativeLayout>
 
-        <net.ycx.safety.mvp.widget.stormwidget.popselectview.view.WheelView
+        <com.igw.igw.widget.storm.popwindowselect.popselectview.view.WheelView
             android:id="@+id/wl_content"
             android:layout_width="match_parent"
             android:layout_height="160dp"

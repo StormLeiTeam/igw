@@ -7,20 +7,27 @@ import android.text.method.LinkMovementMethod
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
+import com.igw.igw.modoule.login.LoginContract
+import com.igw.igw.modoule.login.RegisterContract
+import com.igw.igw.modoule.login.model.RegisterModel
+import com.igw.igw.modoule.login.presenter.LoginModePresenter
+import com.igw.igw.modoule.login.presenter.RegisterPresenter
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.common_status_bar.*
 
 /**
  * 注册模块
  */
 
-class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
+class RegisterActivity : BaseActivity<RegisterPresenter>() , RegisterContract.View {
 
 
+    // 国籍选择器
     private var  nationalityPopWindow : WheelViewPopupwindow<NationalityBean.DataBean.CountrysBean>? = null
 
 
@@ -32,12 +39,22 @@ class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
 
         StatusBarUtils.setDarkMode(this)
 
+        status_bar_main.setTitle("注册")
+
         setUpPop()
-
-
+        requestNationality();
 
         setUserAgreement()
 
+
+    }
+
+    /**
+     *  网络请求国籍
+     */
+    private fun requestNationality() {
+
+        mPresenter.getNationalityData()
 
     }
 
@@ -57,6 +74,9 @@ class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
 
 
     override fun initPresenter() {
+
+        mPresenter =RegisterPresenter(RegisterModel())
+        mPresenter.attachView(this)
 
 
     }
@@ -105,5 +125,11 @@ class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
 
         }
 
+    }
+
+    override fun fail(o: Any?) {
+    }
+
+    override fun success(o: Any?) {
     }
 }

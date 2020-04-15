@@ -4,6 +4,8 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
+import com.igw.igw.modoule.login.LoginContract
+import com.igw.igw.modoule.login.presenter.LoginModePresenter
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.utils.LocaleUtils
@@ -14,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * 登陆页面
  */
-class LoginActivity : BaseActivity<BasePresenter<IBaseView>>()  {
+class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
 
 
     companion object{
@@ -95,6 +97,15 @@ class LoginActivity : BaseActivity<BasePresenter<IBaseView>>()  {
 
     override fun setStatusBarColor(): Boolean {
         return true
+    }
+
+    override fun fail(o: Any?) {
+
+        TODO("Not yet implemented")
+    }
+
+    override fun success(o: Any?) {
+        TODO("Not yet implemented")
     }
 
 

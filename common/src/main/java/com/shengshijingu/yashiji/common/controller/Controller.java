@@ -3,8 +3,6 @@ package com.shengshijingu.yashiji.common.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shengshijingu.yashiji.common.Constants;
@@ -14,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 /**
  * Created by leilei on 2019/3/11.
@@ -23,7 +22,9 @@ public class Controller {
 
     public static String app_version;
 
-    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+//    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+    private Gson gson = new Gson();
+
 
     void ApiSubscribe(Observable observable, Observer observer) {
         observable.subscribeOn(Schedulers.io())
