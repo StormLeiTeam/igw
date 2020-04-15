@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    tools:context=".modoule.login.RegisterActivity">
+    tools:context=".modoule.login.view.RegisterActivity">
 
 
     <include layout="@layout/common_status_bar" />

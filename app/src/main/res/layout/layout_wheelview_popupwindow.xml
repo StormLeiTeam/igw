@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/root_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color666"
+            />
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="@dimen/dp_10"
+                android:text="取消"
+                android:textColor="#88000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/dp_10"
+                android:text="完成"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16" />
+
+        </RelativeLayout>
+
+        <net.ycx.safety.mvp.widget.stormwidget.popselectview.view.WheelView
+            android:id="@+id/wl_content"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            app:wv_dividerColor="@color/gray_9FA7B5"
+            app:wv_selectedItemTextColor="@color/black_000000"
+            app:wv_autoFitTextSize="true"
+            app:wv_curved="true"
+            app:wv_normalItemTextColor="@color/gray_9FA7B5"
+            app:wv_textSize="@dimen/sp_16"
+            app:wv_dividerHeight="1dp"
+            app:wv_dividerType="fill"
+            app:wv_lineSpacing="3dp"
+            app:wv_showDivider="true"
+            app:wv_textAlign="center" />
+    </LinearLayout>
+
+</RelativeLayout>

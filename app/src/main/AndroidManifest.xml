@@ -15,9 +15,9 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.login.RegisterActivity"></activity>
+        <activity android:name=".modoule.login.view.RegisterActivity"></activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".modoule.login.LoginActivity">
+        <activity android:name=".modoule.login.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

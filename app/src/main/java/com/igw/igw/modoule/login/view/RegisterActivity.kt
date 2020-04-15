@@ -1,4 +1,4 @@
-package com.igw.igw.modoule.login
+package com.igw.igw.modoule.login.view
 
 import android.content.Intent
 import android.text.Spannable
@@ -6,10 +6,12 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
+import com.igw.igw.bean.NationalityBean
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.TextClickPrivacy
+import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
 import kotlinx.android.synthetic.main.activity_register.*
 
 /**
@@ -17,11 +19,20 @@ import kotlinx.android.synthetic.main.activity_register.*
  */
 
 class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
+
+
+    private var  nationalityPopWindow : WheelViewPopupwindow<NationalityBean.DataBean.CountrysBean>? = null
+
+
+
+
+
     override fun initView() {
 
 
         StatusBarUtils.setDarkMode(this)
 
+        setUpPop()
 
 
 
@@ -30,6 +41,19 @@ class RegisterActivity : BaseActivity<BasePresenter<IBaseView>>() {
 
     }
 
+
+    /**
+     * 创建pop
+     */
+    private fun setUpPop() {
+
+        // 国籍选择
+        nationalityPopWindow = WheelViewPopupwindow<NationalityBean.DataBean.CountrysBean>(this)
+
+
+
+
+    }
 
 
     override fun initPresenter() {

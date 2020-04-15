@@ -1,18 +1,14 @@
-package com.igw.igw.modoule.login
+package com.igw.igw.modoule.login.view
 
 import android.content.Intent
 import android.support.v4.content.ContextCompat
-import com.bumptech.glide.load.data.LocalUriFetcher
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.StatusBarUtils
-import com.igw.igw.utils.statusbarutils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.status_bar_view.*
-import java.util.*
 
 
 /**
