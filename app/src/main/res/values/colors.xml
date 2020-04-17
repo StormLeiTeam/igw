@@ -23,4 +23,6 @@
     <color name="color_line">#ffcccccc</color>
     <color name="gray_9FA7B5">#9FA7B5</color>
 
+    <color name="tram">#00000000</color>
+
 </resources>

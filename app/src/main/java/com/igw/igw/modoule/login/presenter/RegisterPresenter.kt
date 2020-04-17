@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.login.presenter
 
 import com.igw.igw.bean.NationalityBean
+import com.igw.igw.bean.login.CityListBean
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.view.RegisterActivity
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -65,6 +66,29 @@ class RegisterPresenter(model: RegisterContract.Model)
     }
 
 
+    /**
+     * 根据国籍id 获取城市列表
+     */
+    fun getCityListData(countryId : Int){
+
+        mModel.getCityData(countryId, object: NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java){
+            override fun onSuccess(m: CityListBean.DataBean?) {
+
+
+                m?.let {
+
+                    (rootView as RegisterActivity).showCityListData(it.citys)
+                }
+            }
+
+            override fun onFail(code: String?, msg: String?) {
+            }
+
+            override fun onError(msg: String?) {
+            }
+
+        })
+    }
 
 
     override fun requestData() {

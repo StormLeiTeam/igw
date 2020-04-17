@@ -30,6 +30,19 @@ object LocaleUtils {
 
 
     /**
+     * 判断语言状态是否是英文
+     */
+    public fun isLocaleEn(context: Context): Boolean {
+
+
+        val currentlocale = getCurrentlocale(context)
+
+
+        return currentlocale.equals(Locale.ENGLISH)
+
+
+    }
+    /**
      * 获取用户设置的语言文文字
      */
     public fun  getUserLocale(context: Context): Locale{

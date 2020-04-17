@@ -10,19 +10,27 @@
 
     </style>
 
-    <declare-styleable name="StatusBarHeightView">
-        <attr name="use_type" format="integer">
-            <enum name="use_height" value="0"/>
-            <enum name="use_padding_top" value="1"/>
-        </attr>
-    </declare-styleable>
+
 
 
     <style name="pop_anim">
-
         <item name="android:windowEnterAnimation">@anim/pop_in</item>
         <item name="android:windowExitAnimation">@anim/pop_out</item>
 
+    </style>
+
+
+    <style name="dialog_style" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/tram</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/abc_slide_out_bottom</item>
     </style>
 
 </resources>

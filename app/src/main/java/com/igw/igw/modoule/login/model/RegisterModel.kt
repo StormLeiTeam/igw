@@ -2,6 +2,7 @@ package com.igw.igw.modoule.login.model
 
 import com.google.gson.Gson
 import com.igw.igw.bean.NationalityBean
+import com.igw.igw.bean.login.CityListBean
 import com.igw.igw.httpclient.HttpClientManager
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.network.NetObserver
@@ -26,15 +27,17 @@ import okhttp3.ResponseBody
 class RegisterModel : RegisterContract.Model {
 
 
-    companion object{
-        public  val TAG  = "RegisterModel"
+    companion object {
+        public val TAG = "RegisterModel"
     }
 
+
+    /**
+     * 获取国籍
+     */
     override fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>) {
 
         ControllerUtils.getLoginControllerInstance().getNationality(observer)
-
-
 
 
 //
@@ -70,22 +73,30 @@ class RegisterModel : RegisterContract.Model {
 
     }
 
+    override fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>) {
+
+        ControllerUtils.getLoginControllerInstance().getCityListData(countryId, observer)
+
+    }
+
+
+    /**
+     * 获取城市列表
+     */
+
+
     public fun toRequestBody(map: Map<String, Any>): RequestBody {
 
-        var str  = Gson().toJson(map)
+        var str = Gson().toJson(map)
 
 
-       return   RequestBody.create(MediaType.parse("application/json"), str.toString())
+        return RequestBody.create(MediaType.parse("application/json"), str.toString())
 
 
     }
 
 
 
-//    override fun getNationalityData(observer: Observer<*>) {
-//
-//        ControllerUtils.getLoginControllerInstance().getNationality()
-//    }
 
 
 }

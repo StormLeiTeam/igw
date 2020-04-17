@@ -69,6 +69,6 @@ dependencies {
     implementation 'com.github.yaming116:UpdateApp:1.0.2'
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
     implementation 'me.jessyan:autosize:1.1.2'
-
-
+//    implementation 'jsc.kit.datetimepicker:DateTimePickerLibrary:0.4.8'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 }

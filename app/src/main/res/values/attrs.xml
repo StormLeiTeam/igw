@@ -2,6 +2,15 @@
 <resources>
 
 
+
+    <declare-styleable name="StatusBarHeightView">
+        <attr name="use_type" format="integer">
+            <enum name="use_height" value="0"/>
+            <enum name="use_padding_top" value="1"/>
+        </attr>
+    </declare-styleable>
+
+
     <declare-styleable name="StatusBarView" >
 
         <attr name="statusBarVisible" format="boolean" />
@@ -127,5 +136,13 @@
         <attr name="wv_dividerOffset" format="dimension"/>
     </declare-styleable>
 
+
+
+    <declare-styleable name="DatePicker">
+        <attr name="picker_text_color" format="color" />
+        <attr name="picker_select_textColor" format="color" />
+        <attr name="picker_split" format="color" />
+        <attr name="picker_split_height" format="dimension" />
+    </declare-styleable>
 
 </resources>

@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root_main"
     android:orientation="vertical"
     tools:context=".modoule.login.view.RegisterActivity">
 
@@ -33,21 +33,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
 
                     <TextView
-
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/nationality"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -58,11 +59,13 @@
                 <TextView
                     android:id="@+id/tv_select_nationality"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/zc_down"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
                     android:text="@string/nationality_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -87,14 +90,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/city"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -103,12 +108,14 @@
 
 
                 <TextView
+                    android:id="@+id/tv_select_city"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/zc_down"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:text="@string/city_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -135,14 +142,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/surname"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -152,11 +161,12 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:hint="@string/surname_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -183,14 +193,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/lastname"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -200,11 +212,12 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:hint="@string/lastname_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -228,14 +241,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/gender"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -244,12 +259,14 @@
 
 
                 <TextView
+                    android:id="@+id/tv_select_gender"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/zc_down"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:text="@string/gender_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -273,14 +290,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/birth"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -289,12 +308,14 @@
 
 
                 <TextView
+                    android:id="@+id/tv_select_ymd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/zc_down"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:text="@string/birth_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -313,10 +334,10 @@
 
 
                 <TextView
-
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/nickname"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
@@ -324,11 +345,12 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
                     android:hint="@string/nickname_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -346,19 +368,22 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/organization_or_school"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
 
 
                 <EditText
+
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/organization_or_school_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -376,10 +401,10 @@
 
 
                 <TextView
-
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/self_introduction"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
@@ -387,10 +412,11 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/self_introduction_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -411,21 +437,23 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/email"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
 
 
                 <EditText
-                    android:inputType="textEmailAddress"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/email_explain"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
 
@@ -453,14 +481,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/phone_number"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -470,10 +500,11 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/phone_number_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -502,14 +533,16 @@
                     <TextView
 
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="*"
                         android:textColor="@color/red_FFF33A39"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="@string/password"
                         android:textColor="@color/black_666666"
                         android:textSize="12sp" />
@@ -519,10 +552,11 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/password_explain"
                     android:inputType="textPassword"
                     android:textColor="@color/black_FF999999"
@@ -544,8 +578,9 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/password_again"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
@@ -553,10 +588,11 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/password_again_explain"
                     android:inputType="textPassword"
                     android:textColor="@color/black_FF999999"
@@ -577,8 +613,9 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/invitation_code"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />
@@ -586,10 +623,11 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:hint="@string/invitation_code_explain"
                     android:inputType="textPassword"
                     android:textColor="@color/black_FF999999"
@@ -608,8 +646,9 @@
                 <TextView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:text="@string/head_icon"
                     android:textColor="@color/black_666666"
                     android:textSize="12sp" />

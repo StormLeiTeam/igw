@@ -8,6 +8,7 @@ import io.reactivex.Observer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -32,9 +33,18 @@ public interface ApiService {
 
 
     /**
-     * 获取城市列表
+     * 获取国家
      * @return
      */
     @POST("/api/common/countryList")
     Observable<ResponseBody> getNationality(@Body RequestBody requestBody);
+
+
+    /*
+     * 根据 国籍获取城市列表
+     */
+    @POST("api/common/cityList")
+    Observable<ResponseBody> getCityListData(@Body RequestBody requestBody);
+
+
 }
