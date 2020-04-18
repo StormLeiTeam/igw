@@ -1,17 +1,23 @@
 package com.igw.igw.modoule.login.view
 
-import android.app.ActionBar
+
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
+import android.os.Environment
+import android.support.v4.content.FileProvider
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
+import android.view.Gravity.BOTTOM
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
+import com.igw.igw.BuildConfig
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
@@ -21,12 +27,22 @@ import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.model.RegisterModel
 import com.igw.igw.modoule.login.presenter.RegisterPresenter
 import com.igw.igw.utils.*
+import com.igw.igw.widget.ChoicePopWindow
 import com.igw.igw.widget.storm.TextClickPrivacy
-import com.igw.igw.widget.storm.pickerTime.DatePickDialog
-import com.igw.igw.widget.storm.pickerTime.bean.DateType
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
+import com.jph.takephoto.app.TakePhoto
+import com.jph.takephoto.app.TakePhotoImpl
+import com.jph.takephoto.compress.CompressConfig
+import com.jph.takephoto.model.CropOptions
+import com.jph.takephoto.model.InvokeParam
+import com.jph.takephoto.model.TContextWrap
+import com.jph.takephoto.model.TResult
+import com.jph.takephoto.permission.InvokeListener
+import com.jph.takephoto.permission.PermissionManager
+import com.jph.takephoto.permission.TakePhotoInvocationHandler
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.common_status_bar.*
+import java.io.File
 import java.util.*
 
 
@@ -34,7 +50,7 @@ import java.util.*
  * 注册模块
  */
 
-class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.View {
+class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.View, TakePhoto.TakeResultListener, InvokeListener {
 
     companion object {
 
@@ -67,7 +83,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
     // 生日选择
-    private var birthSelectDialog: DatePickDialog? = null
+//    private var birthSelectDialog: DatePickDialog? = null
 
     //国籍
     private var mCountrys: List<NationalityBean.DataBean.CountrysBean>? = null
@@ -78,6 +94,34 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     // 性别
     private var genders: List<GenderBean>? = null
 
+    // head view popWindow
+    private var mChiocePopwindow: ChoicePopWindow? = null
+
+    private var takePhoto: TakePhoto? = null
+    private var invokeParam: InvokeParam? = null
+    private var cropOptions: CropOptions? = null
+    private var compressConfig: CompressConfig? = null
+    private var imageUri: Uri? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        getTakePhoto().onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        getTakePhoto().onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
+
+    }
+
+    private fun getTakePhoto(): TakePhoto {
+        if (takePhoto == null) {
+            takePhoto = (TakePhotoInvocationHandler.of(this).bind(TakePhotoImpl(this, this))) as TakePhoto
+        }
+
+        return takePhoto!!
+    }
 
     override fun initView() {
 
@@ -85,6 +129,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         StatusBarUtils.setDarkMode(this)
         status_bar_main.setTitle("注册")
         getSystemNationality()
+        setUpImagePicker()
 
         setUpPop()
         initData()
@@ -92,12 +137,23 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
         setUserAgreement()
-
         setUpListener()
 
     }
 
+    private fun setUpImagePicker() {
+
+        takePhoto = getTakePhoto()
+        cropOptions = CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create()
+        compressConfig = CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create()
+        takePhoto?.onEnableCompress(compressConfig, true)
+
+    }
+
     private fun initData() {
+
+        mChiocePopwindow = ChoicePopWindow(this, iv_head_img)
+
 
         //
 
@@ -175,6 +231,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
+
     /**
      * 获取系统的手机语言状太
      */
@@ -199,12 +256,47 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun setUpListener() {
 
 
-        tv_select_ymd.setOnClickListener {
+        // 从相册选择图片
+        mChiocePopwindow?.setOnButtonChoiceOneListener(object : ChoicePopWindow.OnButtonChoiceOneListener {
+            override fun onClick() {
 
+//                var file = File(Environment.getExternalStorageDirectory(), "/temp/${System.currentTimeMillis()}.jpg")
+//                if (!file.parentFile.exists()) file.parentFile.mkdirs()
+////                return Uri.fromFile(file)
+//
+//                var contentUri: Uri = FileProvider.getUriForFile(this@RegisterActivity, BuildConfig.APPLICATION_ID.toString() + ".fileprovider", file)
+                val imageRri = getImageCropUri()
+
+
+                  takePhoto?.onPickFromGalleryWithCrop(imageRri, cropOptions)
+            }
+
+        })
+
+        mChiocePopwindow?.setOnButtonChoiceTwoListener(object: ChoicePopWindow.OnButtonChoiceTwoListener{
+            override fun onClick() {
+
+                val url = getImageCropUri()
+                takePhoto?.onPickFromCaptureWithCrop(url, cropOptions)
+
+            }
+
+        })
+
+
+        iv_head_img.setOnClickListener {
+
+            // 获取头像图片
+            selectHeadImg()
+
+
+        }
+
+
+        tv_select_ymd.setOnClickListener {
 
             // 时间
 //            showDateOfbrith()
-
             showBirthSelect()
         }
 
@@ -269,8 +361,51 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
+    private fun getImageCropUri(): Uri {
 
-//    private var dateTimePicker : DateTimePicker ? = null
+        var file = File(Environment.getExternalStorageDirectory(), "/temp/${System.currentTimeMillis()}.jpg")
+        if (!file.parentFile.exists()) file.parentFile.mkdirs()
+        return Uri.fromFile(file)
+
+
+    }
+
+
+    /**
+     * 获取头像图片
+     */
+    private fun selectHeadImg() {
+        // 判断
+
+        if (mChiocePopwindow == null) {
+
+            mChiocePopwindow = ChoicePopWindow(this, iv_head_img)
+        }
+
+        mChiocePopwindow?.let {
+
+            if (LocaleUtils.isLocaleEn(this)) {
+
+                it.setCancelText("cancle")
+                it.setChoiceOneText("select ")
+                it.setChoiceTwoText("take photo")
+            } else {
+
+                it.setCancelText("取消")
+                it.setChoiceOneText("从相册选取图片")
+                it.setChoiceTwoText("拍照")
+            }
+
+            if (!it.isShowing) {
+                it.showAtLocation(root_main,
+                        BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
+
+            }
+        }
+
+
+    }
+
 
     private var pvTime: TimePickerView? = null
     private var pickerBuilder: TimePickerBuilder? = null
@@ -358,85 +493,45 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             }
         }
 
-
-
-
-
-
-
         pvTime!!.show()
-
-
-//        val calendar = Calendar.getInstance()
-//        calendar[Calendar.YEAR] = 2010
-//        calendar[Calendar.MONTH] = 0
-//        calendar[Calendar.DAY_OF_MONTH] = 1
-//        calendar[Calendar.HOUR_OF_DAY] = 0
-//        calendar[Calendar.MINUTE] = 0
-//        val startDate = calendar.time
-//
-//        calendar[Calendar.YEAR] = 2030
-//        calendar[Calendar.MONTH] = 0
-//        calendar[Calendar.DAY_OF_MONTH] = 1
-//        calendar[Calendar.HOUR_OF_DAY] = 0
-//        calendar[Calendar.MINUTE] = 0
-//        val endDate = calendar.time
-//
-//
-//        //方式一：构建自己的builder
-//        val TBuilder = DateTimePicker.Builder(this)
-//                .setTitle("选择年月日")
-//                .setCancelTextColor(Color.RED)
-//                .setOkTextColor(resources.getColor(R.color.colorPrimary))
-//                .setTitleTextColor(-0x666667)
-//                .setSelectedTextColor(resources.getColor(R.color.colorAccent))
-//                .setKeepLastSelected(true)
-//                .setShowYMDHMLabel(true)
-//                .setShowType(DateTimePicker.ShowType.DAY)
-//
-//        dateTimePicker = DateTimePicker(this, ResultHandler {
-//
-//        }, startDate, endDate, TBuilder)
-//
-
 
     }
 
     private fun showDateOfbrith() {
-
-        if (birthSelectDialog == null) {
-            birthSelectDialog = DatePickDialog(this)
-            birthSelectDialog!!.setYearLimt(200)
-            birthSelectDialog!!.setType(DateType.TYPE_YMD)
-            birthSelectDialog!!.setMessageFormat("yyyy-MM-dd")
-            birthSelectDialog!!.setOnChangeLisener(null)
-            birthSelectDialog!!.setOnSureLisener { date ->
-                date?.let {
-
-                    var instance = Calendar.getInstance()
-                    instance.time = date
-
-                    var year = instance.get(Calendar.YEAR)
-                    var month = instance.get(Calendar.MONTH)
-                    var day = instance.get(Calendar.DAY_OF_MONTH)
-
-
-//                    String str = TimesUtils.timeToString(year, month, day);
-//                    regTime = Long.valueOf(str);
-//                    regTime = str;
-//                    LogUtils.d(TAG, "获取的时间 --> " + regTime);
-//                    tvSelectCarRequestDate.setText(year + "年" + (month + 1) + "月" + day + "日");
-                    val time = year.toString() + "年" + (month + 1) + "月" + day + "日"
-                    val s = TimesUtils.time2StringTime(time, "yyyy年MM月dd日", "yyyy-MM-dd")
-                    tv_select_ymd.text = s
-                }
-            }
-
-
-        }
-
-
-        birthSelectDialog?.show()
+//
+//        if (birthSelectDialog == null) {
+//            birthSelectDialog = DatePickDialog(this)
+//            birthSelectDialog!!.setYearLimt(200)
+//            birthSelectDialog!!.setType(DateType.TYPE_YMD)
+//            birthSelectDialog!!.setMessageFormat("yyyy-MM-dd")
+//            birthSelectDialog!!.setOnChangeLisener(null)
+//            birthSelectDialog!!.setOnSureLisener { date ->
+//                date?.let {
+//
+//                    var instance = Calendar.getInstance()
+//                    instance.time = date
+//
+//                    var year = instance.get(Calendar.YEAR)
+//                    var month = instance.get(Calendar.MONTH)
+//                    var day = instance.get(Calendar.DAY_OF_MONTH)
+//
+//
+////                    String str = TimesUtils.timeToString(year, month, day);
+////                    regTime = Long.valueOf(str);
+////                    regTime = str;
+////                    LogUtils.d(TAG, "获取的时间 --> " + regTime);
+////                    tvSelectCarRequestDate.setText(year + "年" + (month + 1) + "月" + day + "日");
+//                    val time = year.toString() + "年" + (month + 1) + "月" + day + "日"
+//                    val s = TimesUtils.time2StringTime(time, "yyyy年MM月dd日", "yyyy-MM-dd")
+//                    tv_select_ymd.text = s
+//                }
+//            }
+//
+//
+//        }
+//
+//
+//        birthSelectDialog?.show()
 
     }
 
@@ -591,4 +686,48 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        getTakePhoto().onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        PermissionManager.handlePermissionsResult(this, type, invokeParam, this)
+
+    }
+
+    override fun takeSuccess(result: TResult?) {
+        LogUtils.d(TAG, "takePhoto --> takeSuccess -> ${result?.image?.originalPath}")
+
+    }
+
+    override fun takeCancel() {
+        LogUtils.d(TAG, "takePhoto --> takeCancel")
+
+    }
+
+    override fun takeFail(result: TResult?, msg: String?) {
+        LogUtils.d(TAG, "takePhoto --> takeFail -> ${msg}")
+
+    }
+
+    override fun invoke(invokeParam: InvokeParam?): PermissionManager.TPermissionType {
+
+        val type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam!!.method)
+        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
+            this.invokeParam = invokeParam
+        }
+
+        return type
+
+    }
+
+
 }

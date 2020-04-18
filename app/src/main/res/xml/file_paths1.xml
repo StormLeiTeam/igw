@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths>
 
-    <external-path
-        name="download"
-        path="" />
-    <files-path name="my_files" path="tempfiles" />
-</paths>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <paths>
+
+        <external-path
+            name="download"
+            path="" />
+        <files-path
+            name="my_files"
+            path="tempfiles" />
+
+
+        <root-path
+            name="camera_photos"
+            path="" />
+
+
+        <!--        <root-path-->
+        <!--            name="camera_photos"-->
+        <!--            path="" />-->
+        <!--        <external-path-->
+        <!--            name="."-->
+        <!--            path="/storage/emulated/0/" />-->
+
+
+        <external-path
+            name="/storage/emulated/0/"
+            path="." />
+
+
+        <!--&lt;!&ndash;        <files-path path="Android/data/com.example.package.name/files/Pictures/OriPicture/" name="images" />&ndash;&gt;-->
+        <!--&lt;!&ndash;        <external-path path="Android/data/com.example.package.name/files/Pictures/OriPicture/" name="images" />&ndash;&gt;-->
+        <!--        <external-files-path path="files/Pictures/OriPicture" name="images"/>-->
+        <!--        <root-path path="" name="images"/>-->
+
+    </paths>
+
+</resources>

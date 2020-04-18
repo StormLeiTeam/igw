@@ -1,1 +1,1 @@
-include ':app', ':common', ':xrecyclerview'
+include ':app', ':common', ':xrecyclerview', ':takephoto_library'

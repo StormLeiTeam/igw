@@ -24,5 +24,6 @@
     <color name="gray_9FA7B5">#9FA7B5</color>
 
     <color name="tram">#00000000</color>
+    <color name="material_grey_line_200">#FFA4A4A4</color>
 
 </resources>
