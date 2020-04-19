@@ -57,17 +57,18 @@
 
 
                 <TextView
+
                     android:id="@+id/tv_select_nationality"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@drawable/zc_down"
+                    android:drawableEnd="@drawable/zc_down"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
+                    android:hint="@string/nationality_explain"
                     android:maxLines="1"
-                    android:text="@string/nationality_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -113,11 +114,12 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@drawable/zc_down"
+                    android:drawableEnd="@drawable/zc_down"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/city_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:gravity="center_vertical|end"
+                    android:hint="@string/city_explain"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -160,15 +162,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_explain"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/surname_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -211,15 +215,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_lastname_explain"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/lastname_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -234,6 +240,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -264,11 +271,12 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@drawable/zc_down"
+                    android:drawableEnd="@drawable/zc_down"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/gender_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:gravity="center_vertical|end"
+                    android:hint="@string/gender_explain"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -297,6 +305,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -313,9 +322,10 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@drawable/zc_down"
+                    android:drawableEnd="@drawable/zc_down"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
+                    android:maxLines="1"
                     android:text="@string/birth_explain"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
@@ -344,14 +354,16 @@
 
 
                 <EditText
+                    android:id="@+id/et_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/nickname_explain"
+                    android:maxLines="1"
                     android:textColor="@color/black_FF999999"
                     android:textSize="12sp" />
 
@@ -378,14 +390,16 @@
 
                 <EditText
 
+                    android:id="@+id/et_agencyname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/organization_or_school_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -411,14 +425,16 @@
 
 
                 <EditText
+                    android:id="@+id/et_description"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/self_introduction_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -446,15 +462,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_email"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/email_explain"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
 
@@ -499,14 +517,16 @@
 
 
                 <EditText
+                    android:id="@+id/et_phonenumber"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/phone_number_explain"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
                 <include layout="@layout/default_line" />
@@ -551,15 +571,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_password"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/password_explain"
                     android:inputType="textPassword"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
                 <include layout="@layout/default_line" />
@@ -587,15 +609,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_password_again"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/password_again_explain"
                     android:inputType="textPassword"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
                 <include layout="@layout/default_line" />
@@ -622,15 +646,17 @@
 
 
                 <EditText
+                    android:id="@+id/et_inviteCode"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:hint="@string/invitation_code_explain"
                     android:inputType="textPassword"
-                    android:textColor="@color/black_FF999999"
+                    android:maxLines="1"
+                    android:textColor="@color/black_000000"
                     android:textSize="12sp" />
 
                 <include layout="@layout/default_line" />
@@ -669,7 +695,7 @@
             </RelativeLayout>
 
             <Button
-
+                android:id="@+id/btn_submit"
                 android:layout_width="289dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -689,6 +715,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/cb_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

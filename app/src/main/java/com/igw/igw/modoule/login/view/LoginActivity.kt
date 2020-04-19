@@ -41,6 +41,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
 
 
 
+
         btn_register.setOnClickListener {
             // 跳转到注册模块
 
@@ -101,11 +102,11 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
 
     override fun fail(o: Any?) {
 
-        TODO("Not yet implemented")
     }
 
     override fun success(o: Any?) {
-        TODO("Not yet implemented")
+
+
     }
 
 

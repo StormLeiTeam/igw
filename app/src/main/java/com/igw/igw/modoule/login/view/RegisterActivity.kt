@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -14,15 +15,18 @@ import android.view.Gravity
 import android.view.Gravity.BOTTOM
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
+import com.bumptech.glide.Glide
 import com.igw.igw.BuildConfig
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
 import com.igw.igw.bean.login.GenderBean
+import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.model.RegisterModel
 import com.igw.igw.modoule.login.presenter.RegisterPresenter
@@ -40,10 +44,14 @@ import com.jph.takephoto.model.TResult
 import com.jph.takephoto.permission.InvokeListener
 import com.jph.takephoto.permission.PermissionManager
 import com.jph.takephoto.permission.TakePhotoInvocationHandler
+import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
+import javax.crypto.NullCipher
+import kotlin.contracts.ReturnsNotNull
 
 
 /**
@@ -97,11 +105,30 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     // head view popWindow
     private var mChiocePopwindow: ChoicePopWindow? = null
 
+    private var isCityClick: Boolean = false
+
     private var takePhoto: TakePhoto? = null
     private var invokeParam: InvokeParam? = null
     private var cropOptions: CropOptions? = null
     private var compressConfig: CompressConfig? = null
     private var imageUri: Uri? = null
+
+
+    // 注册提交参数
+    private var mNationality: NationalityBean.DataBean.CountrysBean? = null  // 国籍 必填
+    private var mCity: CityListBean.DataBean.CitysBean? = null // 城市 必填
+    private var mExplain: String = "" //性 必填
+    private var mLastNameExplain: String = "" // 名 必填
+    private var mGender: GenderBean? = null // 性别 必填
+    private var mBirthday: String = "" // 出生日期 必填
+    private var mNickName: String = "" //  昵称 选填
+    private var mAgencyName : String = "" // 机构/学校 选填
+    private var mDescription : String = ""  // 自我介绍
+    private var mEmail: String ="" // 自我介绍 // 选填
+    private var mMobilePhone:String  = "" // 手机号码 必填
+    private var mPassword : String = ""  // 密码 必填
+    private var mInviteCode: String = "" // 邀请码
+    private var mHeadImage : File? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,7 +179,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     private fun initData() {
 
-        mChiocePopwindow = ChoicePopWindow(this, iv_head_img)
+        mChiocePopwindow = ChoicePopWindow(this)
 
 
         //
@@ -256,6 +283,16 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun setUpListener() {
 
 
+        // 注册信息提交
+        btn_submit.setOnClickListener {
+
+
+            registerSubmitForNet()
+
+
+        }
+
+
         // 从相册选择图片
         mChiocePopwindow?.setOnButtonChoiceOneListener(object : ChoicePopWindow.OnButtonChoiceOneListener {
             override fun onClick() {
@@ -268,12 +305,12 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 val imageRri = getImageCropUri()
 
 
-                  takePhoto?.onPickFromGalleryWithCrop(imageRri, cropOptions)
+                takePhoto?.onPickFromGalleryWithCrop(imageRri, cropOptions)
             }
 
         })
 
-        mChiocePopwindow?.setOnButtonChoiceTwoListener(object: ChoicePopWindow.OnButtonChoiceTwoListener{
+        mChiocePopwindow?.setOnButtonChoiceTwoListener(object : ChoicePopWindow.OnButtonChoiceTwoListener {
             override fun onClick() {
 
                 val url = getImageCropUri()
@@ -302,8 +339,17 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
 
+
+
         genderPopWindow?.onCommitlistener { data, position ->
 
+            mGender = data
+
+            if (LocaleUtils.isLocaleEn(this)) {
+                tv_select_gender.text = mGender!!.getEnName()
+            } else {
+                tv_select_gender.text = mGender!!.getChName()
+            }
 
         }
 
@@ -311,6 +357,17 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
          * 城市确认
          */
         cityPopwindow?.onCommitlistener { data, position ->
+
+
+            this.mCity = data
+
+            if (LocaleUtils.isLocaleEn(this)) {
+                tv_select_city.text = mCity!!.cityEn
+
+            } else {
+                tv_select_city.text = mCity!!.cityCn
+
+            }
 
 
         }
@@ -322,9 +379,22 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         nationalityPopWindow?.onCommitlistener { data, position ->
 
 
+            this.mNationality = data
+
+            if (LocaleUtils.isLocaleEn(this)) {
+                tv_select_nationality.text = mNationality!!.countryEnName
+
+            } else {
+                tv_select_nationality.text = mNationality!!.countryCnName
+
+            }
+
+            mCitys = null
+            mPresenter.getCityListData(mNationality!!.id)
+            isCityClick = false
+
+
         }
-
-
 
 
 
@@ -343,10 +413,34 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
             SoftInputUtils.hideSoftInput(this, tv_select_city)
 
-            if (cityPopwindow != null && !cityPopwindow!!.isShowing) {
-                cityPopwindow!!.animationStyle = R.style.pop_anim
-                cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
+            if (mCitys != null) {
+
+                if (cityPopwindow != null && !cityPopwindow!!.isShowing) {
+                    cityPopwindow!!.animationStyle = R.style.pop_anim
+                    cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
+                }
+
+            } else {
+
+//
+                if (mNationality == null) {
+
+                    ToastUtil.showCenterToast(this, "请先选择国籍")
+                    return@setOnClickListener
+
+                } else {
+
+                    mPresenter.getCityListData(mNationality!!.id)
+                    isCityClick = true
+                }
+
+//                }
             }
+//
+//
+//
+
+
         }
 
 
@@ -357,6 +451,123 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 nationalityPopWindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
             }
         }
+
+
+    }
+
+
+    /**
+     * 提交注册
+     */
+    private fun registerSubmitForNet() {
+
+
+        if (!cb_check.isChecked){
+
+            // 请先勾选
+
+            ToastUtil.showCenterToast(this,R.string.check_user_agreement)
+
+
+            return
+        }
+
+        if (mNationality == null) {
+            ToastUtil.showCenterToast(this, R.string.warning_nationality)
+            return
+        }
+
+        if (mCity == null) {
+            ToastUtil.showCenterToast(this, R.string.warning_city)
+            return
+        }
+
+        mExplain = et_explain.text.toString().trim()
+        if (mExplain.isEmpty()) {
+            ToastUtil.showCenterToast(this, R.string.warning_explain)
+            return
+
+        }
+
+        mLastNameExplain = et_lastname_explain.text.toString().trim()
+        if (mLastNameExplain.isEmpty()) {
+
+            ToastUtil.showCenterToast(this, R.string.warning_lastname_explain)
+            return
+        }
+
+        if (mGender == null) {
+
+            return
+        }
+
+       mBirthday =   tv_select_ymd.text.toString().trim()
+        LogUtils.d(TAG,"获取的生日  -->  $mBirthday")
+
+        if (mBirthday.isEmpty()) {
+
+            return
+        }
+
+
+        mNickName = et_nickname.text.toString().trim()
+        mAgencyName = et_agencyname.text.toString().trim()
+        mDescription = et_description.text.toString().trim()
+        mEmail = et_email.text.toString().trim()
+        mMobilePhone = et_phonenumber.text.toString().trim()
+
+        if (mMobilePhone.isEmpty() && mMobilePhone.length != 11) {
+            // 手机号码不能为空且 11位
+
+            return
+        }
+
+
+        if (et_password.text.toString().trim().isEmpty()){
+
+            // 为空
+            return
+        }
+
+        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())){
+
+            // 密码不一直
+            return
+
+
+        }
+
+        mPassword = et_password.text.toString().trim()
+
+
+        mInviteCode = et_inviteCode.text.toString().trim()
+
+
+        var registerBean = RegisterBean()
+
+        registerBean.countryId = mNationality!!.id
+        registerBean.cityId = mCity!!.id
+        registerBean.lastName = mExplain
+        registerBean.firstName = mLastNameExplain
+        registerBean.sex = mGender!!.id
+        registerBean.birthday = mBirthday
+        registerBean.nickname = mNickName
+        registerBean.agencyName = mAgencyName
+        registerBean.description = mDescription
+        registerBean.email = mEmail
+        registerBean.mobilePhone = mMobilePhone
+        registerBean.password = mPassword
+        registerBean.inviteCode = mInviteCode
+        mHeadImage?.let {
+            registerBean.setHeadImage(it)
+
+        }
+
+
+        LogUtils.d(TAG,registerBean.toString())
+
+
+        mPresenter.registerUser(registerBean)
 
 
     }
@@ -379,7 +590,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         if (mChiocePopwindow == null) {
 
-            mChiocePopwindow = ChoicePopWindow(this, iv_head_img)
+            mChiocePopwindow = ChoicePopWindow(this)
         }
 
         mChiocePopwindow?.let {
@@ -434,6 +645,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
             pickerBuilder = TimePickerBuilder(this, OnTimeSelectListener { date, v -> //选中事件回调
 
+
+                // 选中
+
+                var time: String = TimesUtils.data2String(date)
+                LogUtils.d(TAG, "获取的生日 --> $time")
+                tv_select_ymd.text = time
+                mBirthday = time
 
             })
                     .setType(booleanArrayOf(true, true, true, false, false, false)) // 默认全部显示
@@ -541,7 +759,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun requestData() {
 
         mPresenter.getNationalityData()
-        mPresenter.getCityListData(1)
 
     }
 
@@ -598,6 +815,10 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         tv_user_agreement.text = spannable
 
     }
+
+    override fun registerSuccess() {
+
+        finish()    }
 
 
     override fun fail(o: Any?) {
@@ -685,6 +906,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         }
 
 
+
+        if (cityPopwindow != null && !cityPopwindow!!.isShowing && isCityClick) {
+            cityPopwindow!!.animationStyle = R.style.pop_anim
+            cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
+        }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -705,6 +933,30 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     override fun takeSuccess(result: TResult?) {
         LogUtils.d(TAG, "takePhoto --> takeSuccess -> ${result?.image?.originalPath}")
+
+        // 返回文件 路径
+        result?.let {
+            mHeadImage = File(it.image?.originalPath)
+
+            LogUtils.d(TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
+
+
+            )
+
+            if (mHeadImage!!.exists()){
+
+                GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
+
+            }else{
+
+                ToastUtil.showCenterToast(this,R.string.select_headimage)
+            }
+
+            val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
+
+            LogUtils.d(TAG, "处理过后的图片  --> $bytes2String")
+
+        }
 
     }
 

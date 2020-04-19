@@ -80,5 +80,7 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.2.0"
 //    implementation project(path: ':takephoto_library')
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+
 
 }

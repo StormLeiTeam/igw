@@ -30,4 +30,16 @@ object TimesUtils {
         return SimpleDateFormat(targetFormat).format(date)
     }
 
+    /**
+     * date 转String -- 2010-07-06
+     */
+    fun data2String(date: Date): String {
+
+        // 获取当前时间
+        val format = SimpleDateFormat("yyyy-MM-dd")
+
+        return format.format(date)
+
+    }
+
 }

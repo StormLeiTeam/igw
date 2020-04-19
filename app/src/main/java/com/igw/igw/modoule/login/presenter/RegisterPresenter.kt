@@ -2,11 +2,14 @@ package com.igw.igw.modoule.login.presenter
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.RegisterBean
+import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.view.RegisterActivity
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
 import com.igw.igw.utils.LogUtils
+import kotlin.math.log
 
 /**
  *
@@ -94,5 +97,29 @@ class RegisterPresenter(model: RegisterContract.Model)
     override fun requestData() {
 
 
+    }
+
+    fun registerUser(registerBean: RegisterBean) {
+
+        mModel.registerUser(registerBean,object :NetObserver<RegisterSuccessBean.DataBean>(RegisterSuccessBean.DataBean::class.java){
+            override fun onSuccess(m: RegisterSuccessBean.DataBean?) {
+
+
+                LogUtils.d(TAG,"注册成功 ")
+                rootView.registerSuccess()
+            }
+
+            override fun onFail(code: String?, msg: String?) {
+                LogUtils.d(TAG,"注册失败")
+
+            }
+
+            override fun onError(msg: String?) {
+
+                LogUtils.d(TAG,"出现错误")
+            }
+
+
+        })
     }
 }

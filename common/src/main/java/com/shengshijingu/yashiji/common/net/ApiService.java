@@ -47,4 +47,11 @@ public interface ApiService {
     Observable<ResponseBody> getCityListData(@Body RequestBody requestBody);
 
 
+    /**
+     * 用户注册
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/register")
+    Observable<ResponseBody> registerUser(@Body RequestBody requestBody);
 }

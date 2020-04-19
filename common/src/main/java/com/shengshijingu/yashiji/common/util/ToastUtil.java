@@ -1,6 +1,7 @@
 package com.shengshijingu.yashiji.common.util;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.dovar.dtoast.DToast;
 import com.dovar.dtoast.inner.IToast;
 import com.shengshijingu.yashiji.common.R;
+import com.shengshijingu.yashiji.common.controller.Controller;
 
 /**
  * 兼容系统版本的Toast  防止一些手机拒绝权限后，Toast无法提示
@@ -29,6 +31,14 @@ public class ToastUtil {
 //                .show();
         showCenterToast(context, msg);
     }
+
+
+    public static void showCenterToast(Context context, @StringRes int  msgId){
+
+
+        showCenterToast(context,context.getResources().getString(msgId));
+    }
+
 
     public static void showCenterToast(Context context, String msg) {
         if (context == null) {

@@ -41,4 +41,10 @@
     <string name="invitation_code">邀请码</string>
     <string name="invitation_code_explain">请输入您的邀请码</string>
     <string name="head_icon">个人照片</string>
+    <string name="warning_nationality">please input your country</string>
+    <string name="warning_city">请选择城市</string>
+    <string name="warning_explain">请输入您的姓</string>
+    <string name="warning_lastname_explain">请输入您的名</string>
+    <string name="select_headimage">请重新选择头像</string>
+    <string name="check_user_agreement">请先勾选用户协议</string>
 </resources>

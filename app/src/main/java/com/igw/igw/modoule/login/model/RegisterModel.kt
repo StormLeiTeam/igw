@@ -3,6 +3,8 @@ package com.igw.igw.modoule.login.model
 import com.google.gson.Gson
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.RegisterBean
+import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.httpclient.HttpClientManager
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.network.NetObserver
@@ -76,6 +78,17 @@ class RegisterModel : RegisterContract.Model {
     override fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>) {
 
         ControllerUtils.getLoginControllerInstance().getCityListData(countryId, observer)
+
+    }
+
+    override fun registerUser(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>) {
+
+
+        ControllerUtils.getLoginControllerInstance()
+                .registerUser(registerBean.countryId!!,registerBean.cityId!!,registerBean.lastName,registerBean.firstName,
+                registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.description,
+                registerBean.email,registerBean.mobilePhone,registerBean.password, registerBean.inviteCode,registerBean.headImage,observer)
+
 
     }
 

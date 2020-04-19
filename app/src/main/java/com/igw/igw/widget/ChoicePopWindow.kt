@@ -46,9 +46,8 @@ class ChoicePopWindow : PopupWindow {
     private var mBtnChoiceOneListen: OnButtonChoiceOneListener? = null
     private var mBtnChoiceTwoListen: OnButtonChoiceTwoListener? = null
 
-    constructor(context: Context, view: ImageView) {
+    constructor(context: Context ) {
         this.mContext = context
-        this.mImageView = view
 
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
