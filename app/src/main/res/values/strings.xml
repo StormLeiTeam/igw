@@ -47,4 +47,8 @@
     <string name="warning_lastname_explain">请输入您的名</string>
     <string name="select_headimage">请重新选择头像</string>
     <string name="check_user_agreement">请先勾选用户协议</string>
+    <string name="please_input_accent">请输入账号</string>
+    <string name="please_input_pwd">请输入密码</string>
+    <string name="please_input_email">请输入邮箱</string>
+    <string name="please_input_code">请输入验证码</string>
 </resources>
