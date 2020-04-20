@@ -154,7 +154,7 @@ public class CityFragment extends BaseDataFragment {
             }
 
             @Override
-            protected void onFail(String code, String msg) {
+            protected void onFail(int code, String msg) {
                 hideLoadingText();
 
             }
@@ -218,7 +218,7 @@ public class CityFragment extends BaseDataFragment {
             }
 
             @Override
-            protected void onFail(String code, String msg) {
+            protected void onFail(int code, String msg) {
                 hideLoadingText();
 
             }

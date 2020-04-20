@@ -1,7 +1,9 @@
 package com.igw.igw.modoule.login.loginstate
 
-import android.animation.Animator
 import android.content.Context
+import com.google.gson.Gson
+import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.SPUtils
 
 /**
@@ -13,7 +15,7 @@ import com.igw.igw.utils.SPUtils
  * @Describe
  */
 
-class LoginController {
+class LoginManager {
 
 
     private var loginState: UserState = LoginoutState()
@@ -21,9 +23,9 @@ class LoginController {
     //
     companion object {
 
-        val instance: LoginController by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        val instance: LoginManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
 
-            LoginController()
+            LoginManager()
         }
     }
 
@@ -45,6 +47,11 @@ class LoginController {
 //        SPUtils.getInstance(USER_INFO).put(KEY_TOKEN,)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE, true)
         //保存token
+
+        var  user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo,UserInfo.DataBean::class.java)
+
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
+
 
         (loginState as LoginState).initData(userInfo)
 

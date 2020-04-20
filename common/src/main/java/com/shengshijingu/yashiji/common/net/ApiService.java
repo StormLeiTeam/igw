@@ -54,4 +54,51 @@ public interface ApiService {
      */
     @POST("/api/user/register")
     Observable<ResponseBody> registerUser(@Body RequestBody requestBody);
+
+
+    /**
+     * 正常账号登陆
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/login")
+    Observable<ResponseBody> loginByAccent(@Body RequestBody requestBody);
+
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/loginByEmail")
+    Observable<ResponseBody> loginByEmail(@Body RequestBody requestBody);
+
+
+    /**
+     * 发送验证码
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/common/sendEmailVerifyCode")
+    Observable<ResponseBody> sendEmailVerifyCode(@Body RequestBody requestBody);
+
+
+    /**
+     * 重置密码
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/resetPassword")
+    Observable<ResponseBody> resetPassword(@Body RequestBody requestBody);
+
+
+    /**
+     * 修改密码
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/updatePassword")
+    Observable<ResponseBody> updatePassword(@Body RequestBody requestBody);
 }
+
+

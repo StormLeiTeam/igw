@@ -54,15 +54,18 @@ class RegisterPresenter(model: RegisterContract.Model)
 
             }
 
-            override fun onFail(code: String?, msg: String?) {
-                LogUtils.d(TAG,"onFail --> ${code}")
 
-            }
+
 
             override fun onError(msg: String?) {
                 LogUtils.d(TAG,"onError --> ${msg}")
 
 
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+
+                LogUtils.d(TAG,"onFail --> ${code}")
             }
 
         })
@@ -84,10 +87,14 @@ class RegisterPresenter(model: RegisterContract.Model)
                 }
             }
 
-            override fun onFail(code: String?, msg: String?) {
-            }
+
 
             override fun onError(msg: String?) {
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+
+
             }
 
         })
@@ -109,14 +116,16 @@ class RegisterPresenter(model: RegisterContract.Model)
                 rootView.registerSuccess()
             }
 
-            override fun onFail(code: String?, msg: String?) {
-                LogUtils.d(TAG,"注册失败")
 
-            }
 
             override fun onError(msg: String?) {
 
                 LogUtils.d(TAG,"出现错误")
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+
+                LogUtils.d(TAG,"注册失败")
             }
 
 

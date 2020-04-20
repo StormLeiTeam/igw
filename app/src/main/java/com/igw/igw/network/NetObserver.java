@@ -41,7 +41,7 @@ public abstract class NetObserver<M> implements Observer<ResponseBody> {
      *
      * @param msg 后台返回的错误信息
      */
-    protected abstract void onFail(String code, String msg);
+    protected abstract void onFail(int  code, String msg);
 
     /**
      * 请求失败(网络以及其他原因)
@@ -77,7 +77,7 @@ public abstract class NetObserver<M> implements Observer<ResponseBody> {
 
                 }else {
 
-                    onFail(response.getCode(),response.getMsg());
+                    onFail(response.getCode(),response.getMessage());
                 }
 
 

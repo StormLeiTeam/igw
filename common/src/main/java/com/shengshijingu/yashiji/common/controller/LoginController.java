@@ -1,13 +1,9 @@
 package com.shengshijingu.yashiji.common.controller;
 
-import android.os.strictmode.NonSdkApiUsedViolation;
 
 import com.shengshijingu.yashiji.common.net.NetApi;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-
 import io.reactivex.Observer;
 
 /**
@@ -86,6 +82,89 @@ public class LoginController extends Controller {
 
 
 
+    }
+
+    /**
+     * 帐号登陆
+     */
+    public void loginByAccent(String mobilePhone, String password,Observer observer){
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobilePhone",mobilePhone);
+        params.put("password",password);
+
+        ApiSubscribe(NetApi.getApiService().loginByAccent(getRequestBody(params)),observer);
+
+    }
+
+
+    /**
+     *
+     * 使用邮箱登陆
+     * @param email
+     * @param verifyCode
+     * @param observer
+     */
+    public void loginByEmail(String email,String verifyCode, Observer observer){
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("email",email);
+        params.put("verifyCode",verifyCode);
+
+        ApiSubscribe(NetApi.getApiService().loginByEmail(getRequestBody(params)),observer);
+
+    }
+
+    /**
+     * 发送验证码
+     * @param email
+     * @param type
+     * @param observer
+     */
+    public void sendEmailVerifyCode(String email,int type,Observer observer){
+
+
+        Map<String,Object> params = new HashMap<>();
+        params.put("email",email);
+        params.put("type",type);
+
+        ApiSubscribe(NetApi.getApiService().sendEmailVerifyCode(getRequestBody(params)),observer);
+    }
+
+
+    /**
+     * 重置密码
+     * @param email
+     * @param verifyCode
+     * @param password
+     * @param observer
+     */
+    public void resetPassword(String email,String verifyCode, String password,Observer observer){
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("email",email);
+        params.put("verifyCode",verifyCode);
+        params.put("password",password);
+
+        ApiSubscribe(NetApi.getApiService().resetPassword(getRequestBody(params)), observer);
+
+    }
+
+
+    /**
+     *  修改密码
+     * @param originPassword
+     * @param password
+     * @param observer
+     */
+    public void updatePassword(String originPassword, String password, Observer observer){
+
+        Map<String,Object> params = new HashMap<>();
+        params.put("originPassword",originPassword);
+        params.put("password",password);
+
+        ApiSubscribe(NetApi.getApiService().updatePassword(getRequestBody(params)), observer);
     }
 
 

@@ -1,11 +1,13 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
+import com.google.gson.Gson
 import com.igw.igw.bean.login.UserInfo
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_LOGIN_STATE
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_TOKEN
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_USER_INFO
 import com.igw.igw.modoule.login.loginstate.Contanct.USER_INFO
+import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.SPUtils
 
 /**
@@ -56,8 +58,6 @@ class LoginState : UserState {
             userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
         }
 
-
-
         return userInfo
 
     }
@@ -65,10 +65,21 @@ class LoginState : UserState {
 
     fun initData(userInfo: String) {
 
+
+
 //        this.userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
 //        this.token = SPUtils.getInstance(userInfo)
 //        // gson
+
+
+        this.userInfo = userInfo
+     var user =    GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo,UserInfo.DataBean::class.java)
+
+//
 //        this.userInfo
+
+        this.token = user.token
+
 
 //        this.token
 

@@ -11,30 +11,28 @@ import com.google.gson.JsonElement;
  * Description :
  */
 
-public class Response<T> implements Serializable{
+public class Response<T> implements Serializable {
 
 
-
-
-
-    private String code;
-    private String msg;
+    private int code;
+    private String message;
     private JsonElement data;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public JsonElement getData() {
@@ -46,9 +44,9 @@ public class Response<T> implements Serializable{
     }
 
 
-    public boolean isSuccess(){
+    public boolean isSuccess() {
 
-        return "200".equals(code);
+        return 200 == code;
     }
 
 

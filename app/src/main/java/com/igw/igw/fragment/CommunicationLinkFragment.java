@@ -106,10 +106,15 @@ public class CommunicationLinkFragment extends BaseDataFragment {
             }
 
             @Override
-            protected void onFail(String code, String msg) {
+            protected void onFail(int code, String msg) {
                 hideLoadingText();
-
             }
+
+            //            @Override
+//            protected void onFail(String code, String msg) {
+//                hideLoadingText();
+//
+//            }
 
             @Override
             protected void onError(String msg) {

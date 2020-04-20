@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.text.Html;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.transition.Transition;
  */
 
 public class MImageGetter implements Html.ImageGetter {
+
 
     private Context c;
 

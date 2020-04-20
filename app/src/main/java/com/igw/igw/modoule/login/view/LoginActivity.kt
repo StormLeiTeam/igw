@@ -1,52 +1,90 @@
 package com.igw.igw.modoule.login.view
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
 import android.view.View
+import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
+import com.igw.igw.bean.login.UserInfo
 import com.igw.igw.modoule.login.LoginContract
-import com.igw.igw.modoule.login.loginstate.LoginState
+import com.igw.igw.modoule.login.loginstate.LoginManager
+import com.igw.igw.modoule.login.model.LoginModel
 import com.igw.igw.modoule.login.presenter.LoginModePresenter
-import com.igw.igw.mvp.presenter.BasePresenter
-import com.igw.igw.mvp.view.IBaseView
+import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
-import com.shengshijingu.yashiji.common.dialog.LoadingDialog
+import com.igw.igw.widget.storm.TextClickPrivacy
+import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.shengshijingu.yashiji.common.util.ToastUtil
+import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.crop__layout_done_cancel.*
+import java.util.concurrent.TimeUnit
 
 
 /**
  * 登陆页面
  */
-class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
+class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
 
-    companion object{
+    companion object {
 
         val TAG = "LoginActivity"
 
-        var mode_state: Int  = 1 // 默认为账号登陆模式
+        var mode_state: Int = 1 // 默认为账号登陆模式
+
+        var MAX_COUNT_TIME: Long = 60
 
     }
+
+
+    private var countTimeDisposable: Disposable? = null //倒计时
+
     override fun initView() {
 
 
         StatusBarUtils.setColor(this, ContextCompat.getColor(this, R.color.colorF33))
         StatusBarUtils.setDarkMode(this)
 
-
+        setUserAgreement()
         setUpListener()
+
+    }
+
+
+    fun setUserAgreement() {
+
+        var content = "我同意《i-gw用户协议》"
+
+        val spannable = SpannableStringBuilder(content)
+        tv_user_agreement.movementMethod = LinkMovementMethod.getInstance()
+        spannable.setSpan(TextClickPrivacy(this), 3, content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tv_user_agreement.text = spannable
 
     }
 
     private fun setUpListener() {
 
+        initCountTime()
 
+//        tv_send_code.setOnClickListener {
+//
+//            sendVerifyCode()
+//        }
 
 
         tv_forget_pwd.setOnClickListener {
@@ -94,14 +132,14 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
         }
 
         // select lanuage  mode
-        tv_language_select.setOnClickListener{
+        tv_language_select.setOnClickListener {
 
             if (LocaleUtils.needUpdateLocale(this, LocaleUtils.LOCALE_ENGLISH)) {
-                LocaleUtils.saveUserLocale(this,LocaleUtils.LOCALE_ENGLISH)
+                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_ENGLISH)
                 LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH)
 
-            }else{
-                LocaleUtils.saveUserLocale(this,LocaleUtils.LOCALE_CHINESE)
+            } else {
+                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_CHINESE)
                 LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
             }
 
@@ -113,42 +151,122 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
     }
 
 
+    // 发送验证码
+    private fun sendVerifyCode() {
+
+
+        if (et_email.text.toString().trim().isEmpty()) {
+
+            ToastUtil.showCenterToast(this, R.string.please_input_email)
+            return
+
+        }
+
+        var email = et_email.text.toString().trim()
+        mPresenter.sendEmailVerifyCode(email, 1)
+
+        // 开启倒计时
+
+        initCountTime()
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun initCountTime() {
+
+        RxView.clicks(tv_send_code)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .flatMap(io.reactivex.functions.Function<Any, ObservableSource<Boolean>> {
+
+                    if (et_email.text.toString().trim().isEmpty()) {
+
+                        ToastUtil.showCenterToast(this, R.string.please_input_email)
+                        return@Function Observable.empty()
+
+                    }
+
+                    return@Function Observable.just(true)
+                }).flatMap(io.reactivex.functions.Function<Boolean, ObservableSource<Long>> {
+
+                    tv_send_code.isEnabled = false
+                    tv_send_code.setTextColor(ContextCompat.getColor(this, R.color.gray_9FA7B5))
+
+                    tv_send_code.text = "$MAX_COUNT_TIME"
+
+                    val email = et_email.text.toString().trim()
+                    mPresenter.sendEmailVerifyCode(email, 1)
+
+                    return@Function Observable.interval(1,TimeUnit.SECONDS,Schedulers.io())
+                            .take(MAX_COUNT_TIME)
+                            .map {
+                                return@map MAX_COUNT_TIME -(it + 1)
+                            }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+
+                    if (it.toInt() == 0) {
+                        tv_send_code.text =  resources.getText(R.string.login_send_code)
+                        tv_send_code.isEnabled = true
+                        tv_send_code.setTextColor(ContextCompat.getColor(this,R.color.black_FF333333))
+
+                    }else{
+                        tv_send_code.text = it.toLong().toString()
+
+                    }
+                }
+
+
+    }
+
+
     //登陆
     private fun login() {
 
-        when(mode_state){
+        if (!cb_check.isChecked) {
+
+            ToastUtil.showCenterToast(this, R.string.check_user_agreement)
+
+            return
+        }
+
+        when (mode_state) {
 
             1 -> {
 
-                LogUtils.d(TAG,"账号登陆模式  ")
+                LogUtils.d(TAG, "账号登陆模式  ")
 
 
-                if (et_accent.text.toString().trim().isEmpty()){
-                    ToastUtil.showCenterToast(this,R.string.please_input_accent)
+                if (et_accent.text.toString().trim().isEmpty()) {
+                    ToastUtil.showCenterToast(this, R.string.please_input_accent)
                     return
                 }
 
-                if (et_pwd.text.toString().trim().isEmpty()){
-                    ToastUtil.showCenterToast(this,R.string.please_input_pwd)
+                if (et_pwd.text.toString().trim().isEmpty()) {
+                    ToastUtil.showCenterToast(this, R.string.please_input_pwd)
                     return
                 }
 
 
                 var accent = et_accent.text.toString().trim()
                 var pwd = et_pwd.text.toString().trim()
+
+
+//                mPresenter.loginByAccent()
+
+                mPresenter.loginByAccent(accent, pwd)
             }
 
             2 -> {
 
-                LogUtils.d(TAG,"邮箱登陆模式 ")
+                LogUtils.d(TAG, "邮箱登陆模式 ")
 
-                if (et_email.text.toString().trim().isEmpty()){
-                    ToastUtil.showCenterToast(this,R.string.please_input_email)
+                if (et_email.text.toString().trim().isEmpty()) {
+                    ToastUtil.showCenterToast(this, R.string.please_input_email)
                     return
                 }
 
-                if (et_code.text.toString().trim().isEmpty()){
-                    ToastUtil.showCenterToast(this,R.string.please_input_code)
+                if (et_code.text.toString().trim().isEmpty()) {
+                    ToastUtil.showCenterToast(this, R.string.please_input_code)
                     return
                 }
 
@@ -156,9 +274,9 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
                 var email = et_email.text.toString().trim()
                 var code = et_code.text.toString().trim()
 
+                mPresenter.loginByEmail(email, code)
             }
         }
-
 
 
     }
@@ -176,6 +294,10 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
     }
 
     override fun initPresenter() {
+
+        mPresenter = LoginModePresenter(LoginModel())
+        mPresenter!!.attachView(this)
+
     }
 
     override fun getLayoutId(): Int = R.layout.activity_login
@@ -187,12 +309,40 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
 
     override fun setRightButton(): String {
 
-        return  ""
+        return ""
 
     }
 
     override fun setStatusBarColor(): Boolean {
         return true
+    }
+
+    override fun loginSuccess(userInfo: UserInfo.DataBean) {
+        //登陆成功
+
+        LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(userInfo))
+
+        startMainActivity()
+    }
+
+    private fun startMainActivity() {
+
+
+
+        var intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun loginFail(code:String,msg:String) {
+
+        LoginManager.instance.loginOut()
+    }
+
+    override fun sendVerifyCodeSuccess() {
+    }
+
+    override fun sendVerifyCodeFail() {
     }
 
     override fun fail(o: Any?) {
@@ -204,5 +354,10 @@ class LoginActivity : BaseActivity<LoginModePresenter>() , LoginContract.View  {
 
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.detachView()
+    }
 
 }
