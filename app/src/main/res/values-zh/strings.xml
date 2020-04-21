@@ -51,4 +51,21 @@
     <string name="please_input_pwd">请输入密码</string>
     <string name="please_input_email">请输入邮箱</string>
     <string name="please_input_code">请输入验证码</string>
+    <string name="hint_original_pwd">"请输入原始密码 "</string>
+    <string name="hint_new_pwd">"请输入新密码 "</string>
+    <string name="hint_new_pwd_again">请再次输入新密码</string>
+    <string name="update_btn_text">"提交 "</string>
+    <string name="warning_input_original_pwd">原始密码不能为空</string>
+    <string name="warning_input_new_pwd">新密码不能为空</string>
+    <string name="warning_input_new_pwd_again">密码不能为空</string>
+    <string name="waring_password_inconsistency">两次密码输入不一致</string>
+    <string name="hint_verify_code">发送验证码</string>
+    <string name="hint_input_regiest_email">请输入注册时的邮箱</string>
+    <string name="hint_input_verify_code">验证码</string>
+    <string name="hint_reset_new_pwd">新密码</string>
+    <string name="hint_reset_new_pwd_again">请再次确认密码</string>
+    <string name="submit_reset">重置密码</string>
+    <string name="verify_not_empty">"验证码不能为空 "</string>
+    <string name="toast_update_pwd_success">修改成功</string>
+    <string name="reset_pwd_success">重置成功</string>
 </resources>

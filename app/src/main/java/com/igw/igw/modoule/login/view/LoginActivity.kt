@@ -29,6 +29,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
@@ -52,6 +53,11 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     }
 
 
+    private var mCompositeDisposable: CompositeDisposable? = null
+
+//    private var countTimeDisposable: Disposable? = null
+
+
     private var countTimeDisposable: Disposable? = null //倒计时
 
     override fun initView() {
@@ -60,6 +66,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
         StatusBarUtils.setColor(this, ContextCompat.getColor(this, R.color.colorF33))
         StatusBarUtils.setDarkMode(this)
 
+        mCompositeDisposable = CompositeDisposable()
         setUserAgreement()
         setUpListener()
 
@@ -174,7 +181,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     @SuppressLint("CheckResult")
     private fun initCountTime() {
 
-        RxView.clicks(tv_send_code)
+        countTimeDisposable = RxView.clicks(tv_send_code)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .flatMap(io.reactivex.functions.Function<Any, ObservableSource<Boolean>> {
 
@@ -196,24 +203,26 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
                     val email = et_email.text.toString().trim()
                     mPresenter.sendEmailVerifyCode(email, 1)
 
-                    return@Function Observable.interval(1,TimeUnit.SECONDS,Schedulers.io())
+                    return@Function Observable.interval(1, TimeUnit.SECONDS, Schedulers.io())
                             .take(MAX_COUNT_TIME)
                             .map {
-                                return@map MAX_COUNT_TIME -(it + 1)
+                                return@map MAX_COUNT_TIME - (it + 1)
                             }
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
 
                     if (it.toInt() == 0) {
-                        tv_send_code.text =  resources.getText(R.string.login_send_code)
+                        tv_send_code.text = resources.getText(R.string.login_send_code)
                         tv_send_code.isEnabled = true
-                        tv_send_code.setTextColor(ContextCompat.getColor(this,R.color.black_FF333333))
+                        tv_send_code.setTextColor(ContextCompat.getColor(this, R.color.black_FF333333))
 
-                    }else{
+                    } else {
                         tv_send_code.text = it.toLong().toString()
 
                     }
                 }
+
+        mCompositeDisposable?.add(countTimeDisposable!!)
 
 
     }
@@ -328,13 +337,12 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     private fun startMainActivity() {
 
 
-
-        var intent = Intent(this,MainActivity::class.java)
+        var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    override fun loginFail(code:String,msg:String) {
+    override fun loginFail(code: String, msg: String) {
 
         LoginManager.instance.loginOut()
     }
@@ -358,6 +366,15 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.detachView()
+
+        mCompositeDisposable?.let {
+            if (it.size() > 0) {
+                it.clear()
+
+            }
+        }
+        mCompositeDisposable = null
+
     }
 
 }

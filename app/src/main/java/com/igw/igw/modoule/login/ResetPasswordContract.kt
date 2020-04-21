@@ -1,8 +1,11 @@
 package com.igw.igw.modoule.login
 
+import com.igw.igw.bean.login.ResetPwdBean
+import com.igw.igw.bean.login.VerifyBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
 import com.igw.igw.mvp.view.IBaseView
+import com.igw.igw.network.NetObserver
 
 /**
  *
@@ -15,20 +18,32 @@ import com.igw.igw.mvp.view.IBaseView
 class ResetPasswordContract {
 
 
-    interface  Model: IBaseModel{
+    interface Model : IBaseModel {
+
+        fun sendEmailVerifyCode(email: String, type: Int, observer: NetObserver<VerifyBean>)
+
+        fun resetPassword(email: String, verifyCode: String, password: String, observer: NetObserver<ResetPwdBean>)
+
+    }
+
+    interface View : IBaseView {
+
+        fun onFailToCode(code: Int,msg: String)
+
+        fun onSuccess()
+
+        fun onFailToReset(code: Int,msg: String)
 
 
     }
 
-    interface  View: IBaseView{
+    interface Presenter : IBasePresenter {
 
 
-    }
-
-    interface Presenter: IBasePresenter{
-
+        // 发送验证码
+        fun sendEmailVerifyCode(email: String, type: Int)
 
 
-
+        fun resetPassword(email: String, verifyCode: String, password: String)
     }
 }

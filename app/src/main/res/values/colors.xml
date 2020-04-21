@@ -25,5 +25,8 @@
 
     <color name="tram">#00000000</color>
     <color name="material_grey_line_200">#FFA4A4A4</color>
+    <color name="bg_fff2f2f2">#fff2f2f2</color>
+
+    <color name="bg_input_stroke">#DCDCDC</color>
 
 </resources>

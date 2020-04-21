@@ -16,28 +16,21 @@ import com.igw.igw.utils.SPUtils
 class LoginoutState : UserState {
 
 
-
-
-
-
     fun loginOut() {
 
 
         // 更改用户状态
-       SPUtils.getInstance(Contanct.USER_INFO).clear()
+        SPUtils.getInstance(Contanct.USER_INFO).clear()
 
     }
 
     override fun CheckLoginState(context: Context) {
 
 
-        context.startActivity(Intent(context,LoginActivity::class.java))
-
+        context.startActivity(Intent(context, LoginActivity::class.java))
 
 
     }
-
-
 
 
 }

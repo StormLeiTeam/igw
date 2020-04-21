@@ -20,7 +20,6 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
 import com.bumptech.glide.Glide
-import com.igw.igw.BuildConfig
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
@@ -276,6 +275,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
 
         }
+
 
 
     }
@@ -978,6 +978,19 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         }
 
         return type
+
+    }
+
+
+    private fun resertAct() {
+
+        finish()
+
+        var intent = Intent(this, RegisterActivity::class.java)
+
+        startActivity(intent)
+        overridePendingTransition(0, 0);
+
 
     }
 

@@ -9,6 +9,7 @@ import com.igw.igw.modoule.login.loginstate.Contanct.KEY_USER_INFO
 import com.igw.igw.modoule.login.loginstate.Contanct.USER_INFO
 import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.SPUtils
+import com.shengshijingu.yashiji.common.net.Interceptor.CommonHeaderInterceptor
 
 /**
  *
@@ -21,26 +22,23 @@ import com.igw.igw.utils.SPUtils
 class LoginState : UserState {
 
 
-
-    companion object{
+    companion object {
         val TAG = "LoginState"
 
 
     }
 
-    private var  userInfo  : String? = null
+    private var userInfo: String? = null
     private var token: String? = null
-
 
 
     override fun CheckLoginState(context: Context) {
 
 
-
     }
 
 
-     fun getToken(): String? {
+    fun getToken(): String? {
 
 
         if (token == null || token!!.isEmpty()) {
@@ -66,24 +64,21 @@ class LoginState : UserState {
     fun initData(userInfo: String) {
 
 
-
 //        this.userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
 //        this.token = SPUtils.getInstance(userInfo)
 //        // gson
 
 
         this.userInfo = userInfo
-     var user =    GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo,UserInfo.DataBean::class.java)
+        var user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
 
 //
 //        this.userInfo
 
         this.token = user.token
 
-
+        CommonHeaderInterceptor.token = this.token!!
 //        this.token
-
-
 
     }
 

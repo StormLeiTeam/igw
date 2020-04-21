@@ -1,5 +1,6 @@
 package com.shengshijingu.yashiji.common.base;
 
+import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +41,14 @@ public abstract class BaseDataFragment extends BaseOldFragment implements OnClic
     protected ViewStub mErrorLayoutViewStub;
 
     private GifImageView mLoadingProgress;
+
+    protected Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mContext = context;
+    }
 
     protected void initBaseView(LayoutInflater inflater) {
         super.initBaseView(inflater);

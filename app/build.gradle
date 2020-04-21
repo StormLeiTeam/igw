@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'com.android.library'
+//apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 29
@@ -45,6 +47,9 @@ android {
         }
     }
 
+//    sourceCompatibility JavaVersion.VERSION_1_8
+//    targetCompatibility JavaVersion.VERSION_1_8
+
 
 }
 
@@ -54,6 +59,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation 'com.jakewharton:butterknife:10.2.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     testImplementation 'junit:junit:4.12'
     //noinspection GradleCompatible
@@ -71,7 +78,6 @@ dependencies {
     implementation 'me.jessyan:autosize:1.1.2'
 //    implementation 'jsc.kit.datetimepicker:DateTimePickerLibrary:0.4.8'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-
 
 
     implementation "com.jakewharton.rxbinding2:rxbinding:2.2.0"

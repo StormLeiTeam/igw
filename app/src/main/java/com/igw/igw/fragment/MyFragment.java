@@ -1,6 +1,11 @@
 package com.igw.igw.fragment;
 
+import android.view.View;
+import android.widget.TextView;
+
+import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.modoule.login.view.UpdateActivity;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 
 /**
@@ -9,7 +14,14 @@ import com.shengshijingu.yashiji.common.base.BaseDataFragment;
  * 作者  雷雷
  */
 
-public class MyFragment extends BaseDataFragment{
+public class MyFragment extends BaseMvpDataFragment{
+
+
+    public static final String TAG =  "MyFragment";
+
+
+    private TextView tv_update_pwd;
+
 
     public static MyFragment getInstance() {
         MyFragment myFragment = new MyFragment();
@@ -34,5 +46,32 @@ public class MyFragment extends BaseDataFragment{
     @Override
     public void initView() {
         onFirstLoadSuccess();
+
+//        tv_update_pwd = mBaseView.findViewById(R.id.tv_update_pwd);
+
+       tv_update_pwd =  bindView(R.id.tv_update_pwd);
+
+
+
+        setUpListener();
+    }
+
+    private void setUpListener() {
+
+        tv_update_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                UpdateActivity.Companion.startSelf((MainActivity)mContext);
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void initPresenter() {
+
     }
 }

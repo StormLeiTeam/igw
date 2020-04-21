@@ -1,8 +1,13 @@
 package com.shengshijingu.yashiji.common.net;
 
+import java.time.temporal.ValueRange;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.LogManager;
 
 import com.shengshijingu.yashiji.common.Constants;
+import com.shengshijingu.yashiji.common.controller.LoginController;
+import com.shengshijingu.yashiji.common.net.Interceptor.CommonHeaderInterceptor;
+
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -12,6 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetApi {
 
     private static ApiService apiService;
+
+    private static String token = "";
 
     public static ApiService getApiService() {
         if (apiService == null) {
@@ -28,6 +35,7 @@ public class NetApi {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
 
         OkHttpClient.Builder okHttpClient = genericClient().newBuilder();
         okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
@@ -46,6 +54,8 @@ public class NetApi {
 
     public static OkHttpClient genericClient() {
 
+        CommonHeaderInterceptor commonHeaderInterceptor = new CommonHeaderInterceptor();
+
         OkHttpClient httpClient = new OkHttpClient.Builder()
 
                 .addInterceptor(chain -> {
@@ -56,7 +66,7 @@ public class NetApi {
                     return chain.proceed(request);
 
                 })
-
+                .addNetworkInterceptor(commonHeaderInterceptor)
                 .build();
 
 
