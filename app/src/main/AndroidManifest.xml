@@ -17,15 +17,16 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.login.view.ResetPasswordActivity"></activity>
-        <activity android:name=".modoule.login.view.ResetPwdActivity" />
+        <activity android:name=".modoule.login.view.LoginActivity"></activity>
+        <activity android:name=".modoule.login.view.UpdateUserInfoActivity" />
+        <activity android:name=".modoule.login.view.ResetPasswordActivity" />
         <activity android:name=".modoule.login.view.UpdateActivity" />
         <activity android:name=".modoule.abouthelp.view.FeedbackOrHelpActivity" />
         <activity
             android:name=".modoule.login.view.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".modoule.login.view.LoginActivity">
+        <activity android:name=".app.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

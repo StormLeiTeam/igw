@@ -332,6 +332,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
         LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(userInfo))
 
         startMainActivity()
+        finish()
     }
 
     private fun startMainActivity() {

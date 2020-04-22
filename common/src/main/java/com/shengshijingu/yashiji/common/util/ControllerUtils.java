@@ -1,5 +1,8 @@
 package com.shengshijingu.yashiji.common.util;
 
+import android.service.autofill.TextValueSanitizer;
+
+import com.shengshijingu.yashiji.common.controller.CommonController;
 import com.shengshijingu.yashiji.common.controller.HomeController;
 import com.shengshijingu.yashiji.common.controller.LoginController;
 
@@ -31,5 +34,17 @@ public class ControllerUtils {
         return loginController;
     }
 
+
+    private static CommonController commonController;
+
+    public static CommonController getCommonController(){
+
+        if(commonController == null) {
+            commonController = new CommonController();
+        }
+
+
+        return commonController;
+    }
 
 }

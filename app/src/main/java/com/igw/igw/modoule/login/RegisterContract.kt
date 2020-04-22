@@ -36,4 +36,6 @@ interface RegisterContract {
        fun  registerSuccess()
 
     }
+
+
 }

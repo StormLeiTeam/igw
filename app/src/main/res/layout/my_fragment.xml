@@ -260,6 +260,7 @@
                         />
 
                     <LinearLayout
+                        android:id="@+id/ll_update_info"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_44"
                         android:orientation="horizontal">
@@ -432,6 +433,7 @@
                         />
 
                     <LinearLayout
+                        android:id="@+id/ll_help_or_feedback"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_44"
                         android:orientation="horizontal">

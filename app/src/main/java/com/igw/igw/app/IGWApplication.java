@@ -2,6 +2,8 @@ package com.igw.igw.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.LoggingMXBean;
 
 import android.app.Activity;
 import android.app.Application;
@@ -9,6 +11,7 @@ import android.content.Context;
 
 import com.igw.igw.BuildConfig;
 import com.igw.igw.httpclient.HttpClientManager;
+import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.utils.ConfigUtil;
 import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.Constants;
@@ -34,9 +37,13 @@ public class IGWApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initConfig();        context = this;
+        initConfig();
+        context = this;
         initLogConfig();
-       ;
+        LoginManager.Companion.getInstance().init();
+        LoginManager.Companion.getInstance().initLoginState();
+
+
 
     }
 

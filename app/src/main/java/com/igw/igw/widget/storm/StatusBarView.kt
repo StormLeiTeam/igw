@@ -625,13 +625,9 @@ class StatusBarView : FrameLayout {
     }
 
 
-
-
     // 状态view 设置背景颜色
-
     public fun setStateBarBackgroundColor(colorId: Int) {
         setBackgroundColor(status_bar, colorId);
-
 
     }
 

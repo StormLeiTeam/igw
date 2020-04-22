@@ -1,37 +1,30 @@
 package com.igw.igw.modoule.login.view
 
-
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.method.LinkMovementMethod
 import android.view.Gravity
-import android.view.Gravity.BOTTOM
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
-import com.bumptech.glide.Glide
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
 import com.igw.igw.bean.login.GenderBean
 import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.modoule.login.RegisterContract
-import com.igw.igw.modoule.login.model.RegisterModel
-import com.igw.igw.modoule.login.presenter.RegisterPresenter
+import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.modoule.login.UpdateInfoContract
+import com.igw.igw.modoule.login.loginstate.LoginManager
+import com.igw.igw.modoule.login.model.UpdateUserInfoModel
+import com.igw.igw.modoule.login.presenter.UpdateUserInfoPresenter
 import com.igw.igw.utils.*
 import com.igw.igw.widget.ChoicePopWindow
-import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
 import com.jph.takephoto.app.TakePhoto
 import com.jph.takephoto.app.TakePhotoImpl
@@ -44,38 +37,29 @@ import com.jph.takephoto.permission.InvokeListener
 import com.jph.takephoto.permission.PermissionManager
 import com.jph.takephoto.permission.TakePhotoInvocationHandler
 import com.shengshijingu.yashiji.common.util.ToastUtil
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_update_user_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.crypto.NullCipher
-import kotlin.contracts.ReturnsNotNull
+import kotlin.time.measureTime
 
+class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateInfoContract.View,
+        TakePhoto.TakeResultListener, InvokeListener {
 
-/**
- * 注册模块
- */
-
-class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.View, TakePhoto.TakeResultListener, InvokeListener {
 
     companion object {
 
+        val TAG = "UpdateUserInfoActivity"
 
-        val TAG = "RegisterActivity"
 
         val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"女\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
 
 
-        public fun startSelf(activity: BaseActivity<*>) {
-
-            var intent = Intent(activity, RegisterActivity::class.java)
+        fun startSelf(activity: BaseActivity<*>) {
+            var intent = Intent(activity, UpdateUserInfoActivity::class.java)
 
             activity.startActivity(intent)
-
         }
-
-
     }
 
 
@@ -89,29 +73,32 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private var genderPopWindow: WheelViewPopupwindow<GenderBean>? = null
 
 
-    // 生日选择
-//    private var birthSelectDialog: DatePickDialog? = null
-
     //国籍
     private var mCountrys: List<NationalityBean.DataBean.CountrysBean>? = null
 
     // 城市
     private var mCitys: List<CityListBean.DataBean.CitysBean>? = null
 
+
+    private var mUserInfo: UserInfo.DataBean? = null
+
+
+    private var isCityClick: Boolean = false
+
+
+    private var pvTime: TimePickerView? = null
+    private var pickerBuilder: TimePickerBuilder? = null
+    private var mChiocePopwindow: ChoicePopWindow? = null
+
     // 性别
     private var genders: List<GenderBean>? = null
 
-    // head view popWindow
-    private var mChiocePopwindow: ChoicePopWindow? = null
-
-    private var isCityClick: Boolean = false
 
     private var takePhoto: TakePhoto? = null
     private var invokeParam: InvokeParam? = null
     private var cropOptions: CropOptions? = null
     private var compressConfig: CompressConfig? = null
     private var imageUri: Uri? = null
-
 
     // 注册提交参数
     private var mNationality: NationalityBean.DataBean.CountrysBean? = null  // 国籍 必填
@@ -121,13 +108,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private var mGender: GenderBean? = null // 性别 必填
     private var mBirthday: String = "" // 出生日期 必填
     private var mNickName: String = "" //  昵称 选填
-    private var mAgencyName : String = "" // 机构/学校 选填
-    private var mDescription : String = ""  // 自我介绍
-    private var mEmail: String ="" // 自我介绍 // 选填
-    private var mMobilePhone:String  = "" // 手机号码 必填
-    private var mPassword : String = ""  // 密码 必填
+    private var mAgencyName: String = "" // 机构/学校 选填
+    private var mDescription: String = ""  // 自我介绍
+    private var mEmail: String = "" // 自我介绍 // 选填
+    private var mMobilePhone: String = "" // 手机号码 必填
+    private var mPassword: String = ""  // 密码 必填
     private var mInviteCode: String = "" // 邀请码
-    private var mHeadImage : File? = null
+    private var mHeadImage: File? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,89 +122,57 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         super.onCreate(savedInstanceState)
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         getTakePhoto().onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
 
     }
 
-    private fun getTakePhoto(): TakePhoto {
-        if (takePhoto == null) {
-            takePhoto = (TakePhotoInvocationHandler.of(this).bind(TakePhotoImpl(this, this))) as TakePhoto
-        }
-
-        return takePhoto!!
-    }
 
     override fun initView() {
 
-
         StatusBarUtils.setDarkMode(this)
-        status_bar_main.setTitle("注册")
-        getSystemNationality()
-        setUpImagePicker()
 
-        setUpPop()
+        status_bar_main.setTitle(resources.getString(R.string.title_update_userinfo))
+        status_bar_main.setConfirmVisible(View.VISIBLE)
+        status_bar_main.setConfirmTextColor(R.color.black_000000)
+        status_bar_main.setConfirmText("中/en")
+
+        setUpPopWindow()
         initData()
-        requestData()
+        setUpImagePicker()
+        // 获取国籍信息
+        getCountryForNet()
+        getLocalUserinfo()
 
-
-        setUserAgreement()
         setUpListener()
-
     }
 
     private fun setUpImagePicker() {
+
 
         takePhoto = getTakePhoto()
         cropOptions = CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create()
         compressConfig = CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create()
         takePhoto?.onEnableCompress(compressConfig, true)
 
+
+    }
+
+    private fun getTakePhoto(): TakePhoto {
+
+        if (takePhoto == null) {
+            takePhoto = (TakePhotoInvocationHandler.of(this).bind(TakePhotoImpl(this, this))) as TakePhoto
+        }
+
+        return takePhoto!!
+
     }
 
     private fun initData() {
 
         mChiocePopwindow = ChoicePopWindow(this)
-
-
-        //
-
-
-//        val list = GsonUtils.getInstance().fromJson<java.util.ArrayList<GenderBean>>(GENDER_JSON, java.util.ArrayList::class.java)
-//
-//        LogUtils.d(TAG, "list --> ${list[0].getChName()}")
-
-
-//        var genders = ArrayList<GenderBean>()
-//        var man = GenderBean()
-//        man.setId(1)
-//        man.setChName("男")
-//        man.setEnName("女")
-//
-//        var women = GenderBean()
-//        women.setId(2)
-//        women.setChName("女")
-//        women.setEnName("women")
-//
-//        genders.add(man)
-//        genders.add(women)
-//
-//
-//        var gender = Gender()
-//        gender.genders = genders
-//
-//        var gson = Gson()
-//        val toJson = gson.toJson(gender)
-//
-//
-//        val fromJson = GsonUtils.getInstance().fromJson<Gender>(toJson, Gender::class.java)
-//
-//
-//        LogUtils.d(TAG, "${toJson}")
-//
-//        LogUtils.d(TAG,"${fromJson.genders[0].getChName()}")
-
 
         genders = GsonUtils.getInstance().fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
 
@@ -257,28 +212,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
-
-    /**
-     * 获取系统的手机语言状太
-     */
-    private fun getSystemNationality() {
-
-
-        val locale = LocaleUtils.getCurrentlocale(this)
-        if (locale.equals(Locale.ENGLISH)) {
-            LogUtils.d(TAG, "当前用户保存的是english")
-            LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH)
-
-        } else {
-            LogUtils.d(TAG, "当前用户保存的是 中文")
-
-            LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
-
-        }
-
-
-    }
-
     private fun setUpListener() {
 
 
@@ -286,7 +219,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         btn_submit.setOnClickListener {
 
 
-            registerSubmitForNet()
+            updateUserInfoForNet()
 
 
         }
@@ -296,11 +229,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         mChiocePopwindow?.setOnButtonChoiceOneListener(object : ChoicePopWindow.OnButtonChoiceOneListener {
             override fun onClick() {
 
-//                var file = File(Environment.getExternalStorageDirectory(), "/temp/${System.currentTimeMillis()}.jpg")
-//                if (!file.parentFile.exists()) file.parentFile.mkdirs()
-////                return Uri.fromFile(file)
-//
-//                var contentUri: Uri = FileProvider.getUriForFile(this@RegisterActivity, BuildConfig.APPLICATION_ID.toString() + ".fileprovider", file)
                 val imageRri = getImageCropUri()
 
 
@@ -329,14 +257,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         }
 
 
+
         tv_select_ymd.setOnClickListener {
 
             // 时间
 //            showDateOfbrith()
             showBirthSelect()
         }
-
-
 
 
 
@@ -389,11 +316,12 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             }
 
             mCitys = null
-            mPresenter.getCityListData(mNationality!!.id)
+            mPresenter.getCityData(mNationality!!.id, false)
             isCityClick = false
 
 
         }
+
 
 
 
@@ -429,15 +357,11 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
                 } else {
 
-                    mPresenter.getCityListData(mNationality!!.id)
+                    mPresenter.getCityData(mNationality!!.id, false)
                     isCityClick = true
                 }
 
-//                }
             }
-//
-//
-//
 
 
         }
@@ -454,32 +378,20 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
-
-    /**
-     * 提交注册
-     */
-    private fun registerSubmitForNet() {
-
-
-        if (!cb_check.isChecked){
-
-            // 请先勾选
-
-            ToastUtil.showCenterToast(this,R.string.check_user_agreement)
-
-
-            return
-        }
+    private fun updateUserInfoForNet() {
 
         if (mNationality == null) {
             ToastUtil.showCenterToast(this, R.string.warning_nationality)
             return
         }
 
+
         if (mCity == null) {
             ToastUtil.showCenterToast(this, R.string.warning_city)
             return
         }
+
+
 
         mExplain = et_explain.text.toString().trim()
         if (mExplain.isEmpty()) {
@@ -488,6 +400,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         }
 
+
         mLastNameExplain = et_lastname_explain.text.toString().trim()
         if (mLastNameExplain.isEmpty()) {
 
@@ -495,13 +408,16 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             return
         }
 
+
+
         if (mGender == null) {
 
             return
         }
 
-       mBirthday =   tv_select_ymd.text.toString().trim()
-        LogUtils.d(TAG,"获取的生日  -->  $mBirthday")
+
+        mBirthday = tv_select_ymd.text.toString().trim()
+        LogUtils.d(TAG, "获取的生日  -->  $mBirthday")
 
         if (mBirthday.isEmpty()) {
 
@@ -522,18 +438,16 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         }
 
 
-        if (et_password.text.toString().trim().isEmpty()){
+        if (et_password.text.toString().trim().isEmpty()) {
 
             // 为空
             return
         }
 
-        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())){
+        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())) {
 
             // 密码不一直
             return
-
-
         }
 
         mPassword = et_password.text.toString().trim()
@@ -543,6 +457,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
         var registerBean = RegisterBean()
+
 
         registerBean.countryId = mNationality!!.id
         registerBean.cityId = mCity!!.id
@@ -562,30 +477,22 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         }
 
-
-        LogUtils.d(TAG,registerBean.toString())
-
-
-        mPresenter.registerUser(registerBean)
-
+        mPresenter.updateUserInfo(registerBean)
 
     }
 
-    private fun getImageCropUri(): Uri {
+    private fun getImageCropUri(): Uri? {
+
 
         var file = File(Environment.getExternalStorageDirectory(), "/temp/${System.currentTimeMillis()}.jpg")
         if (!file.parentFile.exists()) file.parentFile.mkdirs()
         return Uri.fromFile(file)
 
-
     }
 
 
-    /**
-     * 获取头像图片
-     */
     private fun selectHeadImg() {
-        // 判断
+
 
         if (mChiocePopwindow == null) {
 
@@ -608,7 +515,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
             if (!it.isShowing) {
                 it.showAtLocation(root_main,
-                        BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
+                        Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
 
             }
         }
@@ -616,13 +523,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
-
-    private var pvTime: TimePickerView? = null
-    private var pickerBuilder: TimePickerBuilder? = null
-
-    /**
-     *
-     */
     private fun showBirthSelect() {
 
 
@@ -712,60 +612,11 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         pvTime!!.show()
 
-    }
-
-    private fun showDateOfbrith() {
-//
-//        if (birthSelectDialog == null) {
-//            birthSelectDialog = DatePickDialog(this)
-//            birthSelectDialog!!.setYearLimt(200)
-//            birthSelectDialog!!.setType(DateType.TYPE_YMD)
-//            birthSelectDialog!!.setMessageFormat("yyyy-MM-dd")
-//            birthSelectDialog!!.setOnChangeLisener(null)
-//            birthSelectDialog!!.setOnSureLisener { date ->
-//                date?.let {
-//
-//                    var instance = Calendar.getInstance()
-//                    instance.time = date
-//
-//                    var year = instance.get(Calendar.YEAR)
-//                    var month = instance.get(Calendar.MONTH)
-//                    var day = instance.get(Calendar.DAY_OF_MONTH)
-//
-//
-////                    String str = TimesUtils.timeToString(year, month, day);
-////                    regTime = Long.valueOf(str);
-////                    regTime = str;
-////                    LogUtils.d(TAG, "获取的时间 --> " + regTime);
-////                    tvSelectCarRequestDate.setText(year + "年" + (month + 1) + "月" + day + "日");
-//                    val time = year.toString() + "年" + (month + 1) + "月" + day + "日"
-//                    val s = TimesUtils.time2StringTime(time, "yyyy年MM月dd日", "yyyy-MM-dd")
-//                    tv_select_ymd.text = s
-//                }
-//            }
-//
-//
-//        }
-//
-//
-//        birthSelectDialog?.show()
 
     }
 
-    /**
-     *  网络请求国籍
-     */
-    private fun requestData() {
+    private fun setUpPopWindow() {
 
-        mPresenter.getNationalityData()
-
-    }
-
-
-    /**
-     * 创建pop
-     */
-    private fun setUpPop() {
 
         // 国籍选择
         nationalityPopWindow = WheelViewPopupwindow<NationalityBean.DataBean.CountrysBean>(this)
@@ -779,57 +630,109 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
+    private fun getCountryForNet() {
 
-    override fun initPresenter() {
+        mPresenter.getNationalityData()
+    }
 
-        mPresenter = RegisterPresenter(RegisterModel())
-        mPresenter.attachView(this)
+    private fun getLocalUserinfo() {
+        // 获取个人信息
+
+        val userInfo = LoginManager.instance.getUserInfo()
+
+        LogUtils.d(TAG, "会显个人信息 --> $userInfo")
+
+        mUserInfo = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
+
+        mUserInfo?.let {
+
+            mPresenter.getCityData(it.countryId, true)
+
+        }
+
+        updateUserInfoForLocal()
+    }
+
+
+    // 数据回显
+    private fun updateUserInfoForLocal() {
+
+        //
+
+        genders?.let {
+            for (item: GenderBean in it) {
+
+                if (item.id == mUserInfo?.sex) {
+                    mGender = item
+
+
+                }
+
+            }
+
+        }
+
+        mGender?.let {
+            if (LocaleUtils.isLocaleEn(this)) tv_select_gender.text = it.enName else tv_select_gender.text = it.chName
+
+        }
+
+
+        mUserInfo?.let {
+
+
+            et_explain.setText(it.lastName)
+            et_lastname_explain.setText(it.firstName)
+            tv_select_ymd.text = it.birthday
+            et_nickname.setText(it.nickName)
+            et_agencyname.setText(it.agencyName)
+            et_description.setText(it.description)
+            et_email.setText(it.email)
+            et_phonenumber.setText(it.mobilePhone)
+//            et_password.setText(it.password)
+//            et_password_again.setText(it.password)
+
+            if (it.inviteCode != null) {
+
+                et_inviteCode.setText(it.inviteCode.toString())
+
+            }
+
+            if (it.headImage != null) {
+                val headImage = it.headImage.toString()
+                GlideUtils.loadImage(this, headImage, iv_head_img)
+            }
+
+
+        }
 
 
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_register
+    override fun initPresenter() {
+        mPresenter = UpdateUserInfoPresenter(UpdateUserInfoModel())
+        mPresenter.attachView(this)
+
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_update_user_info
+    }
 
     override fun setTitle(): String {
         return ""
     }
 
     override fun setRightButton(): String {
+
         return ""
     }
 
     override fun setStatusBarColor(): Boolean {
-
-        return true
+        return false
     }
 
-
-    fun setUserAgreement() {
-
-        var content = "我同意《i-gw用户协议》"
-
-        val spannable = SpannableStringBuilder(content)
-        tv_user_agreement.movementMethod = LinkMovementMethod.getInstance()
-        spannable.setSpan(TextClickPrivacy(this), 3, content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv_user_agreement.text = spannable
-
-    }
-
-    override fun registerSuccess() {
-
-        finish()    }
-
-
-    override fun fail(o: Any?) {
-    }
-
-    override fun success(o: Any?) {
-    }
-
-    /**
-     *  国籍数据
-     */
-    fun showNationality(countrys: List<NationalityBean.DataBean.CountrysBean>) {
+    override fun onSuccessNationality(countrys: List<NationalityBean.DataBean.CountrysBean>) {
 
         this.mCountrys = countrys
 
@@ -860,66 +763,156 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 }
             }
 
+
+
+
             it.setSelectItemPosition(0)
+        }
+
+
+        val countryId = mUserInfo?.countryId
+
+        if (mCountrys != null && mCountrys!!.size > 0) {
+
+            for (item: NationalityBean.DataBean.CountrysBean in mCountrys!!) {
+
+                if (item.id == countryId) {
+                    mNationality = item
+
+                }
+            }
+        }
+
+        if (LocaleUtils.isLocaleEn(this)) {
+
+            // 英语
+            tv_select_nationality.text = mNationality?.countryEnName
+
+        } else {
+            // 中文
+            tv_select_nationality.text = mNationality?.countryCnName
+
         }
 
 
     }
 
-    fun showCityListData(citys: List<CityListBean.DataBean.CitysBean>) {
+
+    override fun onFailNationality() {
 
 
-        this.mCitys = citys;
+    }
 
-        cityPopwindow?.let {
+    override fun onSuccessCitys(citys: List<CityListBean.DataBean.CitysBean>, isLocal: Boolean) {
 
-            it.setData(mCitys)
+        this.mCitys = citys
 
-            when (LocaleUtils.getCurrentlocale(this)) {
+        if (isLocal) {
 
-                LocaleUtils.LOCALE_ENGLISH -> {
+            for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+
+                if (mUserInfo?.cityId == item.id) {
+                    //相等
+                    mCity = item
+
+                    if (LocaleUtils.isLocaleEn(this)) {
+                        tv_select_city.text = mCity?.cityEn
+                    } else {
+                        tv_select_city.text = mCity?.cityCn
+
+                    }
+                }
+            }
+
+        } else {
+
+            cityPopwindow?.let {
+
+                it.setData(mCitys)
+
+                when (LocaleUtils.getCurrentlocale(this)) {
+
+                    LocaleUtils.LOCALE_ENGLISH -> {
 
 //                    mCountrys.in
 
-                    for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
 
 
-                        item.isEnglish = true
+                            item.isEnglish = true
+                        }
                     }
+
+                    LocaleUtils.LOCALE_CHINESE -> {
+
+                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+
+
+                            item.isEnglish = false
+                        }
+                    }
+
+
                 }
 
-                LocaleUtils.LOCALE_CHINESE -> {
-
-                    for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
-
-
-                        item.isEnglish = false
-                    }
-                }
-
+                it.setSelectItemPosition(0)
 
             }
 
-            it.setSelectItemPosition(0)
-
-        }
 
 
+            if (cityPopwindow != null && !cityPopwindow!!.isShowing && isCityClick) {
+                cityPopwindow!!.animationStyle = R.style.pop_anim
+                cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
+            }
 
-        if (cityPopwindow != null && !cityPopwindow!!.isShowing && isCityClick) {
-            cityPopwindow!!.animationStyle = R.style.pop_anim
-            cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
         }
 
 
     }
+
+    override fun onFailCitys() {
+
+
+    }
+
+    override fun fail(o: Any?) {
+    }
+
+    override fun success(o: Any?) {
+    }
+
+
+    override fun takeSuccess(result: TResult?) {
+
+
+    }
+
+    override fun takeCancel() {
+
+    }
+
+    override fun takeFail(result: TResult?, msg: String?) {
+    }
+
+    override fun invoke(invokeParam: InvokeParam?): PermissionManager.TPermissionType {
+
+
+        val type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam!!.method)
+        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
+            this.invokeParam = invokeParam
+        }
+
+        return type
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         getTakePhoto().onActivityResult(requestCode, resultCode, data)
+
         super.onActivityResult(requestCode, resultCode, data)
 
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -928,70 +921,9 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         PermissionManager.handlePermissionsResult(this, type, invokeParam, this)
 
-    }
-
-    override fun takeSuccess(result: TResult?) {
-        LogUtils.d(TAG, "takePhoto --> takeSuccess -> ${result?.image?.originalPath}")
-
-        // 返回文件 路径
-        result?.let {
-            mHeadImage = File(it.image?.originalPath)
-
-            LogUtils.d(TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
-
-
-            )
-
-            if (mHeadImage!!.exists()){
-
-                GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
-
-            }else{
-
-                ToastUtil.showCenterToast(this,R.string.select_headimage)
-            }
-
-            val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
-
-            LogUtils.d(TAG, "处理过后的图片  --> $bytes2String")
-
-        }
 
     }
 
-    override fun takeCancel() {
-        LogUtils.d(TAG, "takePhoto --> takeCancel")
-
-    }
-
-    override fun takeFail(result: TResult?, msg: String?) {
-        LogUtils.d(TAG, "takePhoto --> takeFail -> ${msg}")
-
-    }
-
-    override fun invoke(invokeParam: InvokeParam?): PermissionManager.TPermissionType {
-
-        val type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam!!.method)
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam
-        }
-
-        return type
-
-    }
-
-
-    private fun resertAct() {
-
-        finish()
-
-        var intent = Intent(this, RegisterActivity::class.java)
-
-        startActivity(intent)
-        overridePendingTransition(0, 0);
-
-
-    }
 
 
 }

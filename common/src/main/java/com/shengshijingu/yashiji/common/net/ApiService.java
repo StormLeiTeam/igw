@@ -5,6 +5,7 @@ import java.util.NavigableMap;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.internal.operators.observable.ObservableRange;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -34,6 +35,7 @@ public interface ApiService {
 
     /**
      * 获取国家
+     *
      * @return
      */
     @POST("/api/common/countryList")
@@ -49,6 +51,7 @@ public interface ApiService {
 
     /**
      * 用户注册
+     *
      * @param requestBody
      * @return
      */
@@ -58,6 +61,7 @@ public interface ApiService {
 
     /**
      * 正常账号登陆
+     *
      * @param requestBody
      * @return
      */
@@ -66,7 +70,6 @@ public interface ApiService {
 
 
     /**
-     *
      * @param requestBody
      * @return
      */
@@ -76,6 +79,7 @@ public interface ApiService {
 
     /**
      * 发送验证码
+     *
      * @param requestBody
      * @return
      */
@@ -85,6 +89,7 @@ public interface ApiService {
 
     /**
      * 重置密码
+     *
      * @param requestBody
      * @return
      */
@@ -94,11 +99,48 @@ public interface ApiService {
 
     /**
      * 修改密码
+     *
      * @param requestBody
      * @return
      */
     @POST("/api/user/updatePassword")
     Observable<ResponseBody> updatePassword(@Body RequestBody requestBody);
+
+
+    /**
+     * 更新用户信息
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/user/updateUser")
+    Observable<ResponseBody> updateUserInfo(@Body RequestBody requestBody);
+
+
+    /**
+     * 获取帮助列表
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/help/helpList")
+    Observable<ResponseBody> getHelpList(@Body RequestBody requestBody);
+
+
+    /**
+     * 提交反馈
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/feedback/saveFeedback")
+    Observable<ResponseBody> saveFeedback(@Body RequestBody requestBody);
+
+    /**
+     * 帮助详情
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/help/helpDetail")
+    Observable<ResponseBody> helpDetail(@Body RequestBody requestBody);
 }
 
 

@@ -30,6 +30,12 @@ class LoginManager {
     }
 
 
+
+    public fun  init(){
+
+        SPUtils.getInstance(Contanct.USER_INFO)
+    }
+
     /**
      * 登陆成功
      */
@@ -41,14 +47,13 @@ class LoginManager {
         state(LoginState())
 
 
-
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO, userInfo)
 
 //        SPUtils.getInstance(USER_INFO).put(KEY_TOKEN,)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE, true)
         //保存token
 
-        var  user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo,UserInfo.DataBean::class.java)
+        var user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
 
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
 
@@ -105,7 +110,7 @@ class LoginManager {
      * 必要页面检测登陆状态
      *
      */
-    fun checkLoginState(context: Context){
+    fun checkLoginState(context: Context) {
 
 
         loginState.CheckLoginState(context)
@@ -113,13 +118,17 @@ class LoginManager {
     }
 
 
+    fun isLogin(): Boolean {
 
+        val isLogin = SPUtils.getInstance(Contanct.USER_INFO).getBoolean(Contanct.KEY_LOGIN_STATE)
+
+        return isLogin
+    }
 
 
     fun getUserInfo(): String? {
 
-       return  (loginState as LoginState).getUserInfo()
-
+        return (loginState as LoginState).getUserInfo()
 
     }
 
@@ -127,11 +136,11 @@ class LoginManager {
     fun token(context: Context): String? {
 
         var token: String? = null
-        if (loginState is LoginoutState){
+        if (loginState is LoginoutState) {
             loginState.CheckLoginState(context)
-        }else{
+        } else {
 
-           token = (loginState as LoginState).getToken().toString()
+            token = (loginState as LoginState).getToken().toString()
 
         }
         return token

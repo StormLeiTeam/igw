@@ -68,4 +68,18 @@
     <string name="verify_not_empty">"验证码不能为空 "</string>
     <string name="toast_update_pwd_success">修改成功</string>
     <string name="reset_pwd_success">重置成功</string>
+    <string name="submit_update_userinfo">提交修改</string>
+    <string name="title_update_userinfo">个人资料修改</string>
+    <string name="help_feedback_title">您需要反馈的问题</string>
+    <string name="help_hot_question">热点问题</string>
+    <string name="hint_help_input_question">"请输入您需要反馈的问题 "</string>
+    <string name="title_help_feedback">帮助与反馈</string>
+    <string name="welcome_text">开启您的美好交流之旅</string>
+    <string name="item_loading">加载中...</string>
+    <string name="item_loading_fail">加载失败, 点击重试</string>
+    <string name="item_loading_end">加载完成</string>
+    <string name="success_feedbback">反馈成功</string>
+    <string name="fail_feedback">提交反馈失败</string>
+    <string name="please_input_feedback">"请输入您要反馈的内容 "</string>
+    <string name="submit_feedback">提交反馈</string>
 </resources>
