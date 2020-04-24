@@ -1,5 +1,7 @@
 package com.igw.igw.modoule.login.view
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -25,6 +27,7 @@ import com.igw.igw.modoule.login.model.UpdateUserInfoModel
 import com.igw.igw.modoule.login.presenter.UpdateUserInfoPresenter
 import com.igw.igw.utils.*
 import com.igw.igw.widget.ChoicePopWindow
+import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
 import com.jph.takephoto.app.TakePhoto
 import com.jph.takephoto.app.TakePhotoImpl
@@ -135,9 +138,13 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         StatusBarUtils.setDarkMode(this)
 
         status_bar_main.setTitle(resources.getString(R.string.title_update_userinfo))
+        status_bar_main.setTitleTextSize(16f)
         status_bar_main.setConfirmVisible(View.VISIBLE)
         status_bar_main.setConfirmTextColor(R.color.black_000000)
-        status_bar_main.setConfirmText("中/en")
+        status_bar_main.setConfirmText("中/En")
+        status_bar_main.setConfirmTextSize(15F)
+
+
 
         setUpPopWindow()
         initData()
@@ -214,6 +221,17 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     private fun setUpListener() {
 
+
+        status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
+            override fun onClick() {
+
+
+
+                LocaleUtils.changeLocale(this@UpdateUserInfoActivity)
+            }
+
+
+        })
 
         // 注册信息提交
         btn_submit.setOnClickListener {
@@ -377,6 +395,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
     }
+
+
 
     private fun updateUserInfoForNet() {
 
@@ -923,7 +943,6 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
     }
-
 
 
 }

@@ -13,6 +13,7 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import android.view.Gravity.BOTTOM
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -31,6 +32,7 @@ import com.igw.igw.modoule.login.model.RegisterModel
 import com.igw.igw.modoule.login.presenter.RegisterPresenter
 import com.igw.igw.utils.*
 import com.igw.igw.widget.ChoicePopWindow
+import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
 import com.jph.takephoto.app.TakePhoto
@@ -46,6 +48,7 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.common_status_bar.*
+import kotlinx.android.synthetic.main.status_bar_view.*
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -153,7 +156,12 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
         StatusBarUtils.setDarkMode(this)
-        status_bar_main.setTitle("注册")
+        status_bar_main.setTitle(resources.getString(R.string.register_title))
+        status_bar_main.setTitleTextSize(16F)
+        status_bar_main.setConfirmVisible(View.VISIBLE)
+        status_bar_main.setConfirmText("中/En")
+        status_bar_main.setConfirmTextSize(15F)
+
         getSystemNationality()
         setUpImagePicker()
 
@@ -276,10 +284,23 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         }
 
+        //重新启动
 
     }
 
     private fun setUpListener() {
+
+
+        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+
+            override fun onClick() {
+
+                changeLocale()
+
+            }
+
+
+        })
 
 
         // 注册信息提交
@@ -450,6 +471,24 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 nationalityPopWindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
             }
         }
+
+
+    }
+
+
+
+    private fun changeLocale() {
+
+        //
+        if (LocaleUtils.isLocaleEn(this)){
+            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_CHINESE)
+        }else{
+
+            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_ENGLISH)
+
+        }
+
+        //重新启动
 
 
     }

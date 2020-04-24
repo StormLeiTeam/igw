@@ -544,6 +544,8 @@ public class XRecyclerView extends RecyclerView {
             }
         }
 
+
+
         @Override
         public int getItemCount() {
             if (adapter != null) {

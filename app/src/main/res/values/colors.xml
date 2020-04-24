@@ -30,5 +30,6 @@
     <color name="bg_input_stroke">#DCDCDC</color>
     <color name="grey_ffa9a9a9">#ffa9a9a9</color>
     <color name="grey_line_ffcccccc">#ffcccccc</color>
+    <color name="grey_eeeeee">#eeeeee</color>
 
 </resources>

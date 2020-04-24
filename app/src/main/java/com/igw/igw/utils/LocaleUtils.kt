@@ -1,8 +1,11 @@
 package com.igw.igw.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import com.google.gson.Gson
+import com.igw.igw.activity.BaseActivity
 import java.net.ConnectException
 import java.util.*
 
@@ -173,6 +176,35 @@ object LocaleUtils {
         return gson.toJson(locale)
 
     }
+
+
+    public fun changeLocale(activity: Activity) {
+
+        if (LocaleUtils.isLocaleEn(activity)) {
+
+            LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
+
+        }else{
+            LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
+
+
+        }
+
+
+
+        activity.finish()
+
+
+        var intent = Intent(activity, activity.javaClass)
+
+        activity.startActivity(intent)
+        activity.overridePendingTransition(0, 0);
+
+//        reconfirmAct()
+
+    }
+
+
 
 
 }

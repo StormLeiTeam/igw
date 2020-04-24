@@ -9,7 +9,9 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.modoule.login.ResetPasswordContract
 import com.igw.igw.modoule.login.model.ResetPasswordModel
 import com.igw.igw.modoule.login.presenter.ResetPwdPresenter
+import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.StatusBarUtils
+import com.igw.igw.widget.storm.StatusBarView
 import com.jakewharton.rxbinding2.view.RxView
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.reactivex.Observable
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_reset_password.btn_submit
 import kotlinx.android.synthetic.main.activity_reset_password.et_email
 import kotlinx.android.synthetic.main.activity_reset_password.et_password_again
 import kotlinx.android.synthetic.main.common_status_bar.*
+import kotlinx.android.synthetic.main.status_bar_view.*
 
 class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordContract.View {
 
@@ -43,11 +46,12 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
 
     override fun initView() {
         StatusBarUtils.setDarkMode(this)
-        status_bar_main.setTitle("重置密码")
+        status_bar_main.setTitle(resources.getString(R.string.reset_pwd_title))
+        status_bar_main.setTitleTextSize(16F)
         status_bar_main.setConfirmVisible(View.VISIBLE)
         status_bar_main.setConfirmText("中/英")
         status_bar_main.setConfirmTextColor(R.color.black_000000)
-
+        status_bar_main.setConfirmTextSize(15F)
 
 
         mCompositeDisposable = CompositeDisposable()
@@ -58,6 +62,16 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
     }
 
     private fun setUpListener() {
+
+
+        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+            override fun onClick() {
+
+
+                LocaleUtils.changeLocale(this@ResetPasswordActivity)
+            }
+
+        })
 
         initCountTime()
 

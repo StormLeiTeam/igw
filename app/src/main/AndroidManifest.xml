@@ -17,7 +17,10 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.login.view.LoginActivity"></activity>
+        <activity android:name=".modoule.city.view.ShareLinkActivity"></activity>
+        <activity android:name=".modoule.abouthelp.view.HelpInfoActivity" />
+        <activity android:name=".modoule.abouthelp.view.HelpActivity" />
+        <activity android:name=".modoule.login.view.LoginActivity" />
         <activity android:name=".modoule.login.view.UpdateUserInfoActivity" />
         <activity android:name=".modoule.login.view.ResetPasswordActivity" />
         <activity android:name=".modoule.login.view.UpdateActivity" />

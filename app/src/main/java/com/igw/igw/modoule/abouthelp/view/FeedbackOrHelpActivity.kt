@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.bumptech.glide.load.data.LocalUriFetcher
+import com.google.gson.JsonNull
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.app.BaseAdapter
@@ -16,10 +18,7 @@ import com.igw.igw.modoule.abouthelp.HelpContract
 import com.igw.igw.modoule.abouthelp.adapter.HelpAdapter
 import com.igw.igw.modoule.abouthelp.model.FeedBackOrHelpModel
 import com.igw.igw.modoule.abouthelp.presenter.FeedbackOrHelpPresenter
-import com.igw.igw.utils.LocaleUtils
-import com.igw.igw.utils.StatusBarUtils
-import com.igw.igw.utils.UIUtils
-import com.igw.igw.utils.UiUtil
+import com.igw.igw.utils.*
 import com.igw.igw.widget.storm.StatusBarView
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_feedback_or_help.*
@@ -156,8 +155,9 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
         status_bar_main.setConfirmVisible(View.VISIBLE)
         status_bar_main.setConfirmText("中/en")
         status_bar_main.setConfirmTextColor(R.color.black_000000)
+        status_bar_main.setConfirmTextSize(15F)
 
-        initRv()
+//        initRv()
         initData()
 
         initAdapter()
@@ -204,14 +204,32 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
 
     }
 
-    private fun initRv() {
 
-
-    }
 
     private fun setUpListener() {
 
 
+        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+            override fun onClick() {
+
+                LocaleUtils.changeLocale(this@FeedbackOrHelpActivity)
+            }
+
+        })
+
+        mAdapter.onItemClickListener(object :HelpAdapter.OnItemClickListener{
+            override fun onItemClick(data: HelpBean.DataBean.RowsBean?, position: Int) {
+
+
+               var json  =  GsonUtils.getInstance().toJson(data)
+
+                json?.let {
+                    HelpInfoActivity.startSelfForData(this@FeedbackOrHelpActivity,json)
+                }
+
+            }
+
+        })
         btn_submit.setOnClickListener {
 
             saveFeedBack()

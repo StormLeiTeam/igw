@@ -1,10 +1,12 @@
 package com.shengshijingu.yashiji.common.util;
 
+import android.media.MediaDataSource;
 import android.service.autofill.TextValueSanitizer;
 
 import com.shengshijingu.yashiji.common.controller.CommonController;
 import com.shengshijingu.yashiji.common.controller.HomeController;
 import com.shengshijingu.yashiji.common.controller.LoginController;
+import com.shengshijingu.yashiji.common.controller.MessageController;
 
 import java.io.PipedReader;
 
@@ -45,6 +47,17 @@ public class ControllerUtils {
 
 
         return commonController;
+    }
+
+
+    private static MessageController messageController;
+
+    public static MessageController getMessageController(){
+
+        if(messageController == null) {
+            messageController = new MessageController();
+        }
+        return  messageController;
     }
 
 }

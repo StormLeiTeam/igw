@@ -141,6 +141,27 @@ public interface ApiService {
      */
     @POST("/api/help/helpDetail")
     Observable<ResponseBody> helpDetail(@Body RequestBody requestBody);
+
+
+    /**
+     * 消息中心
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/message/list")
+    Observable<ResponseBody> messageCenterList(@Body RequestBody requestBody);
+
+
+    /**
+     * 消息处理
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/message/dealMessage")
+    Observable<ResponseBody> dealMessage(@Body RequestBody requestBody);
+
+
+
 }
 
 

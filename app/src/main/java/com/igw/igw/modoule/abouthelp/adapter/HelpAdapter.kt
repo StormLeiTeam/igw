@@ -3,6 +3,8 @@ package com.igw.igw.modoule.abouthelp.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.igw.igw.R
 import com.igw.igw.app.BaseAdapter
@@ -64,11 +66,37 @@ class HelpAdapter(context: Context,isOpenLoadMore: Boolean) :BaseAdapter<HelpBea
         val content
                 = rvViewHolder.getView<TextView>(R.id.tv_content)
 
+        var  main = rvViewHolder.getView<RelativeLayout>(R.id.rv_main)
+
         mDatas?.let {
             content.text = "${it.get(position).helpTitle}/${it.get(position).helpContent}"
 
         }
+
+
+        main.setOnClickListener {
+
+            mListener?.onItemClick(mDatas?.get(position), position)
+        }
+
+
     }
+
+
+
+    private var mListener: OnItemClickListener? = null
+
+    public fun  onItemClickListener(onItemClickListener: OnItemClickListener){
+
+        this.mListener = onItemClickListener
+    }
+
+    public interface  OnItemClickListener{
+
+      fun  onItemClick(data:HelpBean.DataBean.RowsBean?,position:Int)
+    }
+
+
 
 
 }

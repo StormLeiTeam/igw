@@ -10,13 +10,18 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.modoule.login.UpdatePwdContract
 import com.igw.igw.modoule.login.model.UpdatePwdModel
 import com.igw.igw.modoule.login.presenter.UpdatePwdPresenter
+import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.utils.statusbarutils.StatusBarUtil
+import com.igw.igw.widget.storm.StatusBarView
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_update.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.status_bar_view.*
 
+/**
+ *
+ */
 class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View {
 //
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,11 +32,12 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
     override fun initView() {
 
         StatusBarUtils.setDarkMode(this)
-        status_bar_main.setTitle("修改密码")
-
+        status_bar_main.setTitle(resources.getString(R.string.update_pwd_title))
+        status_bar_main.setTitleTextSize(16F)
         status_bar_main.setConfirmVisible(visible = View.VISIBLE)
         status_bar_main.setConfirmText("中/en")
         status_bar_main.setConfirmTextColor(R.color.black_000000)
+        status_bar_main.setConfirmTextSize(15F)
 
 
         setUpListener()
@@ -41,6 +47,15 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
 
     private fun setUpListener() {
 
+
+
+        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+            override fun onClick() {
+
+                LocaleUtils.changeLocale(this@UpdateActivity)
+
+            }
+        })
         btn_submit.setOnClickListener{
 
             updatePwd()
