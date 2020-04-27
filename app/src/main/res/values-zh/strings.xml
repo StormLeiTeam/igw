@@ -80,7 +80,7 @@
     <string name="item_loading_end">加载完成</string>
     <string name="success_feedbback">反馈成功</string>
     <string name="fail_feedback">提交反馈失败</string>
-    <string name="please_input_feedback">"请输入您要反馈的内容 "</string>
+    <string name="please_input_feedback">请输入您要反馈的内容</string>
     <string name="submit_feedback">提交反馈</string>
     <string name="title_help_detail">帮助详情</string>
     <string name="message_center">消息中心</string>
