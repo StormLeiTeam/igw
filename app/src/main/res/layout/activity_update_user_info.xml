@@ -684,7 +684,7 @@
                     android:textSize="12sp" />
 
 
-                <ImageView
+                <com.igw.igw.widget.storm.StormCircleImageView
                     android:id="@+id/iv_head_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

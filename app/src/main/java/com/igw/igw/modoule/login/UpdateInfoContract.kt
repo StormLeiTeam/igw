@@ -1,10 +1,7 @@
 package com.igw.igw.modoule.login
 
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.HeadImageBean
-import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.bean.login.RegisterSuccessBean
+import com.igw.igw.bean.login.*
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
 import com.igw.igw.mvp.view.IBaseView
@@ -37,7 +34,7 @@ class UpdateInfoContract {
 
         fun loadHeadImageFail(code: Int, msg: String)
 
-        fun updateUserInfoSuccessful(data:RegisterSuccessBean.DataBean)
+        fun updateUserInfoSuccessful(data:UserInfoBean.DataBean)
 
         fun updateUserInfoFail(code: Int,msg:String)
     }
@@ -47,7 +44,7 @@ class UpdateInfoContract {
 
         fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>)
 
-        fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
+        fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<UserInfoBean.DataBean>)
 
         fun unloadImageFile(file: File,observer: NetObserver<HeadImageBean.DataBean>)
 

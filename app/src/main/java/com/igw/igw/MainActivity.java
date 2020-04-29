@@ -1,5 +1,7 @@
 package com.igw.igw;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.igw.igw.activity.BaseActivity;
 import com.igw.igw.fragment.CityFragment;
 import com.igw.igw.fragment.HomeFragment;
@@ -48,7 +51,7 @@ public class MainActivity extends BaseActivity {
         initViews();
         showPagerDependButton(R.id.ll_main_home);
 
-        LogUtils.d(TAG,"添加 log 功能");
+        LogUtils.d(TAG, "添加 log 功能");
 
         for (int i = 0; i < array.length - 1; i++) {
             int flag = 0;
@@ -258,5 +261,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected boolean setStatusBarColor() {
         return false;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+//        getSupportFragmentManager().findFragmentByTag(MyFragment.class.getName())
+//                myFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

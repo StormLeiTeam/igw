@@ -44,20 +44,21 @@
                             android:scaleType="centerCrop"
                             android:src="@mipmap/icon_my_bacgground" />
 
-                        <ImageView
-                            android:id="@+id/iv_my_headpic"
+                        <com.igw.igw.widget.storm.StormCircleImageView
+                            android:id="@+id/iv_head_view"
                             android:layout_width="74dp"
                             android:layout_height="74dp"
                             android:layout_marginLeft="@dimen/dp_24"
                             android:layout_marginTop="@dimen/dp_24" />
 
                         <TextView
+                            android:maxLines="1"
                             android:id="@+id/tv_my_nickName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_10"
                             android:layout_marginTop="35dp"
-                            android:layout_toRightOf="@+id/iv_my_headpic"
+                            android:layout_toRightOf="@+id/iv_head_view"
                             android:text="Admin"
                             android:textColor="@color/color333"
                             android:textSize="19dp"
@@ -70,7 +71,7 @@
                             android:layout_below="@+id/tv_my_nickName"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_marginTop="10dp"
-                            android:layout_toRightOf="@+id/iv_my_headpic"
+                            android:layout_toRightOf="@+id/iv_head_view"
                             android:text="喜欢交友的朋友"
                             android:textColor="@color/color333"
                             android:textSize="12dp" />

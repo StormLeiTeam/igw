@@ -1,10 +1,7 @@
 package com.igw.igw.modoule.login.model
 
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.HeadImageBean
-import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.bean.login.RegisterSuccessBean
+import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.UpdateInfoContract
 import com.igw.igw.network.NetObserver
 import com.shengshijingu.yashiji.common.util.ControllerUtils
@@ -35,7 +32,7 @@ class UpdateUserInfoModel : UpdateInfoContract.Model {
 
     }
 
-    override fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>) {
+    override fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<UserInfoBean.DataBean>) {
 
 
 

@@ -1,5 +1,6 @@
 package com.igw.igw.modoule.login.view
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -17,7 +18,6 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.UpdateInfoContract
-import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.modoule.login.model.UpdateUserInfoModel
 import com.igw.igw.modoule.login.presenter.UpdateUserInfoPresenter
 import com.igw.igw.utils.*
@@ -34,6 +34,7 @@ import com.jph.takephoto.model.TResult
 import com.jph.takephoto.permission.InvokeListener
 import com.jph.takephoto.permission.PermissionManager
 import com.jph.takephoto.permission.TakePhotoInvocationHandler
+import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_update_user_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
@@ -54,12 +55,12 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"女\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
 
-
-        fun startSelf(activity: BaseActivity<*>, data: String) {
-            var intent = Intent(activity, UpdateUserInfoActivity::class.java)
-            intent.putExtra("user_info", data)
-            activity.startActivity(intent)
-        }
+//
+//        fun startSelfforResult(activity: View.OnClickListener, data: String) {
+//            var intent = Intent(activity, UpdateUserInfoActivity::class.java)
+//            intent.putExtra("user_info", data)
+//            startActivityForResult(intent,1001)
+//        }
     }
 
 
@@ -236,6 +237,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
 //            updateUserInfoForNet()
+
 
 
 
@@ -504,7 +506,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         registerBean.inviteCode = mInviteCode
 
         if (!mImagePath.isEmpty()){
-            registerBean.headImage = mImagePath
+            registerBean.headImage =  mImagePath
+
         }
 //        mHeadImage?.let {
 //            registerBean.setHeadImage(it)
@@ -670,19 +673,6 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     }
 
     private fun getLocalUserinfo() {
-        // 获取个人信息
-
-//        val userInfo = LoginManager.instance.getUserInfo()
-
-//        LogUtils.d(TAG, "会显个人信息 --> $userInfo")
-//
-//        mLoginBean = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
-//
-//        mLoginBean?.let {
-//
-//            mPresenter.getCityData(it.countryId, true)
-//
-//        }
         var json = intent.getStringExtra("user_info")
 
 
@@ -745,7 +735,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
             if (it.headImage != null) {
                 val headImage = it.headImage.toString()
-                GlideUtils.loadImage(this, headImage, iv_head_img)
+
+                LogUtils.d(TAG,"获取的图片地址  --> ${Constants.BASE_URL +  headImage} ")
+                GlideUtils.loadImage(this,  Constants.BASE_URL + headImage, iv_head_img)
             }
 
 
@@ -926,6 +918,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     //上传图片成功的回调
     override fun loadHeadImageSuccessful(data: HeadImageBean.DataBean) {
         this.mImagePath = data.attachmentUrl
+
+        GlideUtils.loadImage(this,Constants.BASE_URL + mImagePath,iv_head_img)
         updateUserInfoForNet()
 
     }
@@ -936,17 +930,15 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         ToastUtil.showCenterToast(this,msg)
     }
 
-    override fun updateUserInfoSuccessful(data: RegisterSuccessBean.DataBean) {
+    override fun updateUserInfoSuccessful(data: UserInfoBean.DataBean) {
 
-
-
-        val userinfoJson = GsonUtils.getInstance().toJson(data)
-//        LoginManager.instance.updateUserInfo(token, userinfoJson)
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
     override fun updateUserInfoFail(code: Int, msg: String) {
-        TODO("Not yet implemented")
+
+
     }
 
     override fun fail(o: Any?) {
@@ -973,15 +965,11 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
                 GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
 //
-//                LogUtils.d(TAG, "处理过后的图片  --> $bytes2String")
-
-
             }else{
 
                 ToastUtil.showCenterToast(this,R.string.select_headimage)
             }
 
-            val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
 
 
         }
