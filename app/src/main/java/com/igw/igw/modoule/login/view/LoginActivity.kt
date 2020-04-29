@@ -1,9 +1,7 @@
 package com.igw.igw.modoule.login.view
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -12,7 +10,7 @@ import android.view.View
 import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
-import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.modoule.login.LoginContract
 import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.modoule.login.model.LoginModel
@@ -23,11 +21,9 @@ import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -326,10 +322,10 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
         return true
     }
 
-    override fun loginSuccess(userInfo: UserInfo.DataBean) {
+    override fun loginSuccess(loginBean: LoginBean.DataBean) {
         //登陆成功
 
-        LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(userInfo))
+        LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(loginBean))
 
         startMainActivity()
         finish()

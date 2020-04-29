@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".modoule.city.view.ShareLinkActivity"></activity>
         <activity android:name=".modoule.abouthelp.view.HelpInfoActivity" />
-        <activity android:name=".modoule.abouthelp.view.HelpActivity" />
+<!--        <activity android:name=".modoule.abouthelp.view.HelpActivity" />-->
         <activity android:name=".modoule.login.view.LoginActivity" />
         <activity android:name=".modoule.login.view.UpdateUserInfoActivity" />
         <activity android:name=".modoule.login.view.ResetPasswordActivity" />
@@ -29,7 +29,9 @@
             android:name=".modoule.login.view.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".app.SplashActivity">
+        <activity android:name=".app.SplashActivity"
+
+            android:theme="@style/Splash_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

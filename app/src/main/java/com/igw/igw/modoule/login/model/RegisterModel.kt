@@ -3,6 +3,7 @@ package com.igw.igw.modoule.login.model
 import com.google.gson.Gson
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.httpclient.HttpClientManager
@@ -18,6 +19,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import java.io.File
 
 /**
  *
@@ -86,8 +88,13 @@ class RegisterModel : RegisterContract.Model {
 
         ControllerUtils.getLoginControllerInstance()
                 .registerUser(registerBean.countryId!!,registerBean.cityId!!,registerBean.lastName,registerBean.firstName,
-                registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.description,
+                registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.userDesc,
                 registerBean.email,registerBean.mobilePhone,registerBean.password, registerBean.inviteCode,registerBean.headImage,observer)
+
+
+    }
+
+    override fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>) {
 
 
     }

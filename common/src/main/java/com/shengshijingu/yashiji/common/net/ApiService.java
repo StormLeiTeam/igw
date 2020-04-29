@@ -6,11 +6,14 @@ import java.util.NavigableMap;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.internal.operators.observable.ObservableRange;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
 
@@ -119,6 +122,7 @@ public interface ApiService {
 
     /**
      * 获取帮助列表
+     *
      * @param requestBody
      * @return
      */
@@ -128,6 +132,7 @@ public interface ApiService {
 
     /**
      * 提交反馈
+     *
      * @param requestBody
      * @return
      */
@@ -136,6 +141,7 @@ public interface ApiService {
 
     /**
      * 帮助详情
+     *
      * @param requestBody
      * @return
      */
@@ -145,6 +151,7 @@ public interface ApiService {
 
     /**
      * 消息中心
+     *
      * @param requestBody
      * @return
      */
@@ -154,11 +161,34 @@ public interface ApiService {
 
     /**
      * 消息处理
+     *
      * @param requestBody
      * @return
      */
     @POST("/api/message/dealMessage")
     Observable<ResponseBody> dealMessage(@Body RequestBody requestBody);
+
+
+    /**
+     * 上传图片
+     *
+     * @param
+     * @return
+     */
+    @Multipart
+    @POST("/api/common/uploadImage")
+    Observable<ResponseBody> upLoadImage(@Part MultipartBody.Part file);
+
+
+
+    /**
+     * 上传图片
+     *
+     * @param
+     * @return
+     */
+    @POST("/api/user/info")
+    Observable<ResponseBody> userInfo(@Body RequestBody requestBody);
 
 
 

@@ -1,6 +1,6 @@
 package com.igw.igw.modoule.login.model
 
-import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.bean.login.VerifyBean
 import com.igw.igw.modoule.login.LoginContract
 import com.igw.igw.network.NetObserver
@@ -24,14 +24,14 @@ class LoginModel : LoginContract.Model{
 
     }
 
-    override fun loginByAccent(accent: String, password: String, observer: NetObserver<UserInfo.DataBean>) {
+    override fun loginByAccent(accent: String, password: String, observer: NetObserver<LoginBean.DataBean>) {
 
 
         ControllerUtils.getLoginControllerInstance().loginByAccent(accent,password,observer)
 
     }
 
-    override fun loginByEmail(email: String, verifyCode: String, observer: NetObserver<UserInfo.DataBean>) {
+    override fun loginByEmail(email: String, verifyCode: String, observer: NetObserver<LoginBean.DataBean>) {
 
 
         ControllerUtils.getLoginControllerInstance().loginByEmail(email, verifyCode, observer)

@@ -64,4 +64,13 @@ public class CommonController extends Controller{
     }
 
 
+    public void userInfo(Observer observer) {
+
+        HashMap<String, Object> param = new HashMap<>();
+
+        param.put("", "");
+
+        ApiSubscribe(NetApi.getApiService().userInfo(getRequestBody(param)), observer);
+    }
+
 }

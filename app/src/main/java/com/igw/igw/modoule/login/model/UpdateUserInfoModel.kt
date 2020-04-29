@@ -2,12 +2,13 @@ package com.igw.igw.modoule.login.model
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.modoule.login.UpdateInfoContract
 import com.igw.igw.network.NetObserver
-import com.shengshijingu.yashiji.common.controller.Controller
 import com.shengshijingu.yashiji.common.util.ControllerUtils
+import java.io.File
 
 /**
  *
@@ -41,11 +42,21 @@ class UpdateUserInfoModel : UpdateInfoContract.Model {
 
         ControllerUtils.getLoginControllerInstance()
                 .updateUserInfo(registerBean.countryId!!,registerBean.cityId!!,registerBean.lastName,registerBean.firstName,
-                        registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.description,
+                        registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.userDesc,
                         registerBean.email,registerBean.mobilePhone,registerBean.password, registerBean.inviteCode,registerBean.headImage,observer)
 
 
     }
+
+    override fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>) {
+
+        ControllerUtils.getLoginControllerInstance()
+                .uploadImage(file,observer)
+
+
+
+    }
+
 
 
 }

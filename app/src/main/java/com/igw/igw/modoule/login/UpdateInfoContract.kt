@@ -2,12 +2,14 @@ package com.igw.igw.modoule.login
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.network.NetObserver
+import java.io.File
 
 /**
  *
@@ -30,6 +32,14 @@ class UpdateInfoContract {
         fun onSuccessCitys(citys : List<CityListBean.DataBean.CitysBean>,isLocal:Boolean)
 
         fun onFailCitys()
+
+        fun loadHeadImageSuccessful(data: HeadImageBean.DataBean)
+
+        fun loadHeadImageFail(code: Int, msg: String)
+
+        fun updateUserInfoSuccessful(data:RegisterSuccessBean.DataBean)
+
+        fun updateUserInfoFail(code: Int,msg:String)
     }
 
     interface Model : IBaseModel {
@@ -38,6 +48,8 @@ class UpdateInfoContract {
         fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>)
 
         fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
+
+        fun unloadImageFile(file: File,observer: NetObserver<HeadImageBean.DataBean>)
 
     }
 
@@ -49,6 +61,8 @@ class UpdateInfoContract {
         fun getCityData(countryId: Int,isLocal: Boolean)
 
         fun updateUserInfo(registerBean: RegisterBean)
+
+        fun uploadImaga(file:File)
 
     }
 }

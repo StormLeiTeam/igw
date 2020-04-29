@@ -1,7 +1,6 @@
 package com.igw.igw.modoule.login.presenter
 
-import android.nfc.Tag
-import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.bean.login.VerifyBean
 import com.igw.igw.modoule.login.LoginContract
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -31,8 +30,8 @@ class LoginModePresenter(model: LoginContract.Model) :
 
     override fun loginByAccent(accent: String, password: String) {
 
-        mModel.loginByAccent(accent, password, object : NetObserver<UserInfo.DataBean>(UserInfo.DataBean::class.java) {
-            override fun onSuccess(m: UserInfo.DataBean?) {
+        mModel.loginByAccent(accent, password, object : NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java) {
+            override fun onSuccess(m: LoginBean.DataBean?) {
                 LogUtils.d(TAG,m.toString())
 
                 m?.let {
@@ -61,8 +60,8 @@ class LoginModePresenter(model: LoginContract.Model) :
     override fun loginByEmail(email: String, verifyCode: String) {
 
 
-        mModel.loginByEmail(email, verifyCode, object : NetObserver<UserInfo.DataBean>(UserInfo.DataBean::class.java) {
-            override fun onSuccess(m: UserInfo.DataBean?) {
+        mModel.loginByEmail(email, verifyCode, object : NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java) {
+            override fun onSuccess(m: LoginBean.DataBean?) {
 
 
                 m?.let {

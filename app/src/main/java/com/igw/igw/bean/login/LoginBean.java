@@ -1,17 +1,15 @@
 package com.igw.igw.bean.login;
 
-import java.io.PipedReader;
-
 /**
  * @author storm_z
  * @date @{DATE}
  * @email zq329051@outlook.com
  * @Describe
  */
-public class RegisterSuccessBean {
+public class LoginBean {
     /**
      * code : 200
-     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","hasPay":1,"headImage":"","id":1,"inviteCode":"","lastLoginIp":"219.142.145.78","lastLoginTime":"2020-04-28 14:04:34","lastName":"民","lastPasswordReset":"2020-04-28 18:32:04","mobilePhone":"18235188642","nickName":"hah\n哈哈","password":"$2a$10$/J.wl7hqBwvtNPdFqg0FmuRGGTP.8sFmMyb48lAMKezrUihhNy40u","rongyunToken":"","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"userDesc":"我哈哈哈哈哈哈哈哈","userName":"18235188642","userType":4,"utime":"2020-04-28 18:32:03"}
+     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","hasPay":1,"headImage":"","id":1,"inviteCode":"","lastLoginIp":"219.142.145.78","lastLoginTime":"2020-04-28 19:04:58","lastName":"民","lastPasswordReset":"2020-04-28 18:44:44","mobilePhone":"18235188642","nickName":"hah\n哈哈","password":"$2a$10$oVi/ojox.VLLt3g4iZrqG.NnaQJNCZs2e/NcEDhnoRkxY5UMTVJeW","rongyunToken":"","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"token":"eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg4MDcxODk3NjQ4LCJleHAiOjE1OTA2NjM4OTcsInVzZXIiOiIxODIzNTE4ODY0MiJ9.f-9N3G7Kj1rP42u3JGvLW4wICJDMIRGUCLeMJxV_vnmqrx7GeDGLdhQwxCf7gJ1hlJGbP13Bky8A0UmXxsscGg","userDesc":"就是时候都会","userName":"18235188642","userType":4,"utime":"2020-04-28 19:04:57"}
      * message : 操作成功
      */
 
@@ -63,22 +61,23 @@ public class RegisterSuccessBean {
          * id : 1
          * inviteCode :
          * lastLoginIp : 219.142.145.78
-         * lastLoginTime : 2020-04-28 14:04:34
+         * lastLoginTime : 2020-04-28 19:04:58
          * lastName : 民
-         * lastPasswordReset : 2020-04-28 18:32:04
+         * lastPasswordReset : 2020-04-28 18:44:44
          * mobilePhone : 18235188642
          * nickName : hah
          哈哈
-         * password : $2a$10$/J.wl7hqBwvtNPdFqg0FmuRGGTP.8sFmMyb48lAMKezrUihhNy40u
+         * password : $2a$10$oVi/ojox.VLLt3g4iZrqG.NnaQJNCZs2e/NcEDhnoRkxY5UMTVJeW
          * rongyunToken :
          * sex : 1
          * sortWithOutOrderBy :
          * sort_ :
          * status : 0
-         * userDesc : 我哈哈哈哈哈哈哈哈
+         * token : eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg4MDcxODk3NjQ4LCJleHAiOjE1OTA2NjM4OTcsInVzZXIiOiIxODIzNTE4ODY0MiJ9.f-9N3G7Kj1rP42u3JGvLW4wICJDMIRGUCLeMJxV_vnmqrx7GeDGLdhQwxCf7gJ1hlJGbP13Bky8A0UmXxsscGg
+         * userDesc : 就是时候都会
          * userName : 18235188642
          * userType : 4
-         * utime : 2020-04-28 18:32:03
+         * utime : 2020-04-28 19:04:57
          */
 
         private boolean accountNonExpired;
@@ -110,20 +109,11 @@ public class RegisterSuccessBean {
         private String sortWithOutOrderBy;
         private String sort_;
         private int status;
+        private String token;
         private String userDesc;
         private String userName;
         private int userType;
         private String utime;
-        private String token;
-
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
 
         public boolean isAccountNonExpired() {
             return accountNonExpired;
@@ -357,6 +347,14 @@ public class RegisterSuccessBean {
             this.status = status;
         }
 
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
         public String getUserDesc() {
             return userDesc;
         }
@@ -391,10 +389,9 @@ public class RegisterSuccessBean {
     }
 
 
-//
 //    /**
 //     * code : 200
-//     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"京沈高速环境","balance":0,"birthday":"2015-04-20","cityId":1,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 00:35:12","description":"好滴好滴和","email":"578864539@qq.com","enabled":true,"firstName":"计算机","headImage":"","id":9,"inviteCode":"","lastLoginIp":"111.194.47.64","lastLoginTime":"2020-04-20 00:35:14","lastName":"还是","lastPasswordReset":"2020-04-20 00:35:12","mobilePhone":"18235188642","nickName":"就是","password":"$2a$10$.qi30sAbQq6ZefdgH5S78OAaCpB8BilXq6GzYOddgmGqtVZYZfjOe","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"token":"eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg3MzE0MTEzODUwLCJleHAiOjE1ODk5MDYxMTMsInVzZXIiOiIxODIzNTE4ODY0MiJ9.xTuc30-eoTNMKf9PIZnt3nQRwhOTbZdo0aQ4CT5FYjTqnBFM33KaSzA2ZJXBd-Bk317rO3deTI3Sb1OURNaXAw","userName":"18235188642","userType":4,"utime":"2020-04-20 00:35:14"}
+//     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","description":"你继续热听哦","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","headImage":"","id":1,"inviteCode":"","lastLoginIp":"115.171.62.254","lastLoginTime":"2020-04-20 15:53:27","lastName":"民","lastPasswordReset":"2020-04-20 15:52:54","mobilePhone":"18235188642","nickName":"你就","password":"$2a$10$bf5VeH2HwxkShBgFKTCPmu1yLynhj6OLbFUPiTwEkbHy5oQNGhGbC","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"token":"eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg3MzY5MjA2ODE5LCJleHAiOjE1ODk5NjEyMDYsInVzZXIiOiIxODIzNTE4ODY0MiJ9.3IODo4KWsL-IAnxuZpZRxincZVxFmkSRsBGyroZ1EZGCEvAej9KL_k2I-KjHo_jetCmDkPOhTDBZahEGIx_gJg","userName":"18235188642","userType":4,"utime":"2020-04-20 15:53:26"}
 //     * message : 操作成功
 //     */
 //
@@ -430,48 +427,50 @@ public class RegisterSuccessBean {
 //        /**
 //         * accountNonExpired : true
 //         * accountNonLocked : true
-//         * agencyName : 京沈高速环境
-//         * balance : 0
-//         * birthday : 2015-04-20
+//         * agencyName : 明咯咙
+//         * birthday : 2017-04-20
 //         * cityId : 1
+//         * cnBalance : 0
 //         * countryId : 1
 //         * credentialsNonExpired : true
-//         * ctime : 2020-04-20 00:35:12
-//         * description : 好滴好滴和
+//         * ctime : 2020-04-20 15:52:53
+//         * description : 你继续热听哦
 //         * email : 578864539@qq.com
+//         * enBalance : 0
 //         * enabled : true
-//         * firstName : 计算机
+//         * firstName : 你就
 //         * headImage :
-//         * id : 9
+//         * id : 1
 //         * inviteCode :
-//         * lastLoginIp : 111.194.47.64
-//         * lastLoginTime : 2020-04-20 00:35:14
-//         * lastName : 还是
-//         * lastPasswordReset : 2020-04-20 00:35:12
+//         * lastLoginIp : 115.171.62.254
+//         * lastLoginTime : 2020-04-20 15:53:27
+//         * lastName : 民
+//         * lastPasswordReset : 2020-04-20 15:52:54
 //         * mobilePhone : 18235188642
-//         * nickName : 就是
-//         * password : $2a$10$.qi30sAbQq6ZefdgH5S78OAaCpB8BilXq6GzYOddgmGqtVZYZfjOe
+//         * nickName : 你就
+//         * password : $2a$10$bf5VeH2HwxkShBgFKTCPmu1yLynhj6OLbFUPiTwEkbHy5oQNGhGbC
 //         * sex : 1
 //         * sortWithOutOrderBy :
 //         * sort_ :
 //         * status : 0
-//         * token : eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg3MzE0MTEzODUwLCJleHAiOjE1ODk5MDYxMTMsInVzZXIiOiIxODIzNTE4ODY0MiJ9.xTuc30-eoTNMKf9PIZnt3nQRwhOTbZdo0aQ4CT5FYjTqnBFM33KaSzA2ZJXBd-Bk317rO3deTI3Sb1OURNaXAw
+//         * token : eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTg3MzY5MjA2ODE5LCJleHAiOjE1ODk5NjEyMDYsInVzZXIiOiIxODIzNTE4ODY0MiJ9.3IODo4KWsL-IAnxuZpZRxincZVxFmkSRsBGyroZ1EZGCEvAej9KL_k2I-KjHo_jetCmDkPOhTDBZahEGIx_gJg
 //         * userName : 18235188642
 //         * userType : 4
-//         * utime : 2020-04-20 00:35:14
+//         * utime : 2020-04-20 15:53:26
 //         */
 //
 //        private boolean accountNonExpired;
 //        private boolean accountNonLocked;
 //        private String agencyName;
-//        private int balance;
 //        private String birthday;
 //        private int cityId;
+//        private int cnBalance;
 //        private int countryId;
 //        private boolean credentialsNonExpired;
 //        private String ctime;
-//        private String description;
+//        private String userDesc;
 //        private String email;
+//        private int enBalance;
 //        private boolean enabled;
 //        private String firstName;
 //        private String headImage;
@@ -492,6 +491,14 @@ public class RegisterSuccessBean {
 //        private String userName;
 //        private int userType;
 //        private String utime;
+//
+//        public String getUserDesc() {
+//            return userDesc;
+//        }
+//
+//        public void setUserDesc(String userDesc) {
+//            this.userDesc = userDesc;
+//        }
 //
 //        public boolean isAccountNonExpired() {
 //            return accountNonExpired;
@@ -517,14 +524,6 @@ public class RegisterSuccessBean {
 //            this.agencyName = agencyName;
 //        }
 //
-//        public int getBalance() {
-//            return balance;
-//        }
-//
-//        public void setBalance(int balance) {
-//            this.balance = balance;
-//        }
-//
 //        public String getBirthday() {
 //            return birthday;
 //        }
@@ -539,6 +538,14 @@ public class RegisterSuccessBean {
 //
 //        public void setCityId(int cityId) {
 //            this.cityId = cityId;
+//        }
+//
+//        public int getCnBalance() {
+//            return cnBalance;
+//        }
+//
+//        public void setCnBalance(int cnBalance) {
+//            this.cnBalance = cnBalance;
 //        }
 //
 //        public int getCountryId() {
@@ -566,11 +573,11 @@ public class RegisterSuccessBean {
 //        }
 //
 //        public String getDescription() {
-//            return description;
+//            return userDesc;
 //        }
 //
-//        public void setDescription(String description) {
-//            this.description = description;
+//        public void setDescription(String userDesc) {
+//            this.userDesc = userDesc;
 //        }
 //
 //        public String getEmail() {
@@ -579,6 +586,14 @@ public class RegisterSuccessBean {
 //
 //        public void setEmail(String email) {
 //            this.email = email;
+//        }
+//
+//        public int getEnBalance() {
+//            return enBalance;
+//        }
+//
+//        public void setEnBalance(int enBalance) {
+//            this.enBalance = enBalance;
 //        }
 //
 //        public boolean isEnabled() {
@@ -739,43 +754,6 @@ public class RegisterSuccessBean {
 //
 //        public void setUtime(String utime) {
 //            this.utime = utime;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "DataBean{" +
-//                    "accountNonExpired=" + accountNonExpired +
-//                    ", accountNonLocked=" + accountNonLocked +
-//                    ", agencyName='" + agencyName + '\'' +
-//                    ", balance=" + balance +
-//                    ", birthday='" + birthday + '\'' +
-//                    ", cityId=" + cityId +
-//                    ", countryId=" + countryId +
-//                    ", credentialsNonExpired=" + credentialsNonExpired +
-//                    ", ctime='" + ctime + '\'' +
-//                    ", description='" + description + '\'' +
-//                    ", email='" + email + '\'' +
-//                    ", enabled=" + enabled +
-//                    ", firstName='" + firstName + '\'' +
-//                    ", headImage='" + headImage + '\'' +
-//                    ", id=" + id +
-//                    ", inviteCode='" + inviteCode + '\'' +
-//                    ", lastLoginIp='" + lastLoginIp + '\'' +
-//                    ", lastLoginTime='" + lastLoginTime + '\'' +
-//                    ", lastName='" + lastName + '\'' +
-//                    ", lastPasswordReset='" + lastPasswordReset + '\'' +
-//                    ", mobilePhone='" + mobilePhone + '\'' +
-//                    ", nickName='" + nickName + '\'' +
-//                    ", password='" + password + '\'' +
-//                    ", sex=" + sex +
-//                    ", sortWithOutOrderBy='" + sortWithOutOrderBy + '\'' +
-//                    ", sort_='" + sort_ + '\'' +
-//                    ", status=" + status +
-//                    ", token='" + token + '\'' +
-//                    ", userName='" + userName + '\'' +
-//                    ", userType=" + userType +
-//                    ", utime='" + utime + '\'' +
-//                    '}';
 //        }
 //    }
 }

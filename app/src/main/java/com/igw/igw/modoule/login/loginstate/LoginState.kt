@@ -1,9 +1,7 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
-import com.google.gson.Gson
-import com.igw.igw.bean.login.UserInfo
-import com.igw.igw.modoule.login.loginstate.Contanct.KEY_LOGIN_STATE
+import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_TOKEN
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_USER_INFO
 import com.igw.igw.modoule.login.loginstate.Contanct.USER_INFO
@@ -28,7 +26,7 @@ class LoginState : UserState {
 
     }
 
-    private var userInfo: String? = null
+//    private var userInfo: String? = null
     private var token: String? = null
 
 
@@ -49,19 +47,19 @@ class LoginState : UserState {
 
     }
 
-    fun getUserInfo(): String? {
-
-        if (userInfo == null || userInfo!!.isEmpty()) {
-
-            userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
-        }
-
-        return userInfo
-
-    }
+//    fun getUserInfo(): String? {
+//
+//        if (userInfo == null || userInfo!!.isEmpty()) {
+//
+//            userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
+//        }
+//
+//        return userInfo
+//
+//    }
     // 初始化 数据
 
-    fun initData(userInfo: String) {
+    fun initData(token: String) {
 
 
 //        this.userInfo = SPUtils.getInstance(USER_INFO).getString(KEY_USER_INFO)
@@ -69,13 +67,13 @@ class LoginState : UserState {
 //        // gson
 
 
-        this.userInfo = userInfo
-        var user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
+//        this.userInfo = userInfo
+//        val user = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
 
 //
 //        this.userInfo
 
-        this.token = user.token
+        this.token = token
 
         CommonHeaderInterceptor.token = this.token!!
 //        this.token

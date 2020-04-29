@@ -18,7 +18,6 @@ class LoginoutState : UserState {
 
     fun loginOut() {
 
-
         // 更改用户状态
         SPUtils.getInstance(Contanct.USER_INFO).clear()
 

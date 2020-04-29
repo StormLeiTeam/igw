@@ -2,11 +2,13 @@ package com.igw.igw.modoule.login
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.network.NetObserver
+import java.io.File
 
 /**
  *
@@ -28,12 +30,18 @@ interface RegisterContract {
 
         fun registerUser(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
 
+
+        fun unloadImageFile(file: File,observer: NetObserver<HeadImageBean.DataBean>)
+
     }
 
     interface View : IBaseView {
 
 
        fun  registerSuccess()
+
+//        fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
+
 
     }
 

@@ -2,13 +2,14 @@ package com.igw.igw.modoule.login.presenter
 
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.bean.login.RegisterSuccessBean
 import com.igw.igw.modoule.login.UpdateInfoContract
-import com.igw.igw.modoule.login.view.RegisterActivity
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
 import com.igw.igw.utils.LogUtils
+import java.io.File
 
 /**
  *
@@ -109,13 +110,17 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
 
 
         mModel.updateUserInfo(registerBean, object : NetObserver<RegisterSuccessBean.DataBean>(RegisterSuccessBean.DataBean::class.java) {
-            override fun onSuccess(m: RegisterSuccessBean.DataBean?) {
+            override fun onSuccess(m: RegisterSuccessBean.DataBean) {
                 LogUtils.d(TAG, "修改个人数据成功 -->  ${m.toString()}")
+                mRootView.updateUserInfoSuccessful(m)
             }
 
-            override fun onFail(code: Int, msg: String?) {
+            override fun onFail(code: Int, msg: String) {
 
                 LogUtils.d(TAG, "修改个人信息失败 -- ")
+
+
+                mRootView.updateUserInfoFail(code,msg)
             }
 
             override fun onError(msg: String?) {
@@ -126,6 +131,35 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
 
         })
 
+
+    }
+
+    override fun uploadImaga(file: File) {
+
+        mModel.unloadImageFile(file,object :NetObserver<HeadImageBean.DataBean>(HeadImageBean.DataBean::class.java){
+            override fun onSuccess(m: HeadImageBean.DataBean) {
+                LogUtils.d(TAG,"上传照片成功  --> ")
+
+                mRootView.loadHeadImageSuccessful(m)
+
+            }
+
+            override fun onFail(code: Int, msg: String) {
+                LogUtils.d(TAG,"上传照片失败  --> ")
+
+                mRootView.loadHeadImageFail(code,msg)
+
+            }
+
+            override fun onError(msg: String?) {
+                LogUtils.d(TAG,"上传照片异常 --> ")
+
+
+
+
+            }
+
+        })
 
     }
 

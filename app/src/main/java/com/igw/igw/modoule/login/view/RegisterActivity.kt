@@ -591,15 +591,15 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         registerBean.birthday = mBirthday
         registerBean.nickname = mNickName
         registerBean.agencyName = mAgencyName
-        registerBean.description = mDescription
+        registerBean.userDesc = mDescription
         registerBean.email = mEmail
         registerBean.mobilePhone = mMobilePhone
         registerBean.password = mPassword
         registerBean.inviteCode = mInviteCode
-        mHeadImage?.let {
-            registerBean.setHeadImage(it)
-
-        }
+//        mHeadImage?.let {
+//            registerBean.setHeadImage(it)
+//
+//        }
 
 
         LogUtils.d(TAG,registerBean.toString())

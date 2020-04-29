@@ -1,9 +1,9 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
-import com.google.gson.Gson
-import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.utils.GsonUtils
+import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.SPUtils
 
 /**
@@ -22,6 +22,9 @@ class LoginManager {
 
     //
     companion object {
+
+
+        public val TAG = "LoginManger"
 
         val instance: LoginManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
 
@@ -47,13 +50,13 @@ class LoginManager {
         state(LoginState())
 
 
-        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO, userInfo)
+//        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO, userInfo)
 
 //        SPUtils.getInstance(USER_INFO).put(KEY_TOKEN,)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE, true)
         //保存token
 
-        var user = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
+        var user = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
 
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
 
@@ -90,11 +93,18 @@ class LoginManager {
             state(LoginState())
 
 
-            var userInfo = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_INFO)
+//            var userInfo = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_INFO)
 
-            userInfo?.let {
-                (loginState as LoginState).initData(it)
+
+            // bug 用
+            var token = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_TOKEN)
+
+            LogUtils.d(TAG,"获取的token 的值==> $token")
+//            userInfo?.let {
+            token?.let {
+                (loginState as LoginState).initData(token)
             }
+//            }
         } else {
 
 //            state(LoginoutState())
@@ -126,11 +136,6 @@ class LoginManager {
     }
 
 
-    fun getUserInfo(): String? {
-
-        return (loginState as LoginState).getUserInfo()
-
-    }
 
 
     fun token(context: Context): String? {
@@ -145,6 +150,17 @@ class LoginManager {
         }
         return token
     }
+
+//    fun updateUserInfo(token: String, userinfoJson: String) {
+//
+//        if (loginState is LoginState) {
+//
+//            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, token)
+//            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO,userinfoJson)
+//        }
+//
+//
+//    }
 
 
 }

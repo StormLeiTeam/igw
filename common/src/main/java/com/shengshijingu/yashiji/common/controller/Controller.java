@@ -1,5 +1,7 @@
 package com.shengshijingu.yashiji.common.controller;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,8 @@ import okhttp3.ResponseBody;
  */
 
 public class Controller {
+
+    public static  String TAG = "Controller";
 
     public static String app_version;
 
@@ -48,7 +52,10 @@ public class Controller {
     }
 
     private String getRequestStr(Map<String, Object> queryMap) {
-        return gson.toJson(queryMap);
+        String json =  gson.toJson(queryMap);
+
+        Log.d(TAG,"请求参数  ---> " + json );
+        return json;
     }
 
     Map<String, Object> getSignParams(Map<String, Object> queryMap) {

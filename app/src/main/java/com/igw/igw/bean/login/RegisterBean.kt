@@ -26,7 +26,7 @@ class RegisterBean {
     var birthday: String? = null
     var nickname: String? = null
     var agencyName: String? = null
-    var description: String? = null
+    var userDesc: String? = null
     var email: String? = null
     var mobilePhone: String? = null
     var password: String? = null
@@ -34,20 +34,14 @@ class RegisterBean {
     var headImage: String? = null
 
 
-    fun setHeadImage(file: File) {
 
-
-        FileUtils.File2bytes(file)?.let {
-            headImage = FileUtils.bytes2String(it)
-        }
-    }
 
 
 
 
 
     override fun toString(): String {
-        return "RegisterBean(countryId=$countryId, cityId=$cityId, lastName=$lastName, firstName=$firstName, sex=$sex, birthday=$birthday, nickname=$nickname, agencyName=$agencyName, description=$description, email=$email, mobilePhone=$mobilePhone, password=$password, inviteCode=$inviteCode, headImage=$headImage)"
+        return "RegisterBean(countryId=$countryId, cityId=$cityId, lastName=$lastName, firstName=$firstName, sex=$sex, birthday=$birthday, nickname=$nickname, agencyName=$agencyName, description=$userDesc, email=$email, mobilePhone=$mobilePhone, password=$password, inviteCode=$inviteCode, headImage=$headImage)"
     }
 
 

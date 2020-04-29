@@ -1,7 +1,5 @@
 package com.igw.igw.modoule.login.view
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -17,10 +15,7 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.GenderBean
-import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.bean.login.UserInfo
+import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.UpdateInfoContract
 import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.modoule.login.model.UpdateUserInfoModel
@@ -44,8 +39,10 @@ import kotlinx.android.synthetic.main.activity_update_user_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import java.io.File
 import java.util.*
-import kotlin.time.measureTime
 
+/**
+ * 修改个人设置
+ */
 class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateInfoContract.View,
         TakePhoto.TakeResultListener, InvokeListener {
 
@@ -58,9 +55,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"女\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
 
 
-        fun startSelf(activity: BaseActivity<*>) {
+        fun startSelf(activity: BaseActivity<*>, data: String) {
             var intent = Intent(activity, UpdateUserInfoActivity::class.java)
-
+            intent.putExtra("user_info", data)
             activity.startActivity(intent)
         }
     }
@@ -83,7 +80,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     private var mCitys: List<CityListBean.DataBean.CitysBean>? = null
 
 
-    private var mUserInfo: UserInfo.DataBean? = null
+    private var mUserInfo: UserInfoBean.DataBean? = null
 
 
     private var isCityClick: Boolean = false
@@ -179,6 +176,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     private fun initData() {
 
+
         mChiocePopwindow = ChoicePopWindow(this)
 
         genders = GsonUtils.getInstance().fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
@@ -237,8 +235,20 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         btn_submit.setOnClickListener {
 
 
-            updateUserInfoForNet()
+//            updateUserInfoForNet()
 
+
+
+
+            if (mHeadImage != null && mHeadImage!!.exists()) {
+                // 如果有头像文件
+
+                mPresenter.uploadImaga(mHeadImage!!)
+
+            }else{
+
+                updateUserInfoForNet()
+            }
 
         }
 
@@ -487,15 +497,19 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         registerBean.birthday = mBirthday
         registerBean.nickname = mNickName
         registerBean.agencyName = mAgencyName
-        registerBean.description = mDescription
+        registerBean.userDesc = mDescription
         registerBean.email = mEmail
         registerBean.mobilePhone = mMobilePhone
         registerBean.password = mPassword
         registerBean.inviteCode = mInviteCode
-        mHeadImage?.let {
-            registerBean.setHeadImage(it)
 
+        if (!mImagePath.isEmpty()){
+            registerBean.headImage = mImagePath
         }
+//        mHeadImage?.let {
+//            registerBean.setHeadImage(it)
+//
+//        }
 
         mPresenter.updateUserInfo(registerBean)
 
@@ -658,14 +672,24 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     private fun getLocalUserinfo() {
         // 获取个人信息
 
-        val userInfo = LoginManager.instance.getUserInfo()
+//        val userInfo = LoginManager.instance.getUserInfo()
 
-        LogUtils.d(TAG, "会显个人信息 --> $userInfo")
+//        LogUtils.d(TAG, "会显个人信息 --> $userInfo")
+//
+//        mLoginBean = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
+//
+//        mLoginBean?.let {
+//
+//            mPresenter.getCityData(it.countryId, true)
+//
+//        }
+        var json = intent.getStringExtra("user_info")
 
-        mUserInfo = GsonUtils.getInstance().fromJson<UserInfo.DataBean>(userInfo, UserInfo.DataBean::class.java)
+
+        mUserInfo = GsonUtils.getInstance().fromJson(json, UserInfoBean.DataBean::class.java)
+
 
         mUserInfo?.let {
-
             mPresenter.getCityData(it.countryId, true)
 
         }
@@ -706,11 +730,12 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
             tv_select_ymd.text = it.birthday
             et_nickname.setText(it.nickName)
             et_agencyname.setText(it.agencyName)
-            et_description.setText(it.description)
+            et_description.setText(it.userDesc)
             et_email.setText(it.email)
             et_phonenumber.setText(it.mobilePhone)
 //            et_password.setText(it.password)
 //            et_password_again.setText(it.password)
+//            et_inviteCode.setText(it.inviteCode)
 
             if (it.inviteCode != null) {
 
@@ -896,6 +921,34 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     }
 
+
+    private var  mImagePath: String =  ""
+    //上传图片成功的回调
+    override fun loadHeadImageSuccessful(data: HeadImageBean.DataBean) {
+        this.mImagePath = data.attachmentUrl
+        updateUserInfoForNet()
+
+    }
+
+    // 上传图片失败
+    override fun loadHeadImageFail(code: Int, msg: String) {
+
+        ToastUtil.showCenterToast(this,msg)
+    }
+
+    override fun updateUserInfoSuccessful(data: RegisterSuccessBean.DataBean) {
+
+
+
+        val userinfoJson = GsonUtils.getInstance().toJson(data)
+//        LoginManager.instance.updateUserInfo(token, userinfoJson)
+        finish()
+    }
+
+    override fun updateUserInfoFail(code: Int, msg: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun fail(o: Any?) {
     }
 
@@ -905,6 +958,33 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     override fun takeSuccess(result: TResult?) {
 
+        LogUtils.d(TAG, "takePhoto --> takeSuccess -> ${result?.image?.originalPath}")
+
+        // 返回文件 路径
+        result?.let {
+            mHeadImage = File(it.image?.originalPath)
+
+            LogUtils.d(TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
+
+
+            )
+
+            if (mHeadImage!!.exists()){
+
+                GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
+//
+//                LogUtils.d(TAG, "处理过后的图片  --> $bytes2String")
+
+
+            }else{
+
+                ToastUtil.showCenterToast(this,R.string.select_headimage)
+            }
+
+            val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
+
+
+        }
 
     }
 

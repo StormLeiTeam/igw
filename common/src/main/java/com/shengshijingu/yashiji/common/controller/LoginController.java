@@ -3,10 +3,16 @@ package com.shengshijingu.yashiji.common.controller;
 
 import com.shengshijingu.yashiji.common.net.NetApi;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observer;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.http.Field;
+import retrofit2.http.Multipart;
 
 /**
  * @author storm_z
@@ -115,7 +121,7 @@ public class LoginController extends Controller {
      * @param birthday
      * @param nickname
      * @param agencyName
-     * @param description
+     * @param userDesc
      * @param email
      * @param mobilePhone
      * @param password
@@ -124,7 +130,7 @@ public class LoginController extends Controller {
      * @param observer
      */
     public void updateUserInfo(int countryId, int cityId, String lastName, String firstName,
-                               int sex, String birthday, String nickname, String agencyName, String description,
+                               int sex, String birthday, String nickname, String agencyName, String userDesc,
                                String email, String mobilePhone, String password, String inviteCode, String headImage,
                                Observer observer) {
 
@@ -138,7 +144,7 @@ public class LoginController extends Controller {
         params.put("birthday", birthday);
         params.put("nickname", nickname);
         params.put("agencyName", agencyName);
-        params.put("description", description);
+        params.put("userDesc", userDesc);
         params.put("email", email);
         params.put("mobilePhone", mobilePhone);
         params.put("password", password);
@@ -239,5 +245,26 @@ public class LoginController extends Controller {
     }
 
 
+    public void uploadImage(File file,Observer observer){
+
+
+        ApiSubscribe(NetApi.getApiService().upLoadImage(getAuthBody(file,"headImage")),observer);
+    }
+//    private fun getAuthBody(file: File, fileName: String): MultipartBody.Part {
+//
+//        // 进行文件压缩
+//
+//        val requestFile = RequestBody.create(MediaType.parse("multiparform-data"), file)
+//
+//        return MultipartBody.Part.createFormData(fileName, fileName, requestFile)
+//
+//    }
+
+    public MultipartBody.Part  getAuthBody(File file, String fileName){
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multiparform-data"), file);
+
+        return MultipartBody.Part.createFormData("file",fileName,requestBody);
+    }
 
 }
