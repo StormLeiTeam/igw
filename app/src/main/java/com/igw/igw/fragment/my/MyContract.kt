@@ -1,5 +1,6 @@
 package com.igw.igw.fragment.my
 
+import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
@@ -24,6 +25,11 @@ class MyContract {
 
         fun userInfoFail(code: Int, msg: String)
 
+        fun versionSuccessful(data: VersionBean)
+        fun versionFail(code: Int, msg: String)
+
+
+
     }
 
 
@@ -31,6 +37,8 @@ class MyContract {
 
 
         fun userInfo(observer: NetObserver<UserInfoBean.DataBean>)
+
+        fun updateVersion(observer: NetObserver<VersionBean>)
     }
 
 
@@ -38,6 +46,8 @@ class MyContract {
 
 
         fun userInfo()
+
+        fun updateVersion()
 
     }
 }

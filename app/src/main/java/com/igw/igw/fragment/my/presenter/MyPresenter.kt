@@ -1,5 +1,6 @@
 package com.igw.igw.fragment.my.presenter
 
+import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.fragment.my.MyContract
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -55,6 +56,33 @@ public class MyPresenter(model: MyContract.Model) :
                 LogUtils.d(TAG,"获取个人信息 --> error $msg ")
 //                mRootView.userInfoFail(,msg)
 
+            }
+        })
+
+    }
+
+    override fun updateVersion() {
+
+        mModel.updateVersion(object : NetObserver<VersionBean>(VersionBean::class.java){
+            override fun onSuccess(m: VersionBean?) {
+                LogUtils.d(TAG,"更新版本信息 --> successful")
+
+                m?.let {
+
+                    mRootView.versionSuccessful(it)
+
+                }
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                LogUtils.d(TAG,"更新版本信息 --> fail ")
+
+                mRootView.versionFail(code,msg!!)
+
+            }
+
+            override fun onError(msg: String?) {
+                LogUtils.d(TAG,"更新版本信息 --> error  ")
 
             }
 

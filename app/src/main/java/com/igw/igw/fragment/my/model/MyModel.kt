@@ -1,5 +1,6 @@
 package com.igw.igw.fragment.my.model
 
+import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.fragment.my.MyContract
 import com.igw.igw.network.NetObserver
@@ -17,6 +18,13 @@ class MyModel : MyContract.Model{
     override fun userInfo(observer: NetObserver<UserInfoBean.DataBean>) {
 
         ControllerUtils.getCommonController().userInfo(observer)
+
+    }
+
+    override fun updateVersion(observer: NetObserver<VersionBean>) {
+
+
+        ControllerUtils.getCommonController().updateVersion(observer)
 
     }
 

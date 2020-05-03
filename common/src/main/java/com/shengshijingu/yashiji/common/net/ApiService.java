@@ -191,6 +191,13 @@ public interface ApiService {
     Observable<ResponseBody> userInfo(@Body RequestBody requestBody);
 
 
+    /**
+     * app 版本更新
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/common/lastVersion")
+    Observable<ResponseBody> updateVersion(@Body RequestBody requestBody);
 
 }
 

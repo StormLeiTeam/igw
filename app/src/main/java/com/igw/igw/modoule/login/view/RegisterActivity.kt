@@ -563,11 +563,15 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         if (et_password.text.toString().trim().isEmpty()){
 
+            ToastUtil.showCenterToast(this, R.string.warning_not_input_password)
+
             // 为空
             return
         }
 
         if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())){
+            ToastUtil.showCenterToast(this, R.string.warning_two_password_not_same)
+
 
             // 密码不一直
             return

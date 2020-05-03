@@ -73,4 +73,18 @@ public class CommonController extends Controller{
         ApiSubscribe(NetApi.getApiService().userInfo(getRequestBody(param)), observer);
     }
 
+
+    /**
+     * 版本检测
+     * @param observer
+     */
+    public void updateVersion(Observer observer){
+        HashMap<String, Object> param = new HashMap<>();
+
+        param.put("", "");
+
+        ApiSubscribe(NetApi.getApiService().updateVersion(getRequestBody(param)),observer);
+
+    }
+
 }

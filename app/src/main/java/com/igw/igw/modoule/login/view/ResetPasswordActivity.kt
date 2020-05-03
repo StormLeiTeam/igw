@@ -27,6 +27,9 @@ import kotlinx.android.synthetic.main.activity_reset_password.et_password_again
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.status_bar_view.*
 
+/**
+ * 重置密码
+ */
 class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordContract.View {
 
 

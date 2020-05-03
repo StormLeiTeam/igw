@@ -106,4 +106,6 @@
     <string name="update_pwd_title">修改密码</string>
     <string name="reset_pwd_title">重置密码</string>
     <string name="not_login_in">未登陆</string>
+    <string name="warning_not_input_password">密码不能为空</string>
+    <string name="warning_two_password_not_same">两次输入密码不一致</string>
 </resources>

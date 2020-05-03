@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.bean.VersionBean;
 import com.igw.igw.bean.login.LoginBean;
 import com.igw.igw.bean.login.UserInfoBean;
 import com.igw.igw.fragment.my.MyContract;
@@ -52,6 +53,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private TextView tvMoneyDollar; //
     private TextView tvMoneyRmb; //
     private StormCircleImageView iv_head_view; //
+    private LinearLayout ll_update_version;
 
     private UserInfoBean.DataBean mData; // 用户数据
 
@@ -86,12 +88,12 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_help_or_feedback = bindView(R.id.ll_help_or_feedback);
         llLoginOut = bindView(R.id.ll_login_out);
 
-        tv_nickName = bindView(R.id.tv_my_nickName );
+        tv_nickName = bindView(R.id.tv_my_nickName);
         tv_desc = bindView(R.id.tv_my_desc);
         tvMoneyDollar = bindView(R.id.tv_money_dollar);
         tvMoneyRmb = bindView(R.id.tv_money_rmb);
         iv_head_view = bindView(R.id.iv_head_view);
-
+        ll_update_version = bindView(R.id.ll_update_version);
 
 
         initData();
@@ -104,7 +106,6 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         // 获取个人信息
         initUserInfoForView();
 
-//        String userInfo = LoginManager.Companion.getInstance().getUserInfo();
 
 
     }
@@ -117,26 +118,31 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         boolean login = LoginManager.Companion.getInstance().isLogin();
         if (login) {
 
+//            onLoad(2);
             mPresenter.userInfo();
 
-        }else {
+        } else {
 
             // 显示未登陆时候的数据
 //            this.mData = data ;
             //昵称
             tv_nickName.setText(R.string.not_login_in);
             tv_desc.setText("");
-            tvMoneyRmb.setText( "$0.0");
+            tvMoneyRmb.setText("$0.0");
             tvMoneyDollar.setText("¥0.0");
 
         }
-
 
 
     }
 
 
     private void setUpListener() {
+
+        ll_update_version.setOnClickListener(v -> {
+
+            checkAppVersion();
+        });
         llLoginOut.setOnClickListener(v -> {
 
             loginOut();
@@ -158,13 +164,13 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
             @Override
             public void onClick(View v) {
 
-                if(mData != null) {
-                   String userInfo =  GsonUtils.getInstance().toJson(mData);
+                if (mData != null) {
+                    String userInfo = GsonUtils.getInstance().toJson(mData);
 //                    UpdateUserInfoActivity.Companion.startSelfforResult(, userInfo);
 
-                    Intent intent = new  Intent(getActivity(), UpdateUserInfoActivity.class);
+                    Intent intent = new Intent(getActivity(), UpdateUserInfoActivity.class);
                     intent.putExtra("user_info", userInfo);
-                    startActivityForResult(intent,1001);
+                    startActivityForResult(intent, 1001);
 
                 }
 
@@ -180,6 +186,15 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
             }
         });
+
+    }
+
+
+    /**
+     * 版本检测
+     */
+    private void checkAppVersion() {
+
 
     }
 
@@ -205,7 +220,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
         setMPresenter(new MyPresenter(new MyModel()));
         mPresenter = getMPresenter();
-        if(mPresenter != null) {
+        if (mPresenter != null) {
             mPresenter.attachView(this);
         }
 
@@ -232,7 +247,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private void setUpData2View(UserInfoBean.DataBean data) {
         // 昵
 
-        this.mData = data ;
+        this.mData = data;
         //昵称
         tv_nickName.setText(mData.getNickName());
         tv_desc.setText(mData.getUserDesc());
@@ -241,7 +256,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
         LogUtils.d(TAG, "获取的图片地址 " + mData.getHeadImage());
 
-        GlideUtils.INSTANCE.loadImage(this.mContext, Constants.BASE_URL + mData.getHeadImage(),iv_head_view);
+        GlideUtils.INSTANCE.loadImage(this.mContext, Constants.BASE_URL + mData.getHeadImage(), iv_head_view);
 
     }
 
@@ -255,9 +270,36 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
-            LogUtils.d(TAG,"回信哦");
+            LogUtils.d(TAG, "回信哦");
             getMPresenter().userInfo();
 
+
+        }
+    }
+
+    /**
+     * 检测版本数据
+     * @param data
+     */
+    @Override
+    public void versionSuccessful(@NotNull VersionBean data) {
+
+    }
+
+    // 检测版本数据失败
+    @Override
+    public void versionFail(int code, @NotNull String msg) {
+
+
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(null != getMPresenter()) {
+            getMPresenter().detachView();
 
         }
     }
