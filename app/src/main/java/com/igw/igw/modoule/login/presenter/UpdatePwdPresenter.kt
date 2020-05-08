@@ -5,6 +5,7 @@ import com.igw.igw.modoule.login.UpdatePwdContract
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
 import com.igw.igw.utils.LogUtils
+import com.shengshijingu.yashiji.common.util.ToastUtil
 
 /**
  *
@@ -33,26 +34,14 @@ class UpdatePwdPresenter(model: UpdatePwdContract.Model):
 
         mModel.updatePwd(oldPassword,newPassword,object : NetObserver<UpdatePwdBean>(UpdatePwdBean::class.java){
             override fun onSuccess(m: UpdatePwdBean?) {
-
-
-
                 mRootView.onSuccess()
-
-               LogUtils.d(TAG,"修改密码 -- > onSuccess")
             }
 
             override fun onFail(code: Int, msg: String?) {
-
                 mRootView.onFail(code,msg!!)
-
-                LogUtils.d(TAG,"修改密码 -- > onFail")
-
             }
 
             override fun onError(msg: String?) {
-                LogUtils.d(TAG,"修改密码 -- > onError")
-
-
             }
 
         })

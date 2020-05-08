@@ -34,14 +34,14 @@ import java.util.List;
 
 public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> implements MessageContract.View {
 
-
     private static final String TAG = "MessageFragment";
-
 
     private TextView tv_title;
 
     private BadgeView mBadgeView;
+
     private RecyclerView rv_main;
+
     private MessageCenterAdapter mAdapter;
 
     public static MessageFragment getInstance() {
@@ -67,38 +67,26 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     @Override
     public void initView() {
         StatusBarUtils.INSTANCE.setDarkMode((MainActivity) mContext);
-
-
 //        statusBarMain = bindView(R.id.status_bar_main);
 
 //        statusBarMain.setAppActionBarVisible(View.GONE);
 
         onFirstLoadSuccess();
-
-
-
-        tv_title =  bindView(R.id.tv_title);
+        tv_title = bindView(R.id.tv_title);
         rv_main = bindView(R.id.rv_main);
         initAdapter();
         initData();
 
 
-
         setUpListener();
         // 请求好数据再用
 
-        mBadgeView = new BadgeView(mContext,tv_title);
+        mBadgeView = new BadgeView(mContext, tv_title);
 
         mBadgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        mBadgeView.setBadgeMargin(0,10);
+        mBadgeView.setBadgeMargin(0, 10);
         mBadgeView.setText("1");
         mBadgeView.show();
-
-
-
-
-
-
 
     }
 
@@ -110,7 +98,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
             public void onItemClick(@NotNull MessageCenterBean.DataBean.RowsBean bean, int positon) {
 
 
-                LogUtils.d(TAG,"item 点击事件 ");
+                LogUtils.d(TAG, "item 点击事件 ");
             }
         });
 
@@ -118,20 +106,17 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
         mAdapter.addOnAgreeListener(new MessageCenterAdapter.OnAgreeListener() {
             @Override
             public void onAgree(@NotNull MessageCenterBean.DataBean.RowsBean bean, int position) {
-                LogUtils.d(TAG,"点击了同意");
+                LogUtils.d(TAG, "点击了同意");
             }
         });
 
         mAdapter.addOnRefuseListener(new MessageCenterAdapter.OnRefuseListener() {
             @Override
             public void onRefuse(@NotNull MessageCenterBean.DataBean.RowsBean bean, int position) {
-                LogUtils.d(TAG,"点击了拒绝");
+                LogUtils.d(TAG, "点击了拒绝");
             }
         });
     }
-
-
-
 
 
     private void initAdapter() {
@@ -159,6 +144,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
 
     }
+
     @Override
     public void success(Object o) {
 
@@ -170,7 +156,6 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     }
 
 
-
     @Override
     public void onFail(int code, @NotNull String msg) {
 
@@ -179,9 +164,9 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     @Override
     public void onSuccess(@NotNull List<? extends MessageCenterBean.DataBean.RowsBean> mdatas) {
 
-        if(mdatas.size() >0) {
+        if (mdatas.size() > 0) {
 
-            LogUtils.d(TAG,"消息中心数据创建成功 -- ");
+            LogUtils.d(TAG, "消息中心数据创建成功 -- ");
             if (mAdapter != null) {
 
                 mAdapter.refreshData(mdatas);

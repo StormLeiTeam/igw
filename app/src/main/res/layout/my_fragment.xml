@@ -325,6 +325,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
+                                android:textColor="@color/color333"
                             android:gravity="center_vertical"
                             android:text="密码修改"
                             android:textSize="@dimen/dp_12" />

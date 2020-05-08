@@ -2,7 +2,6 @@ package com.igw.igw.utils;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.text.Html;

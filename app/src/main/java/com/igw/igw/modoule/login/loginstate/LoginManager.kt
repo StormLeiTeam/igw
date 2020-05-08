@@ -1,10 +1,12 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
+import android.util.Log
 import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.SPUtils
+import com.igw.igw.utils.SharedUtils
 
 /**
  *
@@ -33,8 +35,7 @@ class LoginManager {
     }
 
 
-
-    public fun  init(){
+    public fun init() {
 
         SPUtils.getInstance(Contanct.USER_INFO)
     }
@@ -49,7 +50,6 @@ class LoginManager {
 
         state(LoginState())
 
-
 //        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO, userInfo)
 
 //        SPUtils.getInstance(USER_INFO).put(KEY_TOKEN,)
@@ -58,8 +58,12 @@ class LoginManager {
 
         var user = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
 
-        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
+        SharedUtils.setAccessToken(user.token)
+        SharedUtils.setRongToken(user.rongyunToken)
 
+        Log.e("12345",user.rongyunToken+"==="+user.token)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
 
         (loginState as LoginState).initData(userInfo)
 
@@ -99,7 +103,7 @@ class LoginManager {
             // bug 用
             var token = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_TOKEN)
 
-            LogUtils.d(TAG,"获取的token 的值==> $token")
+            LogUtils.d(TAG, "获取的token 的值==> $token")
 //            userInfo?.let {
             token?.let {
                 (loginState as LoginState).initData(token)
@@ -134,8 +138,6 @@ class LoginManager {
 
         return isLogin
     }
-
-
 
 
     fun token(context: Context): String? {

@@ -38,20 +38,26 @@ import retrofit2.http.HEAD;
 
 public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyContract.View {
 
-
     public static final String TAG = "MyFragment";
 
-
     private TextView tv_update_pwd;
+
     private LinearLayout ll_update_info;
+
     private LinearLayout ll_help_or_feedback;
+
     private LinearLayout llLoginOut; // 退出登陆
+
     private TextView tv_nickName;
+
     private ImageView iv_headView;
+
     private TextView tv_desc; // 个人描述
 
     private TextView tvMoneyDollar; //
+
     private TextView tvMoneyRmb; //
+
     private StormCircleImageView iv_head_view; //
     private LinearLayout ll_update_version;
 
@@ -94,7 +100,6 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         tvMoneyRmb = bindView(R.id.tv_money_rmb);
         iv_head_view = bindView(R.id.iv_head_view);
         ll_update_version = bindView(R.id.ll_update_version);
-
 
         initData();
 

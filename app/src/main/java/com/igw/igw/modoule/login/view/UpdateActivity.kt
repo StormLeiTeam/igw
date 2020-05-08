@@ -1,10 +1,8 @@
 package com.igw.igw.modoule.login.view
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.modoule.login.UpdatePwdContract
@@ -12,17 +10,16 @@ import com.igw.igw.modoule.login.model.UpdatePwdModel
 import com.igw.igw.modoule.login.presenter.UpdatePwdPresenter
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.StatusBarUtils
-import com.igw.igw.utils.statusbarutils.StatusBarUtil
 import com.igw.igw.widget.storm.StatusBarView
+import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_update.*
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
 
 /**
  *
  */
-class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View {
+class UpdateActivity : BaseActivity<UpdatePwdPresenter>(), UpdatePwdContract.View {
 //
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -42,21 +39,20 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
 
         setUpListener()
 
-
+        Log.e("12345", Constants.authorization);
     }
 
     private fun setUpListener() {
 
 
-
-        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+        status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
                 LocaleUtils.changeLocale(this@UpdateActivity)
 
             }
         })
-        btn_submit.setOnClickListener{
+        btn_submit.setOnClickListener {
 
             updatePwd()
         }
@@ -72,23 +68,23 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
     private fun updatePwd() {
 
 
-        if (et_original_pwd.text.toString().trim().isEmpty()){
+        if (et_original_pwd.text.toString().trim().isEmpty()) {
 
-            ToastUtil.showCenterToast(this,R.string.warning_input_original_pwd)
-
-            return
-        }
-
-        if (et_new_pwd.text.toString().trim().isEmpty()){
-
-            ToastUtil.showCenterToast(this,R.string.warning_input_new_pwd)
+            ToastUtil.showCenterToast(this, R.string.warning_input_original_pwd)
 
             return
         }
 
-        if (et_new_pwd_again.text.toString().trim().isEmpty()){
+        if (et_new_pwd.text.toString().trim().isEmpty()) {
 
-            ToastUtil.showCenterToast(this,R.string.warning_input_new_pwd_again)
+            ToastUtil.showCenterToast(this, R.string.warning_input_new_pwd)
+
+            return
+        }
+
+        if (et_new_pwd_again.text.toString().trim().isEmpty()) {
+
+            ToastUtil.showCenterToast(this, R.string.warning_input_new_pwd_again)
 
             return
         }
@@ -98,8 +94,8 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
         var newPwd = et_new_pwd.text.toString().trim()
         var newPwdAgain = et_new_pwd_again.text.toString().trim()
 
-        if (!newPwd.equals(newPwdAgain)){
-            ToastUtil.showCenterToast(this,R.string.waring_password_inconsistency)
+        if (!newPwd.equals(newPwdAgain)) {
+            ToastUtil.showCenterToast(this, R.string.waring_password_inconsistency)
 
             return
         }
@@ -129,10 +125,7 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
     }
 
     companion object {
-
-
         val TAG = "UpdateActivity"
-
 
         fun startSelf(activity: BaseActivity<*>) {
 
@@ -142,25 +135,17 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(),UpdatePwdContract.View
     }
 
     override fun onSuccess() {
-
-
         //登出
-        ToastUtil.showCenterToast(this,R.string.toast_update_pwd_success)
+        ToastUtil.showCenterToast(this, R.string.toast_update_pwd_success)
         finish()
-
-
-
     }
 
     override fun onFail(code: Int, msg: String) {
-
         // 是否需要英文提示
-        ToastUtil.showCenterToast(this,msg)
-
+        ToastUtil.showCenterToast(this, msg)
     }
 
     override fun fail(o: Any?) {
-
     }
 
     override fun success(o: Any?) {

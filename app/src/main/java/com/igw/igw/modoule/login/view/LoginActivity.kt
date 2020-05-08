@@ -2,10 +2,12 @@ package com.igw.igw.modoule.login.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Paint
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 import com.igw.igw.MainActivity
 import com.igw.igw.R
@@ -89,7 +91,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 //            sendVerifyCode()
 //        }
 
-
+        tv_forget_pwd.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
         tv_forget_pwd.setOnClickListener {
 
             // 忘记密码
@@ -238,9 +240,6 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
             1 -> {
 
-                LogUtils.d(TAG, "账号登陆模式  ")
-
-
                 if (et_accent.text.toString().trim().isEmpty()) {
                     ToastUtil.showCenterToast(this, R.string.please_input_accent)
                     return
@@ -262,8 +261,6 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
             }
 
             2 -> {
-
-                LogUtils.d(TAG, "邮箱登陆模式 ")
 
                 if (et_email.text.toString().trim().isEmpty()) {
                     ToastUtil.showCenterToast(this, R.string.please_input_email)
@@ -329,6 +326,9 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
         startMainActivity()
         finish()
+
+        Log.e("12345","登录成功");
+
     }
 
     private fun startMainActivity() {

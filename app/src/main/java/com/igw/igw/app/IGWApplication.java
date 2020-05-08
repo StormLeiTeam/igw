@@ -15,10 +15,11 @@ import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.utils.ConfigUtil;
 import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.Constants;
+import io.rong.imkit.RongIM;
 
 /**
  * 创建时间  2020/3/105:34 PM .
- *
+ * <p>
  * 作者  雷雷
  */
 
@@ -30,8 +31,6 @@ public class IGWApplication extends Application {
 
     public static final int ENVIRONMENT = Constants.ENVIRONMENT_DEBUG;
 
-
-
     public static LogUtils.Config logConfig;
 
     @Override
@@ -42,8 +41,7 @@ public class IGWApplication extends Application {
         initLogConfig();
         LoginManager.Companion.getInstance().init();
         LoginManager.Companion.getInstance().initLoginState();
-
-
+        RongIM.init(this, "p5tvi9dspqek4");
 
     }
 
@@ -59,7 +57,6 @@ public class IGWApplication extends Application {
                 .setBorderSwitch(true)
                 .setConsoleFilter(LogUtils.V)
                 .setFileFilter(LogUtils.V);
-
 
 
     }
@@ -117,7 +114,7 @@ public class IGWApplication extends Application {
             case Constants.ENVIRONMENT_DEBUG:
                 Constants.BASE_URL = config.getProperty("BASE_URL_DEBUG");
                 Constants.HTML_BASE_URL = config.getProperty("HTML_BASE_URL_DEBUG");
-                HttpClientManager.Companion.initBaseUrl( config.getProperty("BASE_URL_DEBUG"));
+                HttpClientManager.Companion.initBaseUrl(config.getProperty("BASE_URL_DEBUG"));
                 break;
             case Constants.ENVIRONMENT_RELEASE:
                 Constants.BASE_URL = config.getProperty("BASE_URL_RELEASE");

@@ -46,6 +46,10 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url "https://dl.bintray.com/justinquote/maven" }
+
+
+        mavenCentral()
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
         flatDir {
             dirs 'libs'
             dirs project(':app').file('libs')

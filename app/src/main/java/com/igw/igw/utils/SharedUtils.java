@@ -76,6 +76,14 @@ public class SharedUtils {
         getSharedPreferences().edit().putString("accessToken", accessToken).apply();
     }
 
+    public static String getRongToken() {
+        return getSharedPreferences().getString("rongToken", "");
+    }
+
+    public static void setRongToken(String accessToken) {
+        getSharedPreferences().edit().putString("rongToken", accessToken).apply();
+    }
+
     public static String getId() {
         return getSharedPreferences().getString("id", "");
     }

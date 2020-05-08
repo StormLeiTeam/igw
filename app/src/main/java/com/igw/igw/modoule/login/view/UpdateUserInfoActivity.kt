@@ -219,13 +219,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     }
 
     private fun setUpListener() {
-
-
         status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
-
-
-
                 LocaleUtils.changeLocale(this@UpdateUserInfoActivity)
             }
 
@@ -235,12 +230,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         // 注册信息提交
         btn_submit.setOnClickListener {
 
-
 //            updateUserInfoForNet()
-
-
-
-
 
             if (mHeadImage != null && mHeadImage!!.exists()) {
                 // 如果有头像文件

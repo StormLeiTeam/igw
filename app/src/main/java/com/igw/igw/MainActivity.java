@@ -19,6 +19,10 @@ import com.igw.igw.fragment.HomeFragment;
 import com.igw.igw.fragment.MessageFragment;
 import com.igw.igw.fragment.MyFragment;
 import com.igw.igw.utils.LogUtils;
+import com.igw.igw.utils.SPUtils;
+import com.igw.igw.utils.SharedUtils;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BaseActivity {
 
@@ -50,8 +54,6 @@ public class MainActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
         initViews();
         showPagerDependButton(R.id.ll_main_home);
-
-        LogUtils.d(TAG, "添加 log 功能");
 
         for (int i = 0; i < array.length - 1; i++) {
             int flag = 0;
@@ -107,6 +109,24 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < array.length; i++) {
             Log.e("12345", array[i] + "");
         }
+
+        Log.e("12345",SharedUtils.getRongToken());
+        RongIM.connect(SharedUtils.getRongToken(), new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+            @Override
+            public void onSuccess(String userid) {
+                Log.d("12345", "--onSuccess" + userid);
+
+            }
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.d("12345", "--onSuccess" + errorCode);
+            }
+        });
+
 
 
     }
