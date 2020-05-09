@@ -1,5 +1,10 @@
 package com.igw.igw.bean;
 
+import com.igw.igw.utils.LocaleUtils;
+import com.tuacy.fuzzysearchlibrary.IFuzzySearchItem;
+import com.tuacy.fuzzysearchlibrary.IFuzzySearchRule;
+import com.tuacy.fuzzysearchlibrary.PinyinUtil;
+
 import java.util.List;
 
 /**
@@ -56,7 +61,7 @@ public class FriendBean {
             this.friends = friends;
         }
 
-        public static class FriendsBean {
+        public static class FriendsBean  implements IFuzzySearchItem {
             /**
              * ctime : 2020-05-06 22:34:52
              * firstCharPinyin : L
@@ -199,6 +204,22 @@ public class FriendBean {
 
             public void setUtime(String utime) {
                 this.utime = utime;
+            }
+
+
+            // 获取原始字符串
+            @Override
+            public String getSourceKey() {
+
+                return friendNickName;
+            }
+
+
+
+            @Override
+            public List<String> getFuzzyKey() {
+
+                return PinyinUtil.getPinYinList(friendNickName);
             }
         }
     }

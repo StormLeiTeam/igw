@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -13,11 +14,13 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.FriendBean
 import com.igw.igw.modoule.im.MyFriendContract
 import com.igw.igw.modoule.im.adapter.MyFriendAdapter
+import com.igw.igw.modoule.im.adapter.MyFriendSearchAdapter
 import com.igw.igw.modoule.im.model.MyFriendModel
 import com.igw.igw.modoule.im.presenter.MyFriendPresenter
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_my_friend.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
@@ -38,6 +41,8 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
     private  lateinit var  mAdapter : MyFriendAdapter
     private lateinit var mManager: LinearLayoutManager
+
+    private lateinit var mSearchAdapter:MyFriendSearchAdapter
 
 
     override fun initView() {
@@ -60,13 +65,18 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
     private fun initAdapter() {
 
-            mAdapter = MyFriendAdapter(this, false)
+        mAdapter = MyFriendAdapter(this, false)
 
-         mManager= LinearLayoutManager(this)
+        mManager= LinearLayoutManager(this)
         mManager.orientation = LinearLayoutManager.VERTICAL
         mManager.isAutoMeasureEnabled = true
         rv_friends.layoutManager = mManager
         rv_friends.adapter = mAdapter
+
+
+
+
+
 
 
 
@@ -82,6 +92,11 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
     private fun setUpListener() {
 
 
+        et_search.setOnFocusChangeListener { v, hasFocus ->
+
+           ll_search_list.visibility = if (hasFocus) View.VISIBLE else View.GONE
+        }
+
 
         et_search.addTextChangedListener(object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -96,6 +111,8 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+
+                mSearchAdapter.filter.filter(s)
 
             }
 
@@ -162,6 +179,12 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
         mAdapter.refreshData(friends)
 
+
+        mSearchAdapter = MyFriendSearchAdapter(dataList = data.friends)
+        val manager  = LinearLayoutManager(this)
+        manager.orientation = LinearLayoutManager.VERTICAL
+        rv_search.layoutManager = manager
+        rv_search.adapter = mSearchAdapter
 
     }
 
