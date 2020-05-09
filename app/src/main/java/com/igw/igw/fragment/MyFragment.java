@@ -17,6 +17,7 @@ import com.igw.igw.fragment.my.MyContract;
 import com.igw.igw.fragment.my.model.MyModel;
 import com.igw.igw.fragment.my.presenter.MyPresenter;
 import com.igw.igw.modoule.abouthelp.view.FeedbackOrHelpActivity;
+import com.igw.igw.modoule.im.view.MyFriendActivity;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.modoule.login.view.UpdateActivity;
 import com.igw.igw.modoule.login.view.UpdateUserInfoActivity;
@@ -60,6 +61,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     private StormCircleImageView iv_head_view; //
     private LinearLayout ll_update_version;
+    private LinearLayout ll_my_friend;
 
     private UserInfoBean.DataBean mData; // 用户数据
 
@@ -100,6 +102,9 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         tvMoneyRmb = bindView(R.id.tv_money_rmb);
         iv_head_view = bindView(R.id.iv_head_view);
         ll_update_version = bindView(R.id.ll_update_version);
+        ll_my_friend = bindView(R.id.ll_my_friend);
+
+
 
         initData();
 
@@ -143,6 +148,17 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 
     private void setUpListener() {
+
+        ll_my_friend.setOnClickListener(v -> {
+
+
+            MyFriendActivity.Companion.startSelf((MainActivity)mContext);
+
+
+        });
+
+
+
 
         ll_update_version.setOnClickListener(v -> {
 

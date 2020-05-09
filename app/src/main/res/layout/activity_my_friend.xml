@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modoule.im.view.MyFriendActivity">
+
+
+    <include layout="@layout/common_status_bar" />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.igw.igw.widget.storm.EditTextCenter
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                app:isOpen="true"
+                app:isCenter="true"
+                app:isShowLeft="true"
+                android:paddingStart="8dp"
+                android:layout_marginStart="67dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="67dp"
+                android:layout_marginBottom="18dp"
+                android:textSize="12sp"
+                android:background="@drawable/bg_search"
+                android:drawableStart="@drawable/search"
+                android:drawablePadding="10dp"
+                android:hint="@string/hint_search" />
+
+
+            <include layout="@layout/default_line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10.5dp"
+                    android:background="@drawable/recentchat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12.5dp"
+                    android:text="@string/bg_friends_recent_chat"
+                    android:textColor="@color/color333"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/default_line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10.5dp"
+                    android:background="@drawable/businessusers" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12.5dp"
+                    android:text="@string/bg_friends_businessusers_chat"
+                    android:textColor="@color/color333"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/default_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_height="49dp">
+
+                <ImageView
+                    android:layout_marginStart="10.5dp"
+                    android:background="@drawable/ordinaryusers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/color333"
+                    android:layout_marginStart="12.5dp"
+                    android:textSize="14sp"
+                    android:text="@string/bg_friends_ordinaryusers_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+            <include layout="@layout/default_line"/>
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_friends"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+
+        <com.igw.igw.widget.storm.SideBar
+            android:id="@+id/sb_letter"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_width="9.5dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center"
+            android:layout_marginBottom="108.5dp"
+            android:layout_marginTop="127dp" />
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

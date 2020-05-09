@@ -110,4 +110,9 @@
     <string name="not_login_in">not login in</string>
     <string name="warning_not_input_password">The password cannot be empty</string>
     <string name="warning_two_password_not_same">The two input passwords are inconsistent</string>
+    <string name="hint_search">search member</string>
+    <string name="bg_friends_recent_chat">最近聊天</string>
+    <string name="bg_friends_businessusers_chat">商务用户</string>
+    <string name="bg_friends_ordinaryusers_chat">普通用户</string>
+    <string name="title_my_friends_list">我的好友</string>
 </resources>

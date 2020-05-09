@@ -5,6 +5,7 @@ import android.service.autofill.TextValueSanitizer;
 
 import com.shengshijingu.yashiji.common.controller.CommonController;
 import com.shengshijingu.yashiji.common.controller.HomeController;
+import com.shengshijingu.yashiji.common.controller.IMController;
 import com.shengshijingu.yashiji.common.controller.LoginController;
 import com.shengshijingu.yashiji.common.controller.MessageController;
 
@@ -59,5 +60,16 @@ public class ControllerUtils {
         }
         return  messageController;
     }
+
+
+    private static IMController imController;
+    public static IMController getImController(){
+        if(imController == null) {
+            imController = new IMController();
+        }
+        return  imController;
+    }
+
+
 
 }

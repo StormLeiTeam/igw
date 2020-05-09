@@ -1,5 +1,6 @@
 package com.igw.igw.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +18,5 @@ public class SoftInputUtils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
-
-
 
 }

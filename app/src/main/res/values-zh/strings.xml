@@ -108,4 +108,9 @@
     <string name="not_login_in">未登陆</string>
     <string name="warning_not_input_password">密码不能为空</string>
     <string name="warning_two_password_not_same">两次输入密码不一致</string>
+    <string name="hint_search">搜索好友</string>
+    <string name="bg_friends_recent_chat">最近聊天</string>
+    <string name="bg_friends_businessusers_chat">商务用户</string>
+    <string name="bg_friends_ordinaryusers_chat">普通用户</string>
+    <string name="title_my_friends_list">我的好友</string>
 </resources>

@@ -145,4 +145,15 @@
         <attr name="picker_split_height" format="dimension" />
     </declare-styleable>
 
+
+    <declare-styleable name="EditTextCenter">
+
+        <attr name="isCenter" format="boolean"/>
+        <attr name="isShowLeft" format="boolean"/>
+        <attr name="isShowHint" format="boolean"/>
+        <attr name="drawableIcon" format="reference"/>
+        <attr name="isOpen" format="boolean"/>
+
+    </declare-styleable>
+
 </resources>

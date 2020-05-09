@@ -199,6 +199,17 @@ public interface ApiService {
     @POST("/api/common/lastVersion")
     Observable<ResponseBody> updateVersion(@Body RequestBody requestBody);
 
+
+    /**
+     * 获取我的好友列表
+     * @param requestBody
+     * @return
+     */
+    @POST("api/friend/friendList")
+    Observable<ResponseBody> getFriends(@Body RequestBody requestBody);
+
+
+
 }
 
 
