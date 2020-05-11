@@ -89,6 +89,7 @@ class SplashActivity : AppCompatActivity() {
                     override fun onCompleted() {
 
                         val login = LoginManager.instance.isLogin()
+                        LogUtils.d(TAG,"获取登录状态  ===  $login" )
 
                         if (login) {
 

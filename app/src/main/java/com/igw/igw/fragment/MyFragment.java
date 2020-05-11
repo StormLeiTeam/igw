@@ -167,6 +167,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         llLoginOut.setOnClickListener(v -> {
 
             loginOut();
+            initUserInfoForView();
 
 
         });

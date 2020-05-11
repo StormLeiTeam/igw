@@ -13,7 +13,7 @@ import com.igw.igw.utils.SPUtils
  *
  * @Describe
  */
-class LoginoutState : UserState {
+class LoginOutState : UserState {
 
 
     fun loginOut() {

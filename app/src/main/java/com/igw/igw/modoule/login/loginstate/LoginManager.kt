@@ -2,11 +2,9 @@ package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
 import android.util.Log
+import com.igw.igw.app.IGWApplication
 import com.igw.igw.bean.login.LoginBean
-import com.igw.igw.utils.GsonUtils
-import com.igw.igw.utils.LogUtils
-import com.igw.igw.utils.SPUtils
-import com.igw.igw.utils.SharedUtils
+import com.igw.igw.utils.*
 
 /**
  *
@@ -20,7 +18,7 @@ import com.igw.igw.utils.SharedUtils
 class LoginManager {
 
 
-    private var loginState: UserState = LoginoutState()
+    private var loginState: UserState = LoginOutState()
 
     //
     companion object {
@@ -48,11 +46,9 @@ class LoginManager {
         // 存储 用户信息
         // 更改用户状态
 
-        state(LoginState())
+        state(LoginInState())
 
-//        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO, userInfo)
 
-//        SPUtils.getInstance(USER_INFO).put(KEY_TOKEN,)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE, true)
         //保存token
 
@@ -65,7 +61,11 @@ class LoginManager {
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
 
-        (loginState as LoginState).initData(userInfo)
+        (loginState as LoginInState).initData(user.token)
+        (loginState as LoginInState).initRongToken(user.rongyunToken)
+
+        (loginState as LoginInState).initRongYun()
+
 
     }
 
@@ -76,10 +76,8 @@ class LoginManager {
     fun loginOut() {
         // 清除个人信息
         // 更改用户状态
-
-        state(LoginoutState())
-
-        (loginState as LoginoutState).loginOut()
+        state(LoginOutState())
+        (loginState as LoginOutState).loginOut()
 
     }
 
@@ -94,24 +92,29 @@ class LoginManager {
         val isLogin = SPUtils.getInstance(Contanct.USER_INFO).getBoolean(Contanct.KEY_LOGIN_STATE)
 
         if (isLogin) {
-            state(LoginState())
-
-
-//            var userInfo = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_INFO)
-
+            state(LoginInState())
 
             // bug 用
             var token = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_TOKEN)
 
             LogUtils.d(TAG, "获取的token 的值==> $token")
-//            userInfo?.let {
+//          userInfo?.let {
             token?.let {
-                (loginState as LoginState).initData(token)
+                (loginState as LoginInState).initData(token)
             }
-//            }
+
+
+            var  rongToken = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_RONGTOKEN)
+            rongToken?.let {
+                (loginState as LoginInState).initRongToken(rongToken)
+                (loginState as LoginInState).initRongYun()
+
+            }
+
+
+
         } else {
 
-//            state(LoginoutState())
             loginOut()
 
         }
@@ -143,16 +146,30 @@ class LoginManager {
     fun token(context: Context): String? {
 
         var token: String? = null
-        if (loginState is LoginoutState) {
+        if (loginState is LoginOutState) {
             loginState.CheckLoginState(context)
         } else {
 
-            token = (loginState as LoginState).getToken().toString()
+            token = (loginState as LoginInState).getToken().toString()
 
         }
         return token
     }
 
+
+    fun rongYunToken(context: Context){
+
+
+        var token :String? = null
+
+        if (loginState is LoginInState) {
+
+            token = (loginState as LoginInState).getRongYunToken()
+
+        }
+
+
+    }
 //    fun updateUserInfo(token: String, userinfoJson: String) {
 //
 //        if (loginState is LoginState) {

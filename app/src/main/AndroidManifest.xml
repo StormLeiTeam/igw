@@ -17,7 +17,22 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.im.view.MyFriendActivity"></activity>
+
+
+        <activity android:name=".modoule.im.view.MyFriendActivity" />
+        <activity
+            android:name=".modoule.im.view.RecentChatActivity"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.igw.igw"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
         <activity android:name=".modoule.city.view.ShareLinkActivity" />
         <activity android:name=".modoule.abouthelp.view.HelpInfoActivity" /> <!-- <activity android:name=".modoule.abouthelp.view.HelpActivity" /> -->
         <activity android:name=".modoule.login.view.LoginActivity" />

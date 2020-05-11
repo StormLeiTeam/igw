@@ -18,6 +18,7 @@ import com.igw.igw.modoule.im.adapter.MyFriendSearchAdapter
 import com.igw.igw.modoule.im.model.MyFriendModel
 import com.igw.igw.modoule.im.presenter.MyFriendPresenter
 import com.igw.igw.utils.LocaleUtils
+import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -90,6 +91,25 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
     }
 
     private fun setUpListener() {
+
+        ll_near_chat.setOnClickListener {
+
+            // 最近聊天
+            LogUtils.d(TAG,"跳转  -- ")
+
+//            RecentChatActivity.startSelf(this)
+
+
+            var intent = Intent(this, RecentChatActivity::class.java)
+
+            this.startActivity(intent)
+
+        }
+
+
+
+
+
 
 
         et_search.setOnFocusChangeListener { v, hasFocus ->

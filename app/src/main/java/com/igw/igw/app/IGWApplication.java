@@ -39,9 +39,11 @@ public class IGWApplication extends Application {
         initConfig();
         context = this;
         initLogConfig();
+        RongIM.init(this, "p5tvi9dspqek4");
         LoginManager.Companion.getInstance().init();
         LoginManager.Companion.getInstance().initLoginState();
-        RongIM.init(this, "p5tvi9dspqek4");
+
+
 
     }
 

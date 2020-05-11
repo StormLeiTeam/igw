@@ -32,11 +32,13 @@ class LoginModePresenter(model: LoginContract.Model) :
 
         mModel.loginByAccent(accent, password, object : NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java) {
             override fun onSuccess(m: LoginBean.DataBean?) {
-                LogUtils.d(TAG,m.toString())
 
                 m?.let {
 
                     mRootView.loginSuccess(m)
+
+                    LogUtils.d(TAG,"账号密码登录 ->  ${m.token } 融云token --{${m.rongyunToken}}")
+
 
                 }
 
@@ -44,12 +46,18 @@ class LoginModePresenter(model: LoginContract.Model) :
 
             override fun onFail(code: Int, msg: String?) {
 
+                LogUtils.d(TAG,"登录失败 $msg")
+
+
 
             }
 
 
 
             override fun onError(msg: String?) {
+
+                LogUtils.d(TAG,"登录错误 $msg")
+
 
             }
 
@@ -66,16 +74,20 @@ class LoginModePresenter(model: LoginContract.Model) :
 
                 m?.let {
                     mRootView.loginSuccess(m)
+                    LogUtils.d(TAG,"邮箱密码登录 ->  ${m.token } 融云token --{${m.rongyunToken}}")
+
                 }
 
             }
 
             override fun onFail(code: Int, msg: String?) {
+                LogUtils.d(TAG,"登录失败 $msg")
 
 
             }
 
             override fun onError(msg: String?) {
+                LogUtils.d(TAG,"登录错误 $msg")
 
 
             }
