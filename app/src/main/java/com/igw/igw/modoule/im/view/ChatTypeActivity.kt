@@ -97,6 +97,7 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
 
     override fun initPresenter() {
         mPresenter = ChatPresenter(ChatModel())
+        mPresenter.attachView(this)
     }
 
     override fun getLayoutId(): Int = R.layout.activity_chat_type

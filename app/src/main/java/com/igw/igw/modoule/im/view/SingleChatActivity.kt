@@ -2,37 +2,36 @@ package com.igw.igw.modoule.im.view
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import com.igw.igw.R
+import com.igw.igw.utils.LogUtils
 import io.rong.imkit.RongIM
 import io.rong.imkit.fragment.ConversationFragment
 import io.rong.imlib.model.Conversation
-import io.rong.push.RongPushClient
 
 /**
  * 单聊会话界面
  */
-class SingleChatActivity : AppCompatActivity() {
+class SingleChatActivity : FragmentActivity() {
 
 
-    companion object{
+    companion object {
 
-        val TAG =  "SingleChatActivity"
+        val TAG = "SingleChatActivity"
 
-        public fun  startSelfOfIntent(activity: Activity,friendId:String,friendName:String ){
+        public fun startSelfOfIntent(activity: Activity, friendId: String, friendName: String) {
 
-            val intent = Intent(activity,SingleChatActivity::class.java)
-            intent.putExtra("friendId",friendId)
-            intent.putExtra("friendName",friendName)
+            val intent = Intent(activity, SingleChatActivity::class.java)
+            intent.putExtra("friendId", friendId)
+            intent.putExtra("friendName", friendName)
             activity.startActivity(intent)
         }
     }
 
 
-    private var friendName : String? = null
-    private var friendId:String ?= null
-
+    private var friendName: String? = null
+    private var friendId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +45,14 @@ class SingleChatActivity : AppCompatActivity() {
     private fun startChat() {
 
 
-     var  conversationType  = Conversation.ConversationType.PRIVATE;
+        var conversationType = Conversation.ConversationType.PRIVATE
 
         friendId = intent.getStringExtra("friendId")
         friendName = intent.getStringExtra("friendName")
 
-        RongIM.getInstance().startConversation(this , conversationType, friendId, friendName, null)
+
+        LogUtils.d(TAG,"获取  friendID $friendId he  name --> $friendName")
+        RongIM.getInstance()?.startConversation(this, conversationType, friendId, friendName, null)
 
     }
 
