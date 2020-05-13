@@ -13,6 +13,7 @@ import com.igw.igw.utils.RvViewHolder
 import com.igw.igw.widget.storm.StormCircleImageView
 import com.tuacy.fuzzysearchlibrary.FuzzySearchBaseAdapter
 import com.tuacy.fuzzysearchlibrary.IFuzzySearchRule
+import io.rong.imkit.widget.adapter.MessageListAdapter
 
 /**
  *
@@ -82,10 +83,30 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
             GlideUtils.loadImage(holder.itemView.context, it[position].friendHeadImage, headImg)
 
 
+            mListener?.let {
+
+                it.onItemClick(mDataList[position], position)
+
+            }
+
         }
 
 
     }
 
+
+    private var mListener: OnItemClickListener<FriendBean.DataBean.FriendsBean>? = null
+
+
+    public fun onItemClickListener(listener:OnItemClickListener<FriendBean.DataBean.FriendsBean>){
+
+        this.mListener = listener
+    }
+
+
+//    public interface OnItemClickListener{
+//
+//        fun onItemClick(bean:FriendBean.DataBean.FriendsBean,position:Int)
+//    }
 
 }

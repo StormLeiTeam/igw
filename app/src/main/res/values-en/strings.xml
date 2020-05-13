@@ -115,4 +115,8 @@
     <string name="bg_friends_businessusers_chat">商务用户</string>
     <string name="bg_friends_ordinaryusers_chat">普通用户</string>
     <string name="title_my_friends_list">我的好友</string>
+    <string name="bg_friends_businessusers_chating">商务聊天室</string>
+    <string name="hint_chattype_public_chating">公共聊天室</string>
+    <string name="bg_chattype_recent_chat">最近聊天</string>
+    <string name="title_chat_type">双语聊天城</string>
 </resources>

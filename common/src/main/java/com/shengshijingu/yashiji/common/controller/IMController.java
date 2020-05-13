@@ -30,4 +30,46 @@ public class IMController extends Controller {
         ApiSubscribe(NetApi.getApiService().getFriends(getRequestBody(params)),observer);
 
     }
+
+
+
+    /**
+     * 创建聊天室
+     *
+     * @param chatroomId
+     * @param chatroomName
+     * @param observer
+     */
+    public void  createChatRoom(String chatroomId,String chatroomName,  Observer observer){
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("chatroomId", chatroomId);
+        params.put("chatroomName", chatroomName);
+
+        ApiSubscribe(NetApi.getApiService().createChatRoom(getRequestBody(params)),observer);
+
+    }
+
+
+    public void destoryChatroom(String chatroomId, Observer observer){
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("chatroomId", chatroomId);
+
+        ApiSubscribe(NetApi.getApiService().destoryChatRoom(getRequestBody(params)),observer);
+
+
+    }
+
+
+    public void chatroomUsers(String chatroomId, Observer observer){
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("chatroomId", chatroomId);
+
+        ApiSubscribe(NetApi.getApiService().chatRoomUsers(getRequestBody(params)),observer);
+
+    }
+
 }

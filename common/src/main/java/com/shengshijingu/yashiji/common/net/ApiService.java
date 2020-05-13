@@ -209,6 +209,44 @@ public interface ApiService {
     Observable<ResponseBody> getFriends(@Body RequestBody requestBody);
 
 
+    /**
+     * 创建聊天室
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/rongyun/createChatroom")
+    Observable<ResponseBody> createChatRoom(@Body RequestBody requestBody);
+
+
+
+    /**
+     * 销毁聊天室
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/rongyun/destoryChatroom")
+    Observable<ResponseBody> destoryChatRoom(@Body RequestBody requestBody);
+
+
+    /**
+     * 获取聊天室成员
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/rongyun/chatroomUsers")
+    Observable<ResponseBody> chatRoomUsers(@Body RequestBody requestBody);
+
+
+
+    /**
+     * 是否在聊天室   目前这个无效
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/rongyun/destoryChatroom")
+    Observable<ResponseBody> isContainChatRoom(@Body RequestBody requestBody);
+
+
 
 }
 

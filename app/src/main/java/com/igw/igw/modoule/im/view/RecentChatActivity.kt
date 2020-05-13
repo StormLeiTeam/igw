@@ -44,11 +44,11 @@ class RecentChatActivity : FragmentActivity() {
 //       supportedConversation.put(RongPushClient.ConversationType.PRIVATE.getValue(), false)
 //        RongIM.getInstance().startConversationList(Context , supportedConversation)
 //
-
-        var supportedConversation : HashMap<String,Boolean> = HashMap<String , Boolean>()
-        supportedConversation[Conversation.ConversationType.PRIVATE.name] = false
-
-        RongIM.getInstance().startConversationList(this, supportedConversation)
+//
+//        var supportedConversation : HashMap<String,Boolean> = HashMap<String , Boolean>()
+//        supportedConversation[Conversation.ConversationType.PRIVATE.name] = false
+//
+//        RongIM.getInstance().startConversationList(this, supportedConversation)
 
 
 //

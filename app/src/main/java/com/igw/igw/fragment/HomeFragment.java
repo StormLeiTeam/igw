@@ -1,6 +1,7 @@
 package com.igw.igw.fragment;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
@@ -15,6 +16,7 @@ import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 public class HomeFragment extends BaseDataFragment {
 
     private LinearLayout ll_home_citystation;
+    private ImageView iv_home_msg;
 
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -41,6 +43,8 @@ public class HomeFragment extends BaseDataFragment {
         onFirstLoadSuccess();
         ll_home_citystation = bindView(R.id.ll_home_citystation);
         ll_home_citystation.setOnClickListener(this);
+        iv_home_msg = bindView(R.id.iv_home_msg);
+        
 
     }
 

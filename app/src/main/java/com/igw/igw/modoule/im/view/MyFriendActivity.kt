@@ -2,10 +2,7 @@ package com.igw.igw.modoule.im.view
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -15,13 +12,13 @@ import com.igw.igw.bean.FriendBean
 import com.igw.igw.modoule.im.MyFriendContract
 import com.igw.igw.modoule.im.adapter.MyFriendAdapter
 import com.igw.igw.modoule.im.adapter.MyFriendSearchAdapter
+import com.igw.igw.modoule.im.adapter.OnItemClickListener
 import com.igw.igw.modoule.im.model.MyFriendModel
 import com.igw.igw.modoule.im.presenter.MyFriendPresenter
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_my_friend.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
@@ -92,17 +89,34 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
     private fun setUpListener() {
 
+
+
+        mAdapter.onItemClickListener(object :MyFriendAdapter.OnItemClickListener{
+            override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
+
+
+                singleChat(item)
+
+
+            }
+
+
+        })
+
+
+
+
+
         ll_near_chat.setOnClickListener {
 
             // 最近聊天
             LogUtils.d(TAG,"跳转  -- ")
 
 //            RecentChatActivity.startSelf(this)
+//
+//            )
 
-
-            var intent = Intent(this, RecentChatActivity::class.java)
-
-            this.startActivity(intent)
+            ChatTypeActivity.startSelf(this)
 
         }
 
@@ -169,6 +183,17 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
     }
 
+    private fun singleChat(item: FriendBean.DataBean.FriendsBean) {
+
+
+        // 进入到单聊模式
+
+        LogUtils.d(TAG,"选择单聊  --0 ")
+
+        SingleChatActivity.startSelfOfIntent(this,item.friendUserId.toString(),item.friendNickName)
+
+    }
+
     override fun initPresenter() {
 
         mPresenter = MyFriendPresenter(MyFriendModel())
@@ -200,11 +225,31 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
         mAdapter.refreshData(friends)
 
 
+        initSearchAdapter(data)
+
+
+
+    }
+
+    private fun initSearchAdapter(data: FriendBean.DataBean) {
+
+
         mSearchAdapter = MyFriendSearchAdapter(dataList = data.friends)
         val manager  = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.VERTICAL
         rv_search.layoutManager = manager
         rv_search.adapter = mSearchAdapter
+
+
+        mSearchAdapter.onItemClickListener(object :OnItemClickListener<FriendBean.DataBean.FriendsBean>{
+            override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
+
+
+
+                singleChat(item)
+            }
+
+        })
 
     }
 

@@ -108,7 +108,30 @@ class MyFriendAdapter(context: Context,isOpenLoadMore: Boolean ): BaseAdapter<Fr
 
             GlideUtils.loadImage(mContext,it[position].friendHeadImage,headImg)
 
+
+            setUpListener(rvViewHolder, position)
+
         }
+
+
+
+
+
+
+    }
+
+    private fun setUpListener(holder: RvViewHolder, position: Int) {
+
+
+        holder.itemView().setOnClickListener {
+
+            mListener?.let {
+
+                it.onItemClick(mDatas!![position],position)
+            }
+        }
+
+
 
 
     }
@@ -128,5 +151,17 @@ class MyFriendAdapter(context: Context,isOpenLoadMore: Boolean ): BaseAdapter<Fr
         return firstName[0]
     }
 
+
+
+
+    private var mListener: OnItemClickListener? = null
+
+    public  fun onItemClickListener(listener:OnItemClickListener){
+        this.mListener = listener
+    }
+    public interface OnItemClickListener{
+
+        fun onItemClick(item:FriendBean.DataBean.FriendsBean,position: Int)
+    }
 
 }
