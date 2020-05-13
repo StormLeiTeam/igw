@@ -72,11 +72,13 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
         // 商务聊天
         ll_business_chat.setOnClickListener {
 
+            mPresenter.createChatRoom(bussiessChatRoom,"商务聊天室")
+
         }
 
         ll_public_chat.setOnClickListener {
 
-            mPresenter.createChatRoom("0001","公共聊天室")
+            mPresenter.createChatRoom(publicChatRoom,"公共聊天室")
         }
 
         ll_recent_chat.setOnClickListener {
