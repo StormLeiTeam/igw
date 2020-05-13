@@ -3,6 +3,7 @@ package com.shengshijingu.yashiji.common.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -61,6 +62,18 @@ public abstract class BaseOldFragment extends Fragment {
         }
         return mBaseView;
     }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initViews();
+    }
+
+    protected  void initViews(){
+
+    };
 
     /**
      * 显示什么样的标题

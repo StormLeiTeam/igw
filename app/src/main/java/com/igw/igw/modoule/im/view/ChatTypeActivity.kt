@@ -20,12 +20,12 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
 
     companion object{
 
-        val TAG = "ChatTypeActivity"
-
-
-
-        val publicChatRoom = "0001"
-        val bussiessChatRoom = "0002"
+//        val TAG = "ChatTypeActivity"
+//
+//
+//
+//        val publicChatRoom = "0001"
+//        val bussiessChatRoom = "0002"
         fun startSelf(activity: Activity){
 
             var  intent = Intent(activity,ChatTypeActivity::class.java)
@@ -52,41 +52,52 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
 //
 //    }
 
+    var mFragment : ChatTypeFragment? = null
+
+
     private fun setUpView() {
 
 
 
         StatusBarUtils.setDarkMode(this)
 
-        status_bar_main.setTitle(resources.getString(R.string.title_chat_type))
-        status_bar_main.setTitleTextSize(16F)
-        status_bar_main.setConfirmVisible(View.VISIBLE)
-        status_bar_main.setConfirmText("中/En")
-        status_bar_main.setConfirmTextColor(R.color.black_000000)
-        status_bar_main.setConfirmTextSize(15F)
+//        status_bar_main.setTitle(resources.getString(R.string.title_chat_type))
+//        status_bar_main.setTitleTextSize(16F)
+//        status_bar_main.setConfirmVisible(View.VISIBLE)
+//        status_bar_main.setConfirmText("中/En")
+//        status_bar_main.setConfirmTextColor(R.color.black_000000)
+//        status_bar_main.setConfirmTextSize(15F)
+
+        mFragment = ChatTypeFragment()
+
+        val  manager = supportFragmentManager
+
+        val bt = manager.beginTransaction()
+        bt.replace(R.id.fl_main,mFragment!!)
+        bt.commit()
     }
 
     private fun setUpListener() {
 
-
-        // 商务聊天
-        ll_business_chat.setOnClickListener {
-
-            mPresenter.createChatRoom(bussiessChatRoom,"商务聊天室")
-
-        }
-
-        ll_public_chat.setOnClickListener {
-
-            mPresenter.createChatRoom(publicChatRoom,"公共聊天室")
-        }
-
-        ll_recent_chat.setOnClickListener {
-
-            RecentChatActivity.startSelf(this)
-
-
-        }
+//
+//        // 商务聊天
+//        ll_business_chat.setOnClickListener {
+//
+//            mPresenter.createChatRoom(bussiessChatRoom,"商务聊天室")
+//
+//        }
+//
+//        ll_public_chat.setOnClickListener {
+//
+//            mPresenter.createChatRoom(publicChatRoom,"公共聊天室")
+//        }
+//
+//        ll_recent_chat.setOnClickListener {
+//
+//            RecentChatActivity.startSelf(this)
+//
+//
+//        }
     }
 
     override fun initView() {
@@ -120,50 +131,50 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
 
     override fun createSuccessChatRoom(type: String) {
 
-       when(type){
-
-           publicChatRoom -> {
-               // 公共聊天室 创建成功
-
-
-               GroupChatRoomActivity.startSelfOfIntent(this, publicChatRoom,"公共聊天室")
-
-
-
-           }
-
-           bussiessChatRoom -> {
-               // 商务聊天室创建成功
-               GroupChatRoomActivity.startSelfOfIntent(this, bussiessChatRoom,"商务聊天室")
-
-
-           }
-
-       }
+//       when(type){
+//
+//           publicChatRoom -> {
+//               // 公共聊天室 创建成功
+//
+//
+//               GroupChatRoomActivity.startSelfOfIntent(this, publicChatRoom,"公共聊天室")
+//
+//
+//
+//           }
+//
+//           bussiessChatRoom -> {
+//               // 商务聊天室创建成功
+//               GroupChatRoomActivity.startSelfOfIntent(this, bussiessChatRoom,"商务聊天室")
+//
+//
+//           }
+//
+//       }
 
     }
 
     override fun createFailChatRoom(type: String, code: Int, msg: String) {
-        when(type){
-
-            publicChatRoom -> {
-                // 公共聊天室 创建成功
-
-
-            ToastUtil.showCenterToast(this,"公共聊天室进入失败")
-
-
-            }
-
-            bussiessChatRoom -> {
-                // 商务聊天室创建成功
-
-                ToastUtil.showCenterToast(this,"商务聊天室进入失败")
-
-
-            }
-
-        }
+//        when(type){
+//
+//            publicChatRoom -> {
+//                // 公共聊天室 创建成功
+//
+//
+//            ToastUtil.showCenterToast(this,"公共聊天室进入失败")
+//
+//
+//            }
+//
+//            bussiessChatRoom -> {
+//                // 商务聊天室创建成功
+//
+//                ToastUtil.showCenterToast(this,"商务聊天室进入失败")
+//
+//
+//            }
+//
+//        }
 
 
     }

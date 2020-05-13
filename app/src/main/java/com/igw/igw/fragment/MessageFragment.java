@@ -5,6 +5,7 @@ import android.support.v7.view.menu.MenuPresenter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
     private MessageCenterAdapter mAdapter;
 
+    private ImageView iv_back;
+
     public static MessageFragment getInstance() {
         MessageFragment messageFragment = new MessageFragment();
         return messageFragment;
@@ -78,7 +81,6 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
         initData();
 
 
-        setUpListener();
         // 请求好数据再用
 
         mBadgeView = new BadgeView(mContext, tv_title);
@@ -90,8 +92,25 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
     }
 
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        iv_back = bindView(R.id.iv_base_back);
+
+        setUpListener();
+
+    }
+
     private void setUpListener() {
 
+        iv_back.setOnClickListener(v -> {
+
+
+            MainActivity activity = (MainActivity) getActivity();
+
+            activity.showPagerDependButton(R.id.ll_main_home);
+        });
 
         mAdapter.addOnItemClickListener(new MessageCenterAdapter.OnItemClickListener() {
             @Override

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.igw.igw.fragment.CityFragment;
 import com.igw.igw.fragment.HomeFragment;
 import com.igw.igw.fragment.MessageFragment;
 import com.igw.igw.fragment.MyFragment;
+import com.igw.igw.modoule.im.view.ChatTypeFragment;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
@@ -38,6 +40,8 @@ public class MainActivity extends BaseActivity {
     private MyFragment myFragment;
 
     private CityFragment cityFragment;
+
+    private ChatTypeFragment chatTypeFragment;
 
     private LinearLayout ll_main_my, ll_main_order, ll_main_message, ll_main_home;
 
@@ -153,14 +157,14 @@ public class MainActivity extends BaseActivity {
                 }
                 position = 1;
                 break;
-            case R.id.ll_main_message:
+            case R.id.iv_home_msg:
                 if (null == messageFragment) {
                     messageFragment = MessageFragment.getInstance();
                     fragmentTransaction.add(R.id.fl_main, messageFragment);
                 } else {
                     fragmentTransaction.show(messageFragment);
                 }
-                position = 2;
+                position = 4;
                 break;
             case R.id.ll_main_my:
                 if (null == myFragment) {
@@ -170,6 +174,17 @@ public class MainActivity extends BaseActivity {
                     fragmentTransaction.show(myFragment);
                 }
                 position = 3;
+                break;
+
+            case R.id.ll_main_message:
+                if (null == chatTypeFragment) {
+                    chatTypeFragment = ChatTypeFragment.Companion.getInstance();
+                    fragmentTransaction.add(R.id.fl_main, chatTypeFragment);
+                }else{
+                    fragmentTransaction.show(chatTypeFragment);
+
+                }
+                position = 2;
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();
@@ -217,6 +232,10 @@ public class MainActivity extends BaseActivity {
         }
         if (null != cityFragment) {
             fragmentTransaction.hide(cityFragment);
+        }
+
+        if (null != chatTypeFragment) {
+            fragmentTransaction.hide(chatTypeFragment);
         }
 
     }
