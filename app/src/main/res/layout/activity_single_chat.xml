@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".modoule.im.view.SingleChatActivity">
 
-
+    <include layout="@layout/common_status_bar"/>
 
     <FrameLayout
         android:id="@+id/container"

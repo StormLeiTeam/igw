@@ -58,14 +58,16 @@ public class SideBar extends View {
         int singleHeight = height / b.length;// 获取每一个字母的高度
 
         for (int i = 0; i < b.length; i++) {
-            paint.setColor(Color.rgb(0x45, 0xA4, 0xF7));
+//            paint.setColor(Color.rgb(0x45, 0xA4, 0xF7));
             // paint.setColor(Color.WHITE);
+            paint.setColor(Color.parseColor("#555555"));
+
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             paint.setTextSize(UIUtils.sp2px(12f));
             // 选中的状态
             if (i == choose) {
-                paint.setColor(Color.parseColor("#3399ff"));
+                paint.setColor(Color.parseColor("#000000"));
                 paint.setTextSize(UIUtils.sp2px(12f));
                 paint.setFakeBoldText(true);
             }

@@ -9,6 +9,8 @@
 
 
 
+    <include layout="@layout/common_status_bar"/>
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
