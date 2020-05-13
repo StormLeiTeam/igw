@@ -247,6 +247,13 @@ public interface ApiService {
     Observable<ResponseBody> isContainChatRoom(@Body RequestBody requestBody);
 
 
+    /**
+     * 开屏页面
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/advertise/info")
+    Observable<ResponseBody> splashNet(@Body RequestBody requestBody);
 
 }
 

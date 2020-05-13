@@ -87,4 +87,18 @@ public class CommonController extends Controller{
 
     }
 
+
+    /**
+     * 开屏页面的回调
+     * @param platform
+     * @param observer
+     */
+    public void splashNet(int platform, Observer observer){
+        HashMap<String, Object> param = new HashMap<>();
+
+        param.put("platform", platform);
+
+        ApiSubscribe(NetApi.getApiService().splashNet(getRequestBody(param)),observer);
+
+    }
 }
