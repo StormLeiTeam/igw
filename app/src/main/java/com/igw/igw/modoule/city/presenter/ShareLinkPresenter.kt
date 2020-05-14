@@ -17,6 +17,8 @@ class ShareLinkPresenter(model: ShareLInkContract.Model) :
 
     companion object{
         val TAG  = "ShareLinkPresenter"
+
+
     }
     override fun requestData() {
 
