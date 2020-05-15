@@ -1,7 +1,8 @@
 package com.igw.igw.modoule.messagemodule
 
-import android.os.Message
+import com.igw.igw.bean.message.DealMessageBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.bean.message.ReadedMessage
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
 import com.igw.igw.mvp.view.IBaseView
@@ -24,6 +25,15 @@ class MessageContract {
         fun onFail(code: Int, msg: String)
 
 
+        fun onDealMessageSuccess(data: DealMessageBean.DataBean?)
+        fun onDealMessageFail(code: Int, msg: String)
+
+
+
+        fun readedSuccess(data:ReadedMessage.DataBean)
+        fun readedFail(code: Int, msg: String)
+
+
 
     }
 
@@ -33,12 +43,21 @@ class MessageContract {
 
         fun messageCenterList(observer: NetObserver<MessageCenterBean.DataBean>)
 
+        fun dealMessage(id:Int,isAgree: Int,observer: NetObserver<DealMessageBean.DataBean>)
+
+
+        // 接口 未给出
+        fun readedMessage(id: Int,isRead:Int, observer: NetObserver<ReadedMessage.DataBean>)
 
     }
 
-    interface Presenter: IBasePresenter{
+    interface Presenter : IBasePresenter {
 
 
         fun messageCenterList()
+
+        fun dealMessage(id: Int, isAgree: Int)
+
+        fun readedMessage(id: Int,isRead:Int)
     }
 }

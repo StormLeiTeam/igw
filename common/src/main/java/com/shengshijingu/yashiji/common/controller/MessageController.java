@@ -34,4 +34,36 @@ public class MessageController extends Controller {
     }
 
 
+    /**
+     *  处理消息
+     * @param id
+     * @param isAgree  1 同意 2 不同意
+     * @param observer
+     */
+    public void dealMessage(int id,int  isAgree, Observer observer){
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("isAgree",isAgree);
+        ApiSubscribe(NetApi.getApiService().dealMessage(getRequestBody(params)),observer);
+    }
+
+
+    /**
+     * 此接口未完成 需要修改
+     * @param id
+     * @param read
+     * @param observer
+     */
+    public void readedMessage(int id, int read, Observer observer){
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("isAgree",read);
+
+        ApiSubscribe(NetApi.getApiService().readedMessage(getRequestBody(params)),observer);
+
+    }
+
 }

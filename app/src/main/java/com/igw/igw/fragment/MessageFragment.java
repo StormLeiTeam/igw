@@ -1,6 +1,8 @@
 package com.igw.igw.fragment;
 
 import android.nfc.Tag;
+import android.nfc.tech.NfcB;
+import android.support.design.shape.MaterialShapeDrawable;
 import android.support.v7.view.menu.MenuPresenter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +10,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.bean.message.DealMessageBean;
 import com.igw.igw.bean.message.MessageCenterBean;
+import com.igw.igw.bean.message.ReadedMessage;
 import com.igw.igw.modoule.messagemodule.MessageContract;
 import com.igw.igw.modoule.messagemodule.adapter.MessageCenterAdapter;
 import com.igw.igw.modoule.messagemodule.model.MessageListModel;
@@ -22,8 +27,10 @@ import com.igw.igw.utils.statusbarutils.StatusBarUtil;
 import com.igw.igw.widget.storm.BadgeView;
 import com.igw.igw.widget.storm.StatusBarView;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
+import com.shengshijingu.yashiji.common.util.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -46,6 +53,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     private MessageCenterAdapter mAdapter;
 
     private ImageView iv_back;
+
+    private int noReadCount = 0;
 
     public static MessageFragment getInstance() {
         MessageFragment messageFragment = new MessageFragment();
@@ -87,8 +96,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
         mBadgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         mBadgeView.setBadgeMargin(0, 10);
-        mBadgeView.setText("1");
-        mBadgeView.show();
+        mBadgeView.setText("");
+
 
     }
 
@@ -112,12 +121,21 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
             activity.showPagerDependButton(R.id.ll_main_home);
         });
 
+
+
         mAdapter.addOnItemClickListener(new MessageCenterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(@NotNull MessageCenterBean.DataBean.RowsBean bean, int positon) {
 
 
                 LogUtils.d(TAG, "item 点击事件 ");
+
+
+                getMPresenter().readedMessage(bean.getId(), 1);
+
+
+
+
             }
         });
 
@@ -126,6 +144,10 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
             @Override
             public void onAgree(@NotNull MessageCenterBean.DataBean.RowsBean bean, int position) {
                 LogUtils.d(TAG, "点击了同意");
+
+                getMPresenter().dealMessage(bean.getId(),1);
+//                getMPresenter().readedMessage(bean.getId(), 1);
+
             }
         });
 
@@ -133,6 +155,10 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
             @Override
             public void onRefuse(@NotNull MessageCenterBean.DataBean.RowsBean bean, int position) {
                 LogUtils.d(TAG, "点击了拒绝");
+
+                getMPresenter().dealMessage(bean.getId(),2);
+//                getMPresenter().readedMessage(bean.getId(), 1);
+
             }
         });
     }
@@ -153,6 +179,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
 
         getMPresenter().messageCenterList();
+        showLoadingText();
     }
 
     @Override
@@ -177,11 +204,14 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
     @Override
     public void onFail(int code, @NotNull String msg) {
+        hideLoadingText();
+        ToastUtil.showCenterToast(mContext,msg);
 
     }
 
     @Override
     public void onSuccess(@NotNull List<? extends MessageCenterBean.DataBean.RowsBean> mdatas) {
+        hideLoadingText();
 
         if (mdatas.size() > 0) {
 
@@ -191,8 +221,56 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
                 mAdapter.refreshData(mdatas);
 
             }
+
+
+            for (MessageCenterBean.DataBean.RowsBean mdata : mdatas) {
+
+                if(mdata.getIsRead() == 0) {
+
+                    noReadCount+=1;
+                }
+
+            }
+
+            mBadgeView.setText("" + noReadCount);
+            mBadgeView.show();
+
+        }else{
+            
+            mBadgeView.hide();
         }
 
+
+    }
+
+    @Override
+    public void onDealMessageSuccess(@Nullable DealMessageBean.DataBean data) {
+
+    }
+
+    @Override
+    public void onDealMessageFail(int code, @NotNull String msg) {
+
+        ToastUtil.showCenterToast(mContext, msg);
+
+    }
+
+    @Override
+    public void readedSuccess(@NotNull ReadedMessage.DataBean data) {
+
+        noReadCount--;
+        mBadgeView.setText("" + noReadCount);
+        mBadgeView.show();
+
+
+
+
+    }
+
+    @Override
+    public void readedFail(int code, @NotNull String msg) {
+
+        ToastUtil.showCenterToast(mContext,msg);
 
     }
 }

@@ -1,8 +1,8 @@
 package com.igw.igw.modoule.messagemodule.presenter
 
-import android.os.Message
-import com.igw.igw.bean.help.HelpBean
+import com.igw.igw.bean.message.DealMessageBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.bean.message.ReadedMessage
 import com.igw.igw.modoule.messagemodule.MessageContract
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
@@ -39,11 +39,15 @@ class MessageListPresenter(model: MessageContract.Model) :
             override fun onSuccess(m: MessageCenterBean.DataBean?) {
 
                 LogUtils.d(TAG, "消息中心列表 --onSuccess ")
+                m?.let { mRootView.onSuccess(it.rows) }
+
             }
 
             override fun onFail(code: Int, msg: String?) {
 
                 LogUtils.d(TAG, "消息中心列表 --onFail ")
+
+                mRootView.onFail(code,msg!!)
 
             }
 
@@ -79,12 +83,70 @@ class MessageListPresenter(model: MessageContract.Model) :
 
 
                 }
-                mRootView.onSuccess(mdatas)
+//                mRootView.onSuccess(mdatas)
 
             }
 
 
         })
+    }
+
+
+    /**
+     * 消息处理
+     */
+    override fun dealMessage(id: Int, isAgree: Int) {
+
+        mModel.dealMessage(id,isAgree,
+                object :NetObserver<DealMessageBean.DataBean>(DealMessageBean.DataBean::class.java){
+                    override fun onSuccess(m: DealMessageBean.DataBean?) {
+
+                        mRootView.onDealMessageSuccess(m)
+
+                    }
+
+                    override fun onFail(code: Int, msg: String?) {
+                        mRootView.onDealMessageFail(code,msg!!)
+                    }
+
+                    override fun onError(msg: String?) {
+                        TODO("Not yet implemented")
+                    }
+
+
+                })
+
+
+    }
+
+    override fun readedMessage(id: Int,isRead:Int) {
+
+        mModel.readedMessage(id,isRead,
+        object :NetObserver<ReadedMessage.DataBean>(ReadedMessage.DataBean::class.java){
+            override fun onSuccess(m: ReadedMessage.DataBean?) {
+
+
+                m?.let {
+
+                    mRootView.readedSuccess(it)
+
+                }
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+
+
+                mRootView.readedFail(code,msg!!)
+            }
+
+            override fun onError(msg: String?) {
+            }
+
+
+        })
+
+
+
     }
 
 

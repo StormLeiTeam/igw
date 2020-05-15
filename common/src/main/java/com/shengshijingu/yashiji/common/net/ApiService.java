@@ -255,6 +255,18 @@ public interface ApiService {
     @POST("/api/advertise/info")
     Observable<ResponseBody> splashNet(@Body RequestBody requestBody);
 
+
+
+
+    /**
+     * 是否阅读
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/advertise/info")
+    Observable<ResponseBody> readedMessage(@Body RequestBody requestBody);
+
+
 }
 
 

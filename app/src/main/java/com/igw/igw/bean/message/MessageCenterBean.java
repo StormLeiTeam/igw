@@ -1,7 +1,5 @@
 package com.igw.igw.bean.message;
 
-import com.igw.igw.bean.help.CommonBean;
-
 import java.util.List;
 
 /**
@@ -11,11 +9,15 @@ import java.util.List;
  * @Describe
  */
 public class MessageCenterBean {
-
+    /**
+     * code : 200
+     * data : {"total":4,"rows":[{"ctime":"2020-05-15 15:09:32","id":1,"isAgree":0,"isRead":0,"messageContent":"测试内容","messageName":"测试","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:42","id":2,"isAgree":0,"isRead":0,"messageContent":"测试内容1","messageName":"测试1","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:48","id":3,"isAgree":0,"isRead":0,"messageContent":"测试内容2","messageName":"测试2","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:54","id":4,"isAgree":0,"isRead":0,"messageContent":"测试内容3","messageName":"测试3","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1}]}
+     * message : 操作成功
+     */
 
     private int code;
+    private DataBean data;
     private String message;
-    private CommonBean.DataBean data;
 
     public int getCode() {
         return code;
@@ -23,6 +25,14 @@ public class MessageCenterBean {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public String getMessage() {
@@ -33,19 +43,14 @@ public class MessageCenterBean {
         this.message = message;
     }
 
-    public CommonBean.DataBean getData() {
-        return data;
-    }
-
-    public void setData(CommonBean.DataBean data) {
-        this.data = data;
-    }
-
     public static class DataBean {
+        /**
+         * total : 4
+         * rows : [{"ctime":"2020-05-15 15:09:32","id":1,"isAgree":0,"isRead":0,"messageContent":"测试内容","messageName":"测试","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:42","id":2,"isAgree":0,"isRead":0,"messageContent":"测试内容1","messageName":"测试1","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:48","id":3,"isAgree":0,"isRead":0,"messageContent":"测试内容2","messageName":"测试2","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:54","id":4,"isAgree":0,"isRead":0,"messageContent":"测试内容3","messageName":"测试3","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1}]
+         */
 
         private int total;
         private List<RowsBean> rows;
-
 
         public int getTotal() {
             return total;
@@ -64,19 +69,38 @@ public class MessageCenterBean {
         }
 
         public static class RowsBean {
+            /**
+             * ctime : 2020-05-15 15:09:32
+             * id : 1
+             * isAgree : 0
+             * isRead : 0
+             * messageContent : 测试内容
+             * messageName : 测试
+             * messageType : 1
+             * messageUrl :
+             * sortWithOutOrderBy :
+             * sort_ :
+             * userId : 1
+             */
 
+            private String ctime;
             private int id;
-            private String messageName;
+            private int isAgree;
+            private int isRead;
             private String messageContent;
+            private String messageName;
             private int messageType;
-            private boolean isAgree;
+            private String messageUrl;
+            private String sortWithOutOrderBy;
+            private String sort_;
+            private int userId;
 
-            public boolean isAgree() {
-                return isAgree;
+            public String getCtime() {
+                return ctime;
             }
 
-            public void setAgree(boolean agree) {
-                isAgree = agree;
+            public void setCtime(String ctime) {
+                this.ctime = ctime;
             }
 
             public int getId() {
@@ -87,12 +111,20 @@ public class MessageCenterBean {
                 this.id = id;
             }
 
-            public String getMessageName() {
-                return messageName;
+            public int getIsAgree() {
+                return isAgree;
             }
 
-            public void setMessageName(String messageName) {
-                this.messageName = messageName;
+            public void setIsAgree(int isAgree) {
+                this.isAgree = isAgree;
+            }
+
+            public int getIsRead() {
+                return isRead;
+            }
+
+            public void setIsRead(int isRead) {
+                this.isRead = isRead;
             }
 
             public String getMessageContent() {
@@ -103,6 +135,14 @@ public class MessageCenterBean {
                 this.messageContent = messageContent;
             }
 
+            public String getMessageName() {
+                return messageName;
+            }
+
+            public void setMessageName(String messageName) {
+                this.messageName = messageName;
+            }
+
             public int getMessageType() {
                 return messageType;
             }
@@ -111,16 +151,149 @@ public class MessageCenterBean {
                 this.messageType = messageType;
             }
 
-            //
-//            rows": [{
-//                    "id": 1, //消息ID
-//                    "messageName": "恭喜你来到酷玩街区", //消息名称
-//                    "messageContent": "亲爱的好友，恭喜您已注册成功", //消息内容
-//                    "messageType": 1,//消息类型（1：活动与邀请，2：通知）
-//                    "isAgree": 0,//是否同意（0：默认，1：同意，2：不同意）
-//                    "ctimeStr": "2019年9月15日 15:47"//创建时间
-//        }],
-//                "total": 10
+            public String getMessageUrl() {
+                return messageUrl;
+            }
+
+            public void setMessageUrl(String messageUrl) {
+                this.messageUrl = messageUrl;
+            }
+
+            public String getSortWithOutOrderBy() {
+                return sortWithOutOrderBy;
+            }
+
+            public void setSortWithOutOrderBy(String sortWithOutOrderBy) {
+                this.sortWithOutOrderBy = sortWithOutOrderBy;
+            }
+
+            public String getSort_() {
+                return sort_;
+            }
+
+            public void setSort_(String sort_) {
+                this.sort_ = sort_;
+            }
+
+            public int getUserId() {
+                return userId;
+            }
+
+            public void setUserId(int userId) {
+                this.userId = userId;
+            }
         }
     }
+
+
+//    private int code;
+//    private String message;
+//    private CommonBean.DataBean data;
+//
+//    public int getCode() {
+//        return code;
+//    }
+//
+//    public void setCode(int code) {
+//        this.code = code;
+//    }
+//
+//    public String getMessage() {
+//        return message;
+//    }
+//
+//    public void setMessage(String message) {
+//        this.message = message;
+//    }
+//
+//    public CommonBean.DataBean getData() {
+//        return data;
+//    }
+//
+//    public void setData(CommonBean.DataBean data) {
+//        this.data = data;
+//    }
+//
+//    public static class DataBean {
+//
+//        private int total;
+//        private List<RowsBean> rows;
+//
+//
+//        public int getTotal() {
+//            return total;
+//        }
+//
+//        public void setTotal(int total) {
+//            this.total = total;
+//        }
+//
+//        public List<RowsBean> getRows() {
+//            return rows;
+//        }
+//
+//        public void setRows(List<RowsBean> rows) {
+//            this.rows = rows;
+//        }
+//
+//        public static class RowsBean {
+//
+//            private int id;
+//            private String messageName;
+//            private String messageContent;
+//            private int messageType;
+//            private boolean isAgree;
+//
+//            public boolean isAgree() {
+//                return isAgree;
+//            }
+//
+//            public void setAgree(boolean agree) {
+//                isAgree = agree;
+//            }
+//
+//            public int getId() {
+//                return id;
+//            }
+//
+//            public void setId(int id) {
+//                this.id = id;
+//            }
+//
+//            public String getMessageName() {
+//                return messageName;
+//            }
+//
+//            public void setMessageName(String messageName) {
+//                this.messageName = messageName;
+//            }
+//
+//            public String getMessageContent() {
+//                return messageContent;
+//            }
+//
+//            public void setMessageContent(String messageContent) {
+//                this.messageContent = messageContent;
+//            }
+//
+//            public int getMessageType() {
+//                return messageType;
+//            }
+//
+//            public void setMessageType(int messageType) {
+//                this.messageType = messageType;
+//            }
+//
+//            //
+////            rows": [{
+////                    "id": 1, //消息ID
+////                    "messageName": "恭喜你来到酷玩街区", //消息名称
+////                    "messageContent": "亲爱的好友，恭喜您已注册成功", //消息内容
+////                    "messageType": 1,//消息类型（1：活动与邀请，2：通知）
+////                    "isAgree": 0,//是否同意（0：默认，1：同意，2：不同意）
+////                    "ctimeStr": "2019年9月15日 15:47"//创建时间
+////        }],
+////                "total": 10
+//        }
+//    }
 }
