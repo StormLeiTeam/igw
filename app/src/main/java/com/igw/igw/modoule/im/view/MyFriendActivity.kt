@@ -19,17 +19,18 @@ import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
+import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_my_friend.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
-class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View {
+class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.View {
 
-    companion object{
+    companion object {
 
-        val TAG  = "MyFriendActivity"
+        val TAG = "MyFriendActivity"
 
-        public fun startSelf(activity: Activity){
+        public fun startSelf(activity: Activity) {
 
             var intent = Intent(activity, MyFriendActivity::class.java)
             activity.startActivity(intent)
@@ -38,10 +39,10 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
     }
 
 
-    private  lateinit var  mAdapter : MyFriendAdapter
+    private lateinit var mAdapter: MyFriendAdapter
     private lateinit var mManager: LinearLayoutManager
 
-    private lateinit var mSearchAdapter:MyFriendSearchAdapter
+    private lateinit var mSearchAdapter: MyFriendSearchAdapter
 
 
     override fun initView() {
@@ -66,17 +67,11 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
         mAdapter = MyFriendAdapter(this, false)
 
-        mManager= LinearLayoutManager(this)
+        mManager = LinearLayoutManager(this)
         mManager.orientation = LinearLayoutManager.VERTICAL
         mManager.isAutoMeasureEnabled = true
         rv_friends.layoutManager = mManager
         rv_friends.adapter = mAdapter
-
-
-
-
-
-
 
 
     }
@@ -85,14 +80,14 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
 
         mPresenter.getFriendsList()
+        showLoadingText()
 
     }
 
     private fun setUpListener() {
 
 
-
-        mAdapter.onItemClickListener(object :MyFriendAdapter.OnItemClickListener{
+        mAdapter.onItemClickListener(object : MyFriendAdapter.OnItemClickListener {
             override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
 
 
@@ -111,7 +106,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
         ll_near_chat.setOnClickListener {
 
             // 最近聊天
-            LogUtils.d(TAG,"跳转  -- ")
+            LogUtils.d(TAG, "跳转  -- ")
 
 //            RecentChatActivity.startSelf(this)
 //
@@ -129,13 +124,12 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
         et_search.setOnFocusChangeListener { v, hasFocus ->
 
-           ll_search_list.visibility = if (hasFocus) View.VISIBLE else View.GONE
+            ll_search_list.visibility = if (hasFocus) View.VISIBLE else View.GONE
         }
 
 
-        et_search.addTextChangedListener(object :TextWatcher{
+        et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
 
 
             }
@@ -154,25 +148,23 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
         })
 
 
-
-
         //滑动字母表跳转位置
         sb_letter.setOnTouchingLetterChangedListener {
 
-           val position   = mAdapter.getPositonForSection(it[0])
+            val position = mAdapter.getPositonForSection(it[0])
 
-            if (position != -1){
+            if (position != -1) {
 
 
-                mManager.scrollToPositionWithOffset(position,0)
+                mManager.scrollToPositionWithOffset(position, 0)
             }
 
         }
 
 
-       // 切换状态
+        // 切换状态
         status_bar_main.setOnConfirmClickListener(object :
-                StatusBarView.OnConfirmClickListener{
+                StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
                 LocaleUtils.changeLocale(this@MyFriendActivity)
@@ -189,9 +181,9 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
         // 进入到单聊模式
 
-        LogUtils.d(TAG,"选择单聊  --0 ")
+        LogUtils.d(TAG, "选择单聊  --0 ")
 
-        SingleChatActivity.startSelfOfIntent(this,item.friendUserId.toString(),item.friendNickName, Conversation.ConversationType.PRIVATE)
+        SingleChatActivity.startSelfOfIntent(this, item.friendUserId.toString(), item.friendNickName, Conversation.ConversationType.PRIVATE)
 
     }
 
@@ -201,7 +193,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
         mPresenter.attachView(this)
     }
 
-    override fun getLayoutId(): Int  = R.layout.activity_my_friend
+    override fun getLayoutId(): Int = R.layout.activity_my_friend
 
 
     override fun setTitle(): String {
@@ -210,7 +202,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
     }
 
 
-    override fun setRightButton(): String  {
+    override fun setRightButton(): String {
         return ""
     }
 
@@ -224,10 +216,9 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
         val friends = data.friends
 
         mAdapter.refreshData(friends)
-
+        hideLoadingText()
 
         initSearchAdapter(data)
-
 
 
     }
@@ -236,16 +227,14 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
 
         mSearchAdapter = MyFriendSearchAdapter(dataList = data.friends)
-        val manager  = LinearLayoutManager(this)
+        val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.VERTICAL
         rv_search.layoutManager = manager
         rv_search.adapter = mSearchAdapter
 
 
-        mSearchAdapter.onItemClickListener(object :OnItemClickListener<FriendBean.DataBean.FriendsBean>{
+        mSearchAdapter.onItemClickListener(object : OnItemClickListener<FriendBean.DataBean.FriendsBean> {
             override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
-
-
 
                 singleChat(item)
             }
@@ -255,6 +244,9 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
     }
 
     override fun onFailFriends(code: Int, msg: String) {
+
+        ToastUtil.showCenterToast(this, msg)
+
     }
 
     override fun fail(o: Any?) {
