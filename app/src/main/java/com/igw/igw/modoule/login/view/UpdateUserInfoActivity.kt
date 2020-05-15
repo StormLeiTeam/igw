@@ -921,13 +921,14 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     }
 
     override fun updateUserInfoSuccessful(data: UserInfoBean.DataBean) {
-
+        hideLoadingText()
         setResult(Activity.RESULT_OK)
         finish()
     }
 
     override fun updateUserInfoFail(code: Int, msg: String) {
-
+        hideLoadingText()
+        ToastUtil.showCenterToast(this,msg)
 
     }
 

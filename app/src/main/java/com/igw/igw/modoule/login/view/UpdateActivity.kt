@@ -103,7 +103,7 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(), UpdatePwdContract.Vie
 
 
         mPresenter.updatePwd(original, newPwd)
-
+        showLoadingText()
 
     }
 
@@ -135,12 +135,14 @@ class UpdateActivity : BaseActivity<UpdatePwdPresenter>(), UpdatePwdContract.Vie
     }
 
     override fun onSuccess() {
+        hideLoadingText()
         //登出
         ToastUtil.showCenterToast(this, R.string.toast_update_pwd_success)
         finish()
     }
 
     override fun onFail(code: Int, msg: String) {
+        hideLoadingText()
         // 是否需要英文提示
         ToastUtil.showCenterToast(this, msg)
     }
