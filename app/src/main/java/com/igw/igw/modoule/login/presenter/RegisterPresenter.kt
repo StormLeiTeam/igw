@@ -128,6 +128,8 @@ class RegisterPresenter(model: RegisterContract.Model)
             override fun onFail(code: Int, msg: String?) {
 
                 LogUtils.d(TAG,"注册失败")
+
+                rootView.registerFail(code,msg!!)
             }
 
 

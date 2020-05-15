@@ -611,6 +611,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         mPresenter.registerUser(registerBean)
 
+        showLoadingText("注册中...")
+
 
     }
 
@@ -802,6 +804,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         mPresenter.getNationalityData()
 
+        showLoadingText("注册中...")
     }
 
 
@@ -859,8 +862,15 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     }
 
     override fun registerSuccess() {
+        hideLoadingText()
 
         finish()    }
+
+    override fun registerFail(code: Int, msg: String) {
+        hideLoadingText()
+
+        ToastUtil.showCenterToast(this,msg)
+    }
 
 
     override fun fail(o: Any?) {

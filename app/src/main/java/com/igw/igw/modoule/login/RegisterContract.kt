@@ -26,19 +26,22 @@ interface RegisterContract {
         //获取国籍
         fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>)
 
-        fun getCityData(countryId : Int, observer: NetObserver<CityListBean.DataBean>)
+        fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>)
 
         fun registerUser(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
 
 
-        fun unloadImageFile(file: File,observer: NetObserver<HeadImageBean.DataBean>)
+        fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
 
     }
 
     interface View : IBaseView {
 
 
-       fun  registerSuccess()
+        fun registerSuccess()
+
+        fun registerFail(code: Int, msg: String)
+
 
 //        fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
 
