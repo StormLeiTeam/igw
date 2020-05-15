@@ -229,6 +229,8 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     //登陆
     private fun login() {
 
+        showLoadingText("登录中...")
+
         if (!cb_check.isChecked) {
 
             ToastUtil.showCenterToast(this, R.string.check_user_agreement)
@@ -321,12 +323,14 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
     override fun loginSuccess(loginBean: LoginBean.DataBean) {
         //登陆成功
-
+        hideLoadingText()
         LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(loginBean))
 
         startMainActivity()
         finish()
 
+
+        ToastUtil.showCenterToast(this,R.string.login_success)
         Log.e("12345","登录成功");
 
     }
@@ -341,10 +345,18 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
     override fun loginFail(code: String, msg: String) {
 
+        hideLoadingText()
+
+        ToastUtil.showCenterToast(this,msg)
+
         LoginManager.instance.loginOut()
+
     }
 
     override fun sendVerifyCodeSuccess() {
+
+        ToastUtil.showCenterToast(this,"验证码已发送")
+
     }
 
     override fun sendVerifyCodeFail() {

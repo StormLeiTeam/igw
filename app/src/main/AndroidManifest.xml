@@ -40,16 +40,16 @@
             android:screenOrientation="fullSensor"
             android:theme="@style/chatTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-                <data
-                    android:host="com.igw.igw"
-                    android:pathPrefix="/conversation"
-                    android:scheme="rong" />
-            </intent-filter>
+<!--                <data-->
+<!--                    android:host="com.igw.igw"-->
+<!--                    android:pathPrefix="/conversation"-->
+<!--                    android:scheme="rong" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".modoule.im.view.PublicChatActivity" />
         <activity android:name=".modoule.im.view.ChatTypeActivity" />

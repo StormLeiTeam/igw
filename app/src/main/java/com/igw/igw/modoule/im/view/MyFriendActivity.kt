@@ -19,6 +19,7 @@ import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_my_friend.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
@@ -190,7 +191,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(),MyFriendContract.View
 
         LogUtils.d(TAG,"选择单聊  --0 ")
 
-        SingleChatActivity.startSelfOfIntent(this,item.friendUserId.toString(),item.friendNickName)
+        SingleChatActivity.startSelfOfIntent(this,item.friendUserId.toString(),item.friendNickName, Conversation.ConversationType.PRIVATE)
 
     }
 

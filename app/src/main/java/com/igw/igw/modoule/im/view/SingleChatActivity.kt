@@ -1,10 +1,8 @@
 package com.igw.igw.modoule.im.view
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
 import com.igw.igw.R
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
@@ -13,7 +11,6 @@ import io.rong.imkit.RongIM
 import io.rong.imkit.fragment.ConversationFragment
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
 
 /**
  * 单聊会话界面
@@ -25,14 +22,14 @@ class SingleChatActivity : FragmentActivity() {
 
         val TAG = "SingleChatActivity"
 
-        public fun startSelfOfIntent(activity: Activity, friendId: String, friendName: String) {
+        public fun startSelfOfIntent(activity: Activity, chatId: String, chatName: String, type: Conversation.ConversationType) {
 
 
-            var conversationType = Conversation.ConversationType.PRIVATE
+            var conversationType = type
 
 
-            LogUtils.d(TAG, "获取  friendID $friendId he  name --> $friendName")
-            RongIM.getInstance()?.startConversation(activity, conversationType, friendId, friendName, null)
+            LogUtils.d(TAG, "获取  friendID $chatId he  name --> $chatName")
+            RongIM.getInstance()?.startConversation(activity, conversationType, chatId, chatName, null)
 
         }
     }

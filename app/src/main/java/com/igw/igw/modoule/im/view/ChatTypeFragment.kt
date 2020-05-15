@@ -9,6 +9,7 @@ import com.igw.igw.modoule.im.model.ChatModel
 import com.igw.igw.modoule.im.presenter.ChatPresenter
 import com.igw.igw.utils.LogUtils
 import com.shengshijingu.yashiji.common.util.ToastUtil
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.fragment_chattype.*
 
@@ -126,7 +127,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
                 activity?.let {
 
-                    GroupChatRoomActivity.startSelfOfIntent(it, publicChatRoom, "公共聊天室")
+                    SingleChatActivity.startSelfOfIntent(it, publicChatRoom, "公共聊天室",Conversation.ConversationType.GROUP)
 
                 }
 
@@ -138,7 +139,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
                 activity?.let {
 
-                    GroupChatRoomActivity.startSelfOfIntent(it, bussiessChatRoom, "商务聊天室")
+                    SingleChatActivity.startSelfOfIntent(it, bussiessChatRoom, "商务聊天室",Conversation.ConversationType.GROUP)
 
                 }
 

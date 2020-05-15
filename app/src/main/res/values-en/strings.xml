@@ -120,4 +120,5 @@
     <string name="bg_chattype_recent_chat">最近聊天</string>
     <string name="title_chat_type">双语聊天城</string>
     <string name="title_recent_chat">最近聊天</string>
+    <string name="login_success">Login successful</string>
 </resources>
