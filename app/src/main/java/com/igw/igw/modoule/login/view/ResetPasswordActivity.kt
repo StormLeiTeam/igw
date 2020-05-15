@@ -172,6 +172,7 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
 
         mPresenter.resetPassword(email, code, password)
 
+        showLoadingText("重置中...")
 
     }
 
@@ -205,13 +206,14 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
     }
 
     override fun onSuccess() {
-
+        hideLoadingText()
 
         ToastUtil.showCenterToast(this,R.string.reset_pwd_success)
         finish()
     }
 
     override fun onFailToReset(code: Int, msg: String) {
+        hideLoadingText()
 
         ToastUtil.showCenterToast(this,msg)
     }
