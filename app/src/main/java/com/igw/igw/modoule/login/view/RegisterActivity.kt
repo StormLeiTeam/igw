@@ -479,15 +479,16 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     private fun changeLocale() {
 
-        //
-        if (LocaleUtils.isLocaleEn(this)){
-            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_CHINESE)
-        }else{
+//        //
+//        if (LocaleUtils.isLocaleEn(this)){
+//            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_CHINESE)
+//        }else{
+//
+//            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_ENGLISH)
+//
+//        }
 
-            LocaleUtils.updateLocale(this,LocaleUtils.LOCALE_ENGLISH)
-
-        }
-
+        LocaleUtils.changeLocale(this)
         //重新启动
 
 
