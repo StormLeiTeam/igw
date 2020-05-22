@@ -47,7 +47,7 @@ class LoginModePresenter(model: LoginContract.Model) :
             override fun onFail(code: Int, msg: String?) {
 
                 LogUtils.d(TAG,"登录失败 $msg")
-
+                mRootView.loginFail(code.toString(), msg!!)
 
 
             }

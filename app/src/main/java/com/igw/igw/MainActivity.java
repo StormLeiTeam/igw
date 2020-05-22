@@ -20,6 +20,9 @@ import com.igw.igw.fragment.HomeFragment;
 import com.igw.igw.fragment.MessageFragment;
 import com.igw.igw.fragment.MyFragment;
 import com.igw.igw.modoule.im.view.ChatTypeFragment;
+import com.igw.igw.modoule.login.loginstate.LoginManager;
+import com.igw.igw.modoule.login.view.LoginActivity;
+import com.igw.igw.modoule.splash.view.SplashActivity;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
@@ -138,6 +141,9 @@ public class MainActivity extends BaseActivity {
     public void showPagerDependButton(int checkedId) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideFragment(fragmentTransaction);
+
+        boolean login = LoginManager.Companion.getInstance().isLogin();
+
         switch (checkedId) {
             case R.id.ll_main_home:
                 if (null == homeFragment) {
@@ -167,6 +173,21 @@ public class MainActivity extends BaseActivity {
                 position = 4;
                 break;
             case R.id.ll_main_my:
+
+
+
+                if(!login) {
+//            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+//            this@SplashActivity.startActivity(intent)
+//            finish()
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    return;
+                }
+
+
                 if (null == myFragment) {
                     myFragment = MyFragment.getInstance();
                     fragmentTransaction.add(R.id.fl_main, myFragment);
@@ -177,6 +198,19 @@ public class MainActivity extends BaseActivity {
                 break;
 
             case R.id.ll_main_message:
+
+
+                if(!login) {
+//            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+//            this@SplashActivity.startActivity(intent)
+//            finish()
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    return;
+                }
+
                 if (null == chatTypeFragment) {
                     chatTypeFragment = ChatTypeFragment.Companion.getInstance();
                     fragmentTransaction.add(R.id.fl_main, chatTypeFragment);

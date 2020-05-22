@@ -4,6 +4,7 @@ import com.igw.igw.bean.SplashBean
 import com.igw.igw.modoule.splash.SplashContract
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
+import com.igw.igw.utils.LogUtils
 
 /**
  *
@@ -18,6 +19,10 @@ class SplashPresenter(model: SplashContract.Model) :
         BasePresenter<SplashContract.View, SplashContract.Model>(model), SplashContract.Presenter {
 
 
+
+    companion object{
+        val TAG = "SplashPresenter"
+    }
     override fun requestData() {
 
 
@@ -28,6 +33,7 @@ class SplashPresenter(model: SplashContract.Model) :
         mModel.splashNet(platform, object : NetObserver<SplashBean.DataBean>(SplashBean.DataBean::class.java) {
             override fun onSuccess(m: SplashBean.DataBean?) {
 
+                LogUtils.d(TAG, "首页获取的数据 -->${m!!.toString()}")
                 mRootView.onSuccess(m!!)
             }
 

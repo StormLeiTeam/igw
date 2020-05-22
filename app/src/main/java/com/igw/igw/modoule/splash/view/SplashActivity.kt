@@ -108,17 +108,22 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
         val login = LoginManager.instance.isLogin()
         LogUtils.d(TAG, "获取登录状态  ===  $login")
 
-        if (login) {
 
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             this@SplashActivity.startActivity(intent)
             finish()
-        } else {
 
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-            this@SplashActivity.startActivity(intent)
-            finish()
-        }
+//        if (login) {
+//
+//            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+//            this@SplashActivity.startActivity(intent)
+//            finish()
+//        } else {
+//
+//            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+//            this@SplashActivity.startActivity(intent)
+//            finish()
+//        }
     }
 
     override fun initView() {

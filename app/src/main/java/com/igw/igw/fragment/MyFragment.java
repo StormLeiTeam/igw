@@ -19,6 +19,7 @@ import com.igw.igw.fragment.my.presenter.MyPresenter;
 import com.igw.igw.modoule.abouthelp.view.FeedbackOrHelpActivity;
 import com.igw.igw.modoule.im.view.MyFriendActivity;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
+import com.igw.igw.modoule.login.view.LoginActivity;
 import com.igw.igw.modoule.login.view.UpdateActivity;
 import com.igw.igw.modoule.login.view.UpdateUserInfoActivity;
 import com.igw.igw.utils.GlideUtils;
@@ -91,6 +92,15 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 //        tv_update_pwd = mBaseView.findViewById(R.id.tv_update_pwd);
 
+
+
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+
         tv_update_pwd = bindView(R.id.tv_update_pwd);
         ll_update_info = bindView(R.id.ll_update_info);
         ll_help_or_feedback = bindView(R.id.ll_help_or_feedback);
@@ -105,10 +115,10 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_my_friend = bindView(R.id.ll_my_friend);
 
 
-
         initData();
 
         setUpListener();
+
     }
 
     private void initData() {
@@ -148,6 +158,16 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 
     private void setUpListener() {
+
+        tv_nickName.setOnClickListener(v -> {
+
+            boolean login = LoginManager.Companion.getInstance().isLogin();
+
+            if(!login) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
 
         ll_my_friend.setOnClickListener(v -> {
 
