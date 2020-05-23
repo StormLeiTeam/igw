@@ -79,8 +79,8 @@ public class CityListBean {
              * utime : 2020-04-08 23:05:43
              */
 
-            private String cityCn;
-            private String cityEn;
+            private String regionCnName;
+            private String regionEnName;
             private String code;
             private String contact;
             private int countryId;
@@ -105,19 +105,19 @@ public class CityListBean {
             }
 
             public String getCityCn() {
-                return cityCn;
+                return regionCnName;
             }
 
             public void setCityCn(String cityCn) {
-                this.cityCn = cityCn;
+                this.regionCnName = cityCn;
             }
 
             public String getCityEn() {
-                return cityEn;
+                return regionEnName;
             }
 
             public void setCityEn(String cityEn) {
-                this.cityEn = cityEn;
+                this.regionEnName = cityEn;
             }
 
             public String getCode() {
@@ -228,7 +228,7 @@ public class CityListBean {
             public String getWheelText() {
 
 
-                return isEnglish ? cityEn : cityCn;
+                return isEnglish ?regionEnName  : regionCnName;
             }
         }
     }

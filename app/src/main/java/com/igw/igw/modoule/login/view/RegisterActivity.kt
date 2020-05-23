@@ -805,7 +805,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         mPresenter.getNationalityData()
 
-        showLoadingText("注册中...")
     }
 
 

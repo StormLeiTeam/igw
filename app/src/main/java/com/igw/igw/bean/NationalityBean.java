@@ -68,8 +68,8 @@ public class NationalityBean {
              */
 
             private int id;
-            private String countryCnName;
-            private String countryEnName;
+            private String regionCnName;
+            private String regionEnName;
             private String code;
 
             private boolean isEnglish;
@@ -92,19 +92,19 @@ public class NationalityBean {
             }
 
             public String getCountryCnName() {
-                return countryCnName;
+                return regionCnName;
             }
 
             public void setCountryCnName(String countryCnName) {
-                this.countryCnName = countryCnName;
+                this.regionCnName = countryCnName;
             }
 
             public String getCountryEnName() {
-                return countryEnName;
+                return regionEnName;
             }
 
             public void setCountryEnName(String countryEnName) {
-                this.countryEnName = countryEnName;
+                this.regionEnName = countryEnName;
             }
 
             public String getCode() {
@@ -120,10 +120,10 @@ public class NationalityBean {
 
                 if (isEnglish) { // 英语
 
-                    return countryEnName;
+                    return regionEnName;
                 } else {
 
-                    return countryCnName;
+                    return regionCnName;
                 }
             }
         }
