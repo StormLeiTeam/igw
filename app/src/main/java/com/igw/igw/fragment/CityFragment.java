@@ -27,7 +27,7 @@ import com.shengshijingu.yashiji.common.util.ControllerUtils;
 
 /**
  * 创建时间  2020/3/105:42 PM .
- *
+ * <p>
  * 作者  雷雷
  */
 
@@ -182,7 +182,7 @@ public class CityFragment extends BaseDataFragment {
     public void showPickerView() {// 弹出选择器（省市区三级联动）
         if (pvOptions == null) {
             pvOptions = new OptionsPickerBuilder(getActivity(), (options1, options2, options3, v) -> {
-                tv_basetitle.setText(options1Items.get(options1).getCityCn());
+                tv_basetitle.setText(options1Items.get(options1).getRegionCnName());
 
                 cityDetail(options1Items.get(options1).getId());
             }).setLayoutRes(R.layout.addresselected_dialog, v -> {

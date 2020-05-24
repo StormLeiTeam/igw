@@ -61,7 +61,9 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private TextView tvMoneyRmb; //
 
     private StormCircleImageView iv_head_view; //
+
     private LinearLayout ll_update_version;
+
     private LinearLayout ll_my_friend;
 
     private UserInfoBean.DataBean mData; // 用户数据
@@ -127,7 +129,6 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         initUserInfoForView();
 
 
-
     }
 
 
@@ -172,12 +173,10 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_my_friend.setOnClickListener(v -> {
 
 
-            MyFriendActivity.Companion.startSelf((MainActivity)mContext);
+            MyFriendActivity.Companion.startSelf((MainActivity) mContext);
 
 
         });
-
-
 
 
         ll_update_version.setOnClickListener(v -> {
@@ -321,6 +320,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     /**
      * 检测版本数据
+     *
      * @param data
      */
     @Override
@@ -333,14 +333,13 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     public void versionFail(int code, @NotNull String msg) {
 
 
-
     }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(null != getMPresenter()) {
+        if (null != getMPresenter()) {
             getMPresenter().detachView();
 
         }

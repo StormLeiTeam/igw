@@ -6,7 +6,7 @@ import com.contrarywind.interfaces.IPickerViewData;
 
 /**
  * 创建时间  2020/3/111:01 PM .
- *
+ * <p>
  * 作者  雷雷
  */
 
@@ -25,19 +25,9 @@ public class CityBean {
     public static class CitysBean implements IPickerViewData {
 
         /**
-         * cityCn : 北京
-         * cityEn : BEIJING
-         * code : BEIJING
-         * contact : 马建成
-         * countryId : 1
-         * createUserId : 1
-         * ctime : 2020-03-09 23:30:56
-         * email : bjmajiancheng@davdian.com
-         * id : 1
-         * sortWithOutOrderBy :
-         * sort_ :
-         * updateUserId : 1
-         * utime : 2020-03-09 23:30:56
+         * cityCn : 北京 cityEn : BEIJING code : BEIJING contact : 马建成 countryId : 1 createUserId : 1
+         * ctime : 2020-03-09 23:30:56 email : bjmajiancheng@davdian.com id : 1 sortWithOutOrderBy :
+         * sort_ : updateUserId : 1 utime : 2020-03-09 23:30:56
          */
 
         private String cityCn;
@@ -47,6 +37,26 @@ public class CityBean {
         private String code;
 
         private String contact;
+
+        private String regionCnName;
+
+        private String regionEnName;
+
+        public String getRegionCnName() {
+            return regionCnName;
+        }
+
+        public void setRegionCnName(String regionCnName) {
+            this.regionCnName = regionCnName;
+        }
+
+        public String getRegionEnName() {
+            return regionEnName;
+        }
+
+        public void setRegionEnName(String regionEnName) {
+            this.regionEnName = regionEnName;
+        }
 
         private int countryId;
 
@@ -172,7 +182,7 @@ public class CityBean {
 
         @Override
         public String getPickerViewText() {
-            return cityCn;
+            return regionCnName;
         }
     }
 }

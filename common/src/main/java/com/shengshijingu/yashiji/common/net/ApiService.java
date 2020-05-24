@@ -20,7 +20,7 @@ public interface ApiService {
     /**
      * 城市列表
      */
-    @POST("/api/city/list")
+    @POST("/api/common/cityList")
     Observable<ResponseBody> cityList(@Body RequestBody requestBody);
 
     /**
