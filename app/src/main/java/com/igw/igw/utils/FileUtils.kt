@@ -74,8 +74,6 @@ object FileUtils{
     }
 
 
-
-
     fun compress(data:String): String? {
         var finalData: String? = null
 
