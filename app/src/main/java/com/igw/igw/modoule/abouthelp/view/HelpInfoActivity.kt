@@ -67,7 +67,7 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
         val json = intent.getStringExtra("intent_data") ?: return
 
 
-        mData = GsonUtils.getInstance().fromJson(json, HelpBean.DataBean.RowsBean::class.java)
+        mData = GsonUtils.instance.fromJson(json, HelpBean.DataBean.RowsBean::class.java)
         mPresenter.getHelpInfo(mData!!.id)
 
 

@@ -221,7 +221,7 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
             override fun onItemClick(data: HelpBean.DataBean.RowsBean?, position: Int) {
 
 
-               var json  =  GsonUtils.getInstance().toJson(data)
+               var json  =  GsonUtils.instance.toJson(data)
 
                 json?.let {
                     HelpInfoActivity.startSelfForData(this@FeedbackOrHelpActivity,json)
