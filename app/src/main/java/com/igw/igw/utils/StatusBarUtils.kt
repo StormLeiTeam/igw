@@ -300,6 +300,8 @@ object StatusBarUtils {
             @IntRange(from = 0, to = 255) alpha: Int
     ) {
 
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val cipherColor = StatusBarUtils.cipherColor(color, alpha)
             var translucentView =
