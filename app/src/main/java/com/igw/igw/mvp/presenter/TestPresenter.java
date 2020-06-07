@@ -7,6 +7,7 @@ package com.igw.igw.mvp.presenter;
 
 //public class TestPresenter extends BasePresenter<ITestView> {
 //
+
 //
 //    public TestPresenter(Context context, ITestView view) {
 //        super(context, view);
