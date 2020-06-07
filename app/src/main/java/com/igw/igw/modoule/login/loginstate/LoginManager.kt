@@ -52,7 +52,7 @@ class LoginManager {
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE, true)
         //保存token
 
-        var user = GsonUtils.getInstance().fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
+        var user = GsonUtils.instance.fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
 
         SharedUtils.setAccessToken(user.token)
         SharedUtils.setRongToken(user.rongyunToken)

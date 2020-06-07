@@ -324,7 +324,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     override fun loginSuccess(loginBean: LoginBean.DataBean) {
         //登陆成功
         hideLoadingText()
-        LoginManager.instance.loginSuccess(GsonUtils.getInstance().toJson(loginBean))
+        LoginManager.instance.loginSuccess(GsonUtils.instance.toJson(loginBean))
 
         startMainActivity()
         finish()

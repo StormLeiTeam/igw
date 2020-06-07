@@ -180,7 +180,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         mChiocePopwindow = ChoicePopWindow(this)
 
-        genders = GsonUtils.getInstance().fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
+        genders = GsonUtils.instance.fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
 
         genderPopWindow?.let {
 
@@ -666,7 +666,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         var json = intent.getStringExtra("user_info")
 
 
-        mUserInfo = GsonUtils.getInstance().fromJson(json, UserInfoBean.DataBean::class.java)
+        mUserInfo = GsonUtils.instance.fromJson(json, UserInfoBean.DataBean::class.java)
 
 
         mUserInfo?.let {
