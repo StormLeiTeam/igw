@@ -8,7 +8,19 @@ package com.igw.igw.mvp.presenter;
 //public class TestPresenter extends BasePresenter<ITestView> {
 //
 
+
+
+
+
+
+
+
+
+//ce
+//dddddddddgagaa嘎嘎嘎
 //
+
+
 //    public TestPresenter(Context context, ITestView view) {
 //        super(context, view);
 //    }
@@ -20,5 +32,6 @@ package com.igw.igw.mvp.presenter;
 //
 //    public  void getTestResult(){
 //        mView.requestData();
+
 //    }
 //}

@@ -18,7 +18,7 @@ import com.igw.igw.utils.LogUtils
 public class MyPresenter(model: MyContract.Model) :
         BasePresenter<MyContract.View, MyContract.Model>(model),
         MyContract.Presenter {
-
+//啊哈哈哈
 
     companion object {
 
