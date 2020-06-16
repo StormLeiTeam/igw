@@ -31,7 +31,7 @@ class LoginModePresenter(model: LoginContract.Model) :
     override fun loginByAccent(accent: String, password: String) {
 
         mModel.loginByAccent(accent, password, object : NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java) {
-            override fun onSuccess(m: LoginBean.DataBean?) {
+            override fun onSuccess(m: LoginBean.DataBean) {
 
                 m?.let {
 
@@ -62,6 +62,8 @@ class LoginModePresenter(model: LoginContract.Model) :
             }
 
 
+
+
         })
     }
 
@@ -69,7 +71,7 @@ class LoginModePresenter(model: LoginContract.Model) :
 
 
         mModel.loginByEmail(email, verifyCode, object : NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java) {
-            override fun onSuccess(m: LoginBean.DataBean?) {
+            override fun onSuccess(m: LoginBean.DataBean) {
 
 
                 m?.let {
@@ -100,7 +102,7 @@ class LoginModePresenter(model: LoginContract.Model) :
 
 
         mModel.sendEmailVerifyCode(email, type, object : NetObserver<VerifyBean>(VerifyBean::class.java) {
-            override fun onSuccess(m: VerifyBean?) {
+            override fun onSuccess(m: VerifyBean) {
 
 
             }

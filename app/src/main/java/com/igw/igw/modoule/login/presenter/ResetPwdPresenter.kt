@@ -33,7 +33,7 @@ class ResetPwdPresenter(model: ResetPasswordContract.Model) :
     override fun sendEmailVerifyCode(email: String, type: Int) {
 
         mModel.sendEmailVerifyCode(email, type, object : NetObserver<VerifyBean>(VerifyBean::class.java) {
-            override fun onSuccess(m: VerifyBean?) {
+            override fun onSuccess(m: VerifyBean) {
 
 
             }
@@ -55,7 +55,7 @@ class ResetPwdPresenter(model: ResetPasswordContract.Model) :
 
 
         mModel.resetPassword(email, verifyCode, password, object : NetObserver<ResetPwdBean>(ResetPwdBean::class.java) {
-            override fun onSuccess(m: ResetPwdBean?) {
+            override fun onSuccess(m: ResetPwdBean) {
 
                 mRootView.onSuccess()
 

@@ -32,7 +32,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
     override fun createChatRoom(chatRoomId: String, chatRoomName: String) {
 
         mModel.createChatRoom(chatRoomId,chatRoomName,object :NetObserver<ChatRoomBean.DataBean>(ChatRoomBean.DataBean::class.java){
-            override fun onSuccess(m: ChatRoomBean.DataBean?) {
+            override fun onSuccess(m: ChatRoomBean.DataBean) {
 
                 mRootView.createSuccessChatRoom(chatRoomId)
             }
@@ -56,7 +56,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
     override fun destoryChatRoom(chatRoomId: String) {
 
         mModel.destoryChatRoom(chatRoomId, object :NetObserver<ChatRoomBean.DataBean>(ChatRoomBean.DataBean::class.java){
-            override fun onSuccess(m: ChatRoomBean.DataBean?) {
+            override fun onSuccess(m: ChatRoomBean.DataBean) {
 
                 mRootView.createSuccessChatRoom(chatRoomId)
 
@@ -79,7 +79,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
 
         mModel.chatRoomUsers(chatRoomId,
                 object :NetObserver<ChatRoomUsesBean>(ChatRoomUsesBean::class.java){
-                    override fun onSuccess(m: ChatRoomUsesBean?) {
+                    override fun onSuccess(m: ChatRoomUsesBean) {
 
 
                     }

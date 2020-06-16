@@ -32,7 +32,7 @@ class FeedbackOrHelpPresenter(model: HelpContract.Model) :
     override fun getHelpList(pageNum: Int, pageSize: Int,isLoadMore: Boolean) {
 
         mModel.getHelpList(pageNum, pageSize, object : NetObserver<HelpBean.DataBean>(HelpBean.DataBean::class.java) {
-            override fun onSuccess(m: HelpBean.DataBean?) {
+            override fun onSuccess(m: HelpBean.DataBean) {
 
                 LogUtils.d(TAG, "帮助列表 请求成功")
 
@@ -49,8 +49,8 @@ class FeedbackOrHelpPresenter(model: HelpContract.Model) :
 
             }
 
-            override fun onFail(code: Int, msg: String) {
-                mRootView.onFailHelpList(code,msg,isLoadMore)
+            override fun onFail(code: Int, msg: String?) {
+                mRootView.onFailHelpList(code,msg!!,isLoadMore)
 
                 LogUtils.d(TAG, "帮助列表请求失败 ")
             }
@@ -67,13 +67,13 @@ class FeedbackOrHelpPresenter(model: HelpContract.Model) :
     override fun saveFeedback(content: String) {
 
         mModel.saveFeedback(content,object : NetObserver<CommonBean.DataBean>(CommonBean.DataBean::class.java){
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG, "提交反馈失败 ")
 
-                mRootView.onFailFeedBack(code,msg)
+                mRootView.onFailFeedBack(code,msg!!)
             }
 
-            override fun onSuccess(m: CommonBean.DataBean?) {
+            override fun onSuccess(m: CommonBean.DataBean) {
                 LogUtils.d(TAG, "提交反馈成功 ")
 
 

@@ -34,14 +34,11 @@ class MyFriendPresenter(model:MyFriendContract.Model) :
 
 
         mModel.getFriendsList(object :NetObserver<FriendBean.DataBean>(FriendBean.DataBean::class.java){
-            override fun onSuccess(m: FriendBean.DataBean?) {
+            override fun onSuccess(m: FriendBean.DataBean) {
 
                 LogUtils.d(TAG," 获取好友列表  -->  onSuccess")
 
-                if (null != m) {
-                    mRootView.onSuccessFriends(m)
-
-                }
+                mRootView.onSuccessFriends(m)
             }
 
             override fun onFail(code: Int, msg: String?) {

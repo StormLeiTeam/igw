@@ -227,6 +227,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //        LogUtils.d(TAG,"${fromJson.genders[0].getChName()}")
 
 
+
+
         genders = GsonUtils.instance.fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
 
         genderPopWindow?.let {

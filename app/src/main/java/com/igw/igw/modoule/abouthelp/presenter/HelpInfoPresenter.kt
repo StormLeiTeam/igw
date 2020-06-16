@@ -35,15 +35,15 @@ class HelpInfoPresenter(model: HelpInfoModel): BasePresenter<HelpInfoContract.Vi
 
 
         mModel.getHelpInfo(id,object :NetObserver<HelpInfoBean.DataBean>(HelpInfoBean.DataBean::class.java){
-            override fun onSuccess(m: HelpInfoBean.DataBean?) {
+            override fun onSuccess(m: HelpInfoBean.DataBean) {
 
                 LogUtils.d(TAG,"获取帮助详情 --> onSuccess ")
                 m?.let { mRootView.onSuccess(it) }
             }
 
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG,"获取帮助详情 --> onFail ")
-                mRootView.onFail(code,msg)
+                mRootView.onFail(code,msg!!)
 
             }
 

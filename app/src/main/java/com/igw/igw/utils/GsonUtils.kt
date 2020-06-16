@@ -66,7 +66,7 @@ class GsonUtils private constructor() {
         private var INSTANCEJ: GsonUtils? = null
 
         @JvmStatic
-        val instance: GsonUtils?
+        val instance: GsonUtils
             get() {
                 if (INSTANCEJ == null) {
                     synchronized(GsonUtils::class.java) {
@@ -75,9 +75,10 @@ class GsonUtils private constructor() {
                         }
                     }
                 }
-                return INSTANCEJ
+                return INSTANCEJ!!
             }
     }
+
 
     init {
         gson = Gson()
