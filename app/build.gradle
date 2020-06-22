@@ -92,4 +92,7 @@ dependencies {
     implementation 'cn.rongcloud.sdk:im_lib:2.9.18'
     implementation project(path: ':fuzzysearchlibrary')
 
+    implementation 'com.google.android:flexbox:0.2.5'
+
+
 }

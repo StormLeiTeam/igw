@@ -11,19 +11,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.igw.igw.R;
 import com.igw.igw.bean.CityBean;
 import com.igw.igw.bean.CityBean.CitysBean;
 import com.igw.igw.bean.CityInfoBean;
+import com.igw.igw.modoule.city.view.SearchCityActivity;
 import com.igw.igw.network.NetObserver;
 import com.igw.igw.utils.ActivityUtils;
 import com.igw.igw.utils.ColorUtils;
+import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.MImageGetter;
 import com.igw.igw.utils.SharedUtils;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 import com.shengshijingu.yashiji.common.util.ControllerUtils;
+import com.shengshijingu.yashiji.common.util.ToastUtil;
 
 /**
  * 创建时间  2020/3/105:42 PM .
@@ -32,6 +36,8 @@ import com.shengshijingu.yashiji.common.util.ControllerUtils;
  */
 
 public class CityFragment extends BaseDataFragment {
+
+    public static final String TAG = "CityFragment";
 
     private LinearLayout ll_city;
 
@@ -45,7 +51,12 @@ public class CityFragment extends BaseDataFragment {
 
     private TextView tv_city_cityInfo, tv_city_businessCooperation, tv_city_html;
 
+    private ImageView iv_search;
+
+
     private int cityType = 1;
+
+    private int cityId = -1;
 
     public static CityFragment getInstance() {
         CityFragment cityFragment = new CityFragment();
@@ -83,6 +94,9 @@ public class CityFragment extends BaseDataFragment {
         tv_city_cityInfo.setOnClickListener(this);
 
         tv_city_html.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        iv_search = bindView(R.id.iv_search);
+        iv_search.setOnClickListener(this);
     }
 
     @Override
@@ -105,6 +119,20 @@ public class CityFragment extends BaseDataFragment {
                     break;
                 case R.id.iv_citystation_cooperation:
                     ActivityUtils.startCommunicationLinkActivity(getActivity());
+                    break;
+                case R.id.iv_search:
+
+
+                    LogUtils.d(TAG, "获取的 cityid " + cityId);
+
+                    if (cityId != -1) {
+                        SearchCityActivity.Companion.startSelf(getActivity(),cityId);
+
+                    }else {
+
+                        ToastUtil.showCenterToast(mContext, "请先选择城市");
+                    }
+
                     break;
             }
 
@@ -185,6 +213,10 @@ public class CityFragment extends BaseDataFragment {
                 tv_basetitle.setText(options1Items.get(options1).getRegionCnName());
 
                 cityDetail(options1Items.get(options1).getId());
+                this.cityId = options1Items.get(options1).getId();
+
+                LogUtils.d(TAG, "获取的城市id  -> " + cityId);
+
             }).setLayoutRes(R.layout.addresselected_dialog, v -> {
                 TextView tv_finish = v.findViewById(R.id.tv_finish);
                 tv_finish.setOnClickListener(view -> {
@@ -198,6 +230,7 @@ public class CityFragment extends BaseDataFragment {
                     .setContentTextSize(16)
                     .build();
             pvOptions.setPicker(options1Items, null, null);//三级选择器
+
 
         }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import com.google.gson.Gson
 import com.igw.igw.activity.BaseActivity
+import retrofit2.http.PUT
 import java.net.ConnectException
 import java.util.*
 
@@ -20,13 +21,13 @@ import java.util.*
  */
 object LocaleUtils {
 
-    public  final val  LOCALE_CHINESE = Locale.CHINESE;  // 中文
+    public final val LOCALE_CHINESE = Locale.CHINESE;  // 中文
 
-    public  final  val LOCALE_ENGLISH = Locale.ENGLISH;  // 英文
+    public final val LOCALE_ENGLISH = Locale.ENGLISH;  // 英文
 
 
     // 语言文件名
-    private final  val LOCALE_SP_NAME= "LOCALE_SP_NAME"
+    private final val LOCALE_SP_NAME = "LOCALE_SP_NAME"
 
     // 保存locale key
     private final val LOCALE_KEY = "LOCALE_KEY"
@@ -45,16 +46,16 @@ object LocaleUtils {
 
 
     }
+
     /**
      * 获取用户设置的语言文文字
      */
-    public fun  getUserLocale(context: Context): Locale{
+    public fun getUserLocale(context: Context): Locale {
 
         var localeJson = SPUtils.getInstance(LOCALE_SP_NAME).getString(LOCALE_KEY, "")
 
 
         return jsonToLocale(localeJson);
-
 
 
     }
@@ -123,7 +124,7 @@ object LocaleUtils {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     configuration.setLocale(it)
 
-                }else{
+                } else {
                     configuration.locale = it
                 }
 
@@ -131,7 +132,7 @@ object LocaleUtils {
 
                 context.resources.updateConfiguration(configuration, displayMetrics)
 
-                saveUserLocale(context,it)
+                saveUserLocale(context, it)
 
             }
 
@@ -147,7 +148,7 @@ object LocaleUtils {
      *
      *
      */
-    public fun needUpdateLocale(context: Context, locale: Locale)  :Boolean {
+    public fun needUpdateLocale(context: Context, locale: Locale): Boolean {
 
         return locale != null && getCurrentlocale(context) != locale
 
@@ -169,7 +170,7 @@ object LocaleUtils {
     /**
      * locale对象转化为json
      */
-    public  fun  localeToJson(locale: Locale) : String{
+    public fun localeToJson(locale: Locale): String {
 
         val gson = Gson()
 
@@ -184,7 +185,7 @@ object LocaleUtils {
 
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
 
-        }else{
+        } else {
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
 
 
@@ -205,6 +206,38 @@ object LocaleUtils {
     }
 
 
+    public fun changeLocale(activity: Activity, tag: String, value: Any) {
+
+        if (LocaleUtils.isLocaleEn(activity)) {
+
+            LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
+
+        } else {
+            LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
+
+
+        }
+
+
+
+        activity.finish()
+
+
+        var intent = Intent(activity, activity.javaClass)
+
+
+        if (value is Int) {
+
+            intent.putExtra(tag, value)
+
+        }
+
+        activity.startActivity(intent)
+        activity.overridePendingTransition(0, 0);
+
+//        reconfirmAct()
+
+    }
 
 
 }

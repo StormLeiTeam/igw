@@ -267,6 +267,29 @@ public interface ApiService {
     Observable<ResponseBody> readedMessage(@Body RequestBody requestBody);
 
 
+
+
+    //  获取城市标签
+    @POST("/api/city/labelList")
+    Observable<ResponseBody> getCityLabal(@Body RequestBody requestBody);
+
+
+    /**
+     * 获取搜索结果
+     * @param
+     * @return
+     */
+    @POST("/api/city/companyList")
+    Observable<ResponseBody> getCitySearchResult(@Body RequestBody requestBody);
+
+
+    /**
+     * 公司详情
+     * @param requestBody
+     * @return
+     */
+    @POST("api/city/companyDetail")
+    Observable<ResponseBody> companyCityInfo(@Body RequestBody requestBody);
 }
 
 
