@@ -125,4 +125,5 @@
     <string name="componyinfo_name">名称:</string>
     <string name="intro">"简介: "</string>
     <string name="componyinfo_city_title">城市展台</string>
+    <string name="company_label">"标签: "</string>
 </resources>
