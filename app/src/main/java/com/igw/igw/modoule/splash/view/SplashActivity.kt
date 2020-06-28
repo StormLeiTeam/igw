@@ -153,7 +153,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
     override fun onSuccess(data: SplashBean.DataBean) {
         initCountDown()
-        GlideUtils.loadImage(this, Constants.BASE_URL + data.advertiseInfo.image, bg_splash)
+        GlideUtils.loadImageNormal(this, Constants.BASE_URL + data.advertiseInfo.image, R.drawable.splash_bg, bg_splash)
     }
 
     override fun onFail(code: Int, msg: String) {
