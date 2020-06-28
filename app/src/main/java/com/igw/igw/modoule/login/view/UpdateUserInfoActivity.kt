@@ -564,8 +564,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         //endDate.set(2020,1,1);
 
         //正确设置方式 原因：注意事项有说明
-        startDate.set(2013, 0, 1)
-        endDate.set(2020, 12, 30)
+        startDate.set(startDate.get(Calendar.YEAR)-100, 0, 1)
+        endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH) + 1, endDate.get(Calendar.DAY_OF_MONTH))
+
 
         if (pickerBuilder == null) {
 
