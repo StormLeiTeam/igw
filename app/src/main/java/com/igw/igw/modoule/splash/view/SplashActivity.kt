@@ -1,23 +1,18 @@
 package com.igw.igw.modoule.splash.view
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.SplashBean
 import com.igw.igw.modoule.login.loginstate.LoginManager
-import com.igw.igw.modoule.login.view.LoginActivity
 import com.igw.igw.modoule.splash.SplashContract
 import com.igw.igw.modoule.splash.model.SplashModel
 import com.igw.igw.modoule.splash.presenter.SplashPresenter
 import com.igw.igw.utils.GlideUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
-import io.reactivex.disposables.Disposable
+import com.shengshijingu.yashiji.common.Constants
 import kotlinx.android.synthetic.main.activity_splash.*
 import rx.Observable
 import rx.Observer
@@ -158,7 +153,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
     override fun onSuccess(data: SplashBean.DataBean) {
         initCountDown()
-        GlideUtils.loadImage(this, data.advertiseInfo.image, bg_splash)
+        GlideUtils.loadImage(this, Constants.BASE_URL + data.advertiseInfo.image, bg_splash)
     }
 
     override fun onFail(code: Int, msg: String) {

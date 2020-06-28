@@ -33,8 +33,8 @@ class SplashPresenter(model: SplashContract.Model) :
         mModel.splashNet(platform, object : NetObserver<SplashBean.DataBean>(SplashBean.DataBean::class.java) {
             override fun onSuccess(m: SplashBean.DataBean) {
 
-                LogUtils.d(TAG, "首页获取的数据 -->${m!!.toString()}")
-                mRootView.onSuccess(m!!)
+                LogUtils.d(TAG, "首页获取的数据 -->${m.toString()}")
+                mRootView.onSuccess(m)
             }
 
             override fun onFail(code: Int, msg: String?) {
