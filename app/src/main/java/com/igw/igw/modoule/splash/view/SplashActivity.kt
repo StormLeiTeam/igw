@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit
 /**
  *
  */
-class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
+class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
 
     companion object {
@@ -39,27 +39,11 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
 
     var count = 5
 
-     var locale : Boolean = true
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_splash)
-//
-////        initCountDown()
-//
-//
-//
-//    }
+    var locale: Boolean = true
 
 
-//    override fun onResume() {
-//        super.onResume()
-//        initCountDown()
-//
-//    }
+    private var countimeSubscription: Subscription? = null
 
-
-    private var  countimeSubscription: Subscription? = null
     /**
      * 开启倒计时
      */
@@ -67,7 +51,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
 
         var count = 5 // 秒数
 
-        countimeSubscription  = Observable.interval(0, 1, TimeUnit.SECONDS)
+        countimeSubscription = Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(count + 1)
                 .map { t -> count - t }
                 .subscribeOn(Schedulers.io())
@@ -109,9 +93,9 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
         LogUtils.d(TAG, "获取登录状态  ===  $login")
 
 
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
-            this@SplashActivity.startActivity(intent)
-            finish()
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        this@SplashActivity.startActivity(intent)
+        finish()
 
 //        if (login) {
 //
@@ -137,7 +121,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
 
     private fun setUpLisetener() {
 
-        bg_splash.setOnClickListener{
+        bg_splash.setOnClickListener {
 //            /点击时跳转
         }
 
@@ -146,7 +130,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
 
             countimeSubscription?.let {
 
-                if (!it.isUnsubscribed){
+                if (!it.isUnsubscribed) {
                     it.unsubscribe()
 
                     startMainOrLogin()
@@ -157,24 +141,24 @@ class SplashActivity : BaseActivity<SplashPresenter>(),SplashContract.View {
     }
 
     override fun initPresenter() {
-         mPresenter = SplashPresenter(SplashModel())
+        mPresenter = SplashPresenter(SplashModel())
         mPresenter.attachView(this)
     }
 
-    override fun getLayoutId(): Int  = R.layout.activity_splash
+    override fun getLayoutId(): Int = R.layout.activity_splash
 
-    override fun setTitle(): String  =  ""
+    override fun setTitle(): String = ""
 
-    override fun setRightButton(): String  =  ""
+    override fun setRightButton(): String = ""
 
     override fun setStatusBarColor(): Boolean {
-       return false
+        return false
 
     }
 
     override fun onSuccess(data: SplashBean.DataBean) {
         initCountDown()
-        GlideUtils.loadImage(this,data.advertiseInfo.image,bg_splash)
+        GlideUtils.loadImage(this, data.advertiseInfo.image, bg_splash)
     }
 
     override fun onFail(code: Int, msg: String) {
