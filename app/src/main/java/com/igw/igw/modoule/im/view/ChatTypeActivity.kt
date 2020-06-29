@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
+import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatTypeContract
 import com.igw.igw.modoule.im.model.ChatModel
 import com.igw.igw.modoule.im.presenter.ChatPresenter
@@ -177,6 +178,14 @@ class ChatTypeActivity : BaseActivity<ChatPresenter>() , ChatTypeContract.View  
 //        }
 
 
+    }
+
+    override fun userInfoSuccessful(data: UserInfoBean.DataBean) {
+
+
+    }
+
+    override fun userInfoFail(code: Int, msg: String) {
     }
 
     override fun fail(o: Any?) {

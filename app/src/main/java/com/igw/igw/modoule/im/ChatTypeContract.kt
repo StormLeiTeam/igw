@@ -2,6 +2,7 @@ package com.igw.igw.modoule.im
 
 import com.igw.igw.bean.chat.ChatRoomBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
+import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
 import com.igw.igw.mvp.view.IBaseView
@@ -28,6 +29,9 @@ class ChatTypeContract {
 
         fun chatRoomUsers(chatRoomId: String,observer: NetObserver<ChatRoomUsesBean>)
 
+        fun userInfo(observer: NetObserver<UserInfoBean.DataBean>)
+
+
     }
 
 
@@ -39,7 +43,9 @@ class ChatTypeContract {
         fun createFailChatRoom(type: String, code:Int,msg:String)
 
 
+        fun userInfoSuccessful(data: UserInfoBean.DataBean)
 
+        fun userInfoFail(code: Int, msg: String)
 
     }
 
@@ -53,6 +59,8 @@ class ChatTypeContract {
 
         fun chatRoomUsers(chatRoomId: String)
 
+
+        fun  userInfo()
 
     }
 

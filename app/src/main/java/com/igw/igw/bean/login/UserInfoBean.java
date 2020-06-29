@@ -11,7 +11,7 @@ public class UserInfoBean {
 
     /**
      * code : 200
-     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","hasPay":1,"headImage":"","id":1,"inviteCode":"","lastLoginIp":"219.142.145.78","lastLoginTime":"2020-04-28 19:04:58","lastName":"民","lastPasswordReset":"2020-04-28 19:07:26","mobilePhone":"18235188642","nickName":"hah\n哈哈","password":"$2a$10$Ay7MKcILBv3DNin7wdAAtu5zzclz3ROOg4.GSoLlYurNcQQPUVPEK","rongyunToken":"","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"userDesc":"我哈哈哈哈哈哈哈哈","userName":"18235188642","userType":4,"utime":"2020-04-28 19:07:26"}
+     * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","hasPay":1,"headImage":"/gameword-user-service/upload/18235188642/image/20200429/20200429175403_841_headImage","id":1,"inviteCode":"","lastLoginIp":"115.171.62.23","lastLoginTime":"2020-06-29 13:52:22","lastName":"民","lastPaidDate":"2020-06-29 14:26:35","lastPasswordReset":"2020-04-29 17:54:05","mobilePhone":"18235188642","nickName":"hah\n哈哈","password":"$2a$10$Qdd/weynXlz8NzwqCpDBsuMBXQJ2zfdNNYXRuqZLkgD072LCK3qLO","payMessage":"","rongyunToken":"rXPApFA6VXRKTWLtddInuCJT/DXRzoy1@3i9q.cn.rongnav.com;3i9q.cn.rongcfg.com","roomId":"","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"userDesc":"我哈哈哈哈哈哈哈哈","userName":"18235188642","userType":0,"utime":"2020-06-29 13:52:22"}
      * message : 操作成功
      */
 
@@ -50,35 +50,38 @@ public class UserInfoBean {
          * agencyName : 明咯咙
          * birthday : 2017-04-20
          * cityId : 1
-         * cnBalance : 0.0
+         * cnBalance : 0
          * countryId : 1
          * credentialsNonExpired : true
          * ctime : 2020-04-20 15:52:53
          * email : 578864539@qq.com
-         * enBalance : 0.0
+         * enBalance : 0
          * enabled : true
          * firstName : 你就
          * hasPay : 1
-         * headImage :
+         * headImage : /gameword-user-service/upload/18235188642/image/20200429/20200429175403_841_headImage
          * id : 1
          * inviteCode :
-         * lastLoginIp : 219.142.145.78
-         * lastLoginTime : 2020-04-28 19:04:58
+         * lastLoginIp : 115.171.62.23
+         * lastLoginTime : 2020-06-29 13:52:22
          * lastName : 民
-         * lastPasswordReset : 2020-04-28 19:07:26
+         * lastPaidDate : 2020-06-29 14:26:35
+         * lastPasswordReset : 2020-04-29 17:54:05
          * mobilePhone : 18235188642
          * nickName : hah
          哈哈
-         * password : $2a$10$Ay7MKcILBv3DNin7wdAAtu5zzclz3ROOg4.GSoLlYurNcQQPUVPEK
-         * rongyunToken :
+         * password : $2a$10$Qdd/weynXlz8NzwqCpDBsuMBXQJ2zfdNNYXRuqZLkgD072LCK3qLO
+         * payMessage :
+         * rongyunToken : rXPApFA6VXRKTWLtddInuCJT/DXRzoy1@3i9q.cn.rongnav.com;3i9q.cn.rongcfg.com
+         * roomId :
          * sex : 1
          * sortWithOutOrderBy :
          * sort_ :
          * status : 0
          * userDesc : 我哈哈哈哈哈哈哈哈
          * userName : 18235188642
-         * userType : 4
-         * utime : 2020-04-28 19:07:26
+         * userType : 0
+         * utime : 2020-06-29 13:52:22
          */
 
         private boolean accountNonExpired;
@@ -86,12 +89,12 @@ public class UserInfoBean {
         private String agencyName;
         private String birthday;
         private int cityId;
-        private double cnBalance;
+        private int cnBalance;
         private int countryId;
         private boolean credentialsNonExpired;
         private String ctime;
         private String email;
-        private double enBalance;
+        private int enBalance;
         private boolean enabled;
         private String firstName;
         private int hasPay;
@@ -101,11 +104,14 @@ public class UserInfoBean {
         private String lastLoginIp;
         private String lastLoginTime;
         private String lastName;
+        private String lastPaidDate;
         private String lastPasswordReset;
         private String mobilePhone;
         private String nickName;
         private String password;
+        private String payMessage;
         private String rongyunToken;
+        private String roomId;
         private int sex;
         private String sortWithOutOrderBy;
         private String sort_;
@@ -155,11 +161,11 @@ public class UserInfoBean {
             this.cityId = cityId;
         }
 
-        public double getCnBalance() {
+        public int getCnBalance() {
             return cnBalance;
         }
 
-        public void setCnBalance(double cnBalance) {
+        public void setCnBalance(int cnBalance) {
             this.cnBalance = cnBalance;
         }
 
@@ -195,11 +201,11 @@ public class UserInfoBean {
             this.email = email;
         }
 
-        public double getEnBalance() {
+        public int getEnBalance() {
             return enBalance;
         }
 
-        public void setEnBalance(double enBalance) {
+        public void setEnBalance(int enBalance) {
             this.enBalance = enBalance;
         }
 
@@ -275,6 +281,14 @@ public class UserInfoBean {
             this.lastName = lastName;
         }
 
+        public String getLastPaidDate() {
+            return lastPaidDate;
+        }
+
+        public void setLastPaidDate(String lastPaidDate) {
+            this.lastPaidDate = lastPaidDate;
+        }
+
         public String getLastPasswordReset() {
             return lastPasswordReset;
         }
@@ -307,12 +321,28 @@ public class UserInfoBean {
             this.password = password;
         }
 
+        public String getPayMessage() {
+            return payMessage;
+        }
+
+        public void setPayMessage(String payMessage) {
+            this.payMessage = payMessage;
+        }
+
         public String getRongyunToken() {
             return rongyunToken;
         }
 
         public void setRongyunToken(String rongyunToken) {
             this.rongyunToken = rongyunToken;
+        }
+
+        public String getRoomId() {
+            return roomId;
+        }
+
+        public void setRoomId(String roomId) {
+            this.roomId = roomId;
         }
 
         public int getSex() {

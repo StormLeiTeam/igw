@@ -2,6 +2,7 @@ package com.igw.igw.modoule.im.model
 
 import com.igw.igw.bean.chat.ChatRoomBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
+import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatTypeContract
 import com.igw.igw.network.NetObserver
 import com.shengshijingu.yashiji.common.util.ControllerUtils
@@ -35,6 +36,13 @@ class ChatModel :ChatTypeContract.Model {
 
         ControllerUtils.getImController().chatroomUsers(chatRoomId, observer)
 
+
+    }
+
+    override fun userInfo(observer: NetObserver<UserInfoBean.DataBean>) {
+
+
+        ControllerUtils.getCommonController().userInfo(observer)
 
     }
 
