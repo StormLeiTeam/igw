@@ -76,8 +76,11 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         ll_business_chat.setOnClickListener {
 
             roomId?.let {
-                mPresenter?.createChatRoom(it
-                        , "商务聊天室")
+                if (it.isNotEmpty()){
+                    mPresenter?.createChatRoom(it
+                            , "商务聊天室")
+
+                }
 
             }
 
@@ -86,8 +89,11 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         ll_public_chat.setOnClickListener {
 
             roomId?.let {
-                mPresenter?.createChatRoom(publicChatRoom, "公共聊天室")
 
+                if (it.isNotEmpty()){
+                    mPresenter?.createChatRoom(it, "公共聊天室")
+
+                }
             }
         }
 
@@ -122,7 +128,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         status_bar_main.setConfirmTextColor(R.color.black_000000)
         status_bar_main.setConfirmTextSize(15F)
 
-        mPresenter?.userInfo()
+//        mPresenter?.userInfo()
 
     }
 
@@ -156,6 +162,14 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
             }
 
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+      mPresenter?.userInfo()
+
     }
 
     override fun createFailChatRoom(type: String, code: Int, msg: String) {
