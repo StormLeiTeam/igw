@@ -24,20 +24,21 @@ import com.igw.igw.utils.*
 import com.igw.igw.widget.ChoicePopWindow
 import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
-import com.jph.takephoto.app.TakePhoto
-import com.jph.takephoto.app.TakePhotoImpl
-import com.jph.takephoto.compress.CompressConfig
-import com.jph.takephoto.model.CropOptions
-import com.jph.takephoto.model.InvokeParam
-import com.jph.takephoto.model.TContextWrap
-import com.jph.takephoto.model.TResult
-import com.jph.takephoto.permission.InvokeListener
-import com.jph.takephoto.permission.PermissionManager
-import com.jph.takephoto.permission.TakePhotoInvocationHandler
+
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_update_user_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
+import org.devio.takephoto.app.TakePhoto
+import org.devio.takephoto.app.TakePhotoImpl
+import org.devio.takephoto.compress.CompressConfig
+import org.devio.takephoto.model.CropOptions
+import org.devio.takephoto.model.InvokeParam
+import org.devio.takephoto.model.TContextWrap
+import org.devio.takephoto.model.TResult
+import org.devio.takephoto.permission.InvokeListener
+import org.devio.takephoto.permission.PermissionManager
+import org.devio.takephoto.permission.TakePhotoInvocationHandler
 import java.io.File
 import java.util.*
 
