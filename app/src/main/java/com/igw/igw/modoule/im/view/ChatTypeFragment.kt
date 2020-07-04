@@ -134,6 +134,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
     override fun createSuccessChatRoom(type: String) {
 
+        LogUtils.d(tag,"获取创建好的 room $type")
 
         when (type) {
 
@@ -142,7 +143,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
                 activity?.let {
 
-                    SingleChatActivity.startSelfOfIntent(it, publicChatRoom, "公共聊天室", Conversation.ConversationType.GROUP)
+                    SingleChatActivity.startSelfOfIntent(it, "5555", "公共聊天室", Conversation.ConversationType.GROUP)
 
                 }
 
@@ -200,6 +201,8 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
     private var userType: Int? = null
     private var roomId: String? = null
+
+
     override fun userInfoSuccessful(data: UserInfoBean.DataBean) {
 
         this.userType = data.userType

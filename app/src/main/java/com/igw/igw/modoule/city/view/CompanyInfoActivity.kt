@@ -16,10 +16,7 @@ import com.igw.igw.bean.city.CompanyInfoBean
 import com.igw.igw.modoule.city.CompanyInfoContract
 import com.igw.igw.modoule.city.model.CompanyInfoModel
 import com.igw.igw.modoule.city.presenter.CompanyInfoPresenter
-import com.igw.igw.utils.GlideUtils
-import com.igw.igw.utils.LocaleUtils
-import com.igw.igw.utils.StatusBarUtils
-import com.igw.igw.utils.UIUtils
+import com.igw.igw.utils.*
 import com.igw.igw.widget.storm.StatusBarView
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
@@ -125,9 +122,9 @@ class CompanyInfoActivity : BaseActivity<CompanyInfoPresenter>(), CompanyInfoCon
             GlideUtils.loadImage(this, Constants.BASE_URL + dataBean.companyLogo, iv_name)
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                tv_intro_info.text = Html.fromHtml(dataBean.enDesc, Html.FROM_HTML_MODE_LEGACY);
+                tv_intro_info.text = Html.fromHtml(dataBean.enDesc, Html.FROM_HTML_MODE_LEGACY,MImageGetter(tv_intro_info,this),null);
             } else {
-                tv_intro_info.text = Html.fromHtml(dataBean.enDesc); }
+                tv_intro_info.text = Html.fromHtml(dataBean.enDesc,MImageGetter(tv_intro_info,this),null); }
 
 
             for (label in dataBean.enLabelNames) {
@@ -142,9 +139,9 @@ class CompanyInfoActivity : BaseActivity<CompanyInfoPresenter>(), CompanyInfoCon
             GlideUtils.loadImage(this, Constants.BASE_URL + dataBean.companyLogo, iv_name)
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                tv_intro_info.text = Html.fromHtml(dataBean.cnDesc, Html.FROM_HTML_MODE_LEGACY);
+                tv_intro_info.text = Html.fromHtml(dataBean.cnDesc, Html.FROM_HTML_MODE_LEGACY,MImageGetter(tv_intro_info,this),null);
             } else {
-                tv_intro_info.text = Html.fromHtml(dataBean.cnDesc); }
+                tv_intro_info.text = Html.fromHtml(dataBean.cnDesc,MImageGetter(tv_intro_info,this),null); }
 
 
 

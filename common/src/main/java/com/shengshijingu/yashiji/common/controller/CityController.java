@@ -8,6 +8,7 @@ import java.util.Map;
 
 import io.reactivex.Observer;
 
+
 /**
  * @author storm_z
  * @date @{DATE}
@@ -62,6 +63,23 @@ public class CityController extends Controller {
     }
 
 
+    public void  companyCityList(int cityId,  int pageNum,int pageSize,Observer observer){
+
+
+        Map<String, Object> params = new HashMap<>();
+
+
+        params.put("cityId",cityId);
+        params.put("pageNum",pageNum);
+        params.put("pageSize",pageSize);
+
+
+        ApiSubscribe(NetApi.getApiService().getCityCompanyList(getRequestBody(params)),observer);
+
+    }
+
+
+
     /**
      * 获取的公司详情
      * @param companyId
@@ -75,5 +93,9 @@ public class CityController extends Controller {
 
         ApiSubscribe(NetApi.getApiService().companyCityInfo(getRequestBody(params)), observer);
     }
+
+
+
+
 
 }

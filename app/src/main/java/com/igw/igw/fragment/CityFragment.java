@@ -4,30 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.app.BaseAdapter;
 import com.igw.igw.bean.CityBean;
-import com.igw.igw.bean.CityBean.CitysBean;
 import com.igw.igw.bean.CityInfoBean;
+import com.igw.igw.bean.city.CityCompanyBean;
+import com.igw.igw.modoule.city.adapter.CityCompanyAdapter;
+import com.igw.igw.modoule.city.view.CompanyInfoActivity;
 import com.igw.igw.modoule.city.view.SearchCityActivity;
 import com.igw.igw.network.NetObserver;
 import com.igw.igw.utils.ActivityUtils;
 import com.igw.igw.utils.ColorUtils;
+import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.MImageGetter;
 import com.igw.igw.utils.SharedUtils;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
+import com.shengshijingu.yashiji.common.controller.Controller;
 import com.shengshijingu.yashiji.common.util.ControllerUtils;
 import com.shengshijingu.yashiji.common.util.ToastUtil;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 创建时间  2020/3/105:42 PM .
@@ -41,7 +53,7 @@ public class CityFragment extends BaseDataFragment {
 
     private LinearLayout ll_city;
 
-    private ArrayList<CitysBean> options1Items = new ArrayList<>(); //省
+    private ArrayList<CityBean.DataBean.CitysBean> options1Items = new ArrayList<>(); //省
 
     private OptionsPickerView pvOptions;
 
@@ -53,10 +65,18 @@ public class CityFragment extends BaseDataFragment {
 
     private ImageView iv_search;
 
+    private WebView webView;
+
+    private LinearLayout ll_buss_content;
+    private RecyclerView rv_company;
+
 
     private int cityType = 1;
 
     private int cityId = -1;
+    private int pageNum = 1;
+
+    private CityCompanyAdapter mCityCompanyAdapter;
 
     public static CityFragment getInstance() {
         CityFragment cityFragment = new CityFragment();
@@ -97,6 +117,94 @@ public class CityFragment extends BaseDataFragment {
 
         iv_search = bindView(R.id.iv_search);
         iv_search.setOnClickListener(this);
+
+        webView = bindView(R.id.web);
+
+        ll_buss_content = bindView(R.id.ll_buss_content);
+
+        rv_company = bindView(R.id.tv_company);
+
+        initAdapter();
+
+        cityDetail(1);
+        cityId = 1;
+        tv_basetitle.setText("北京");
+
+
+
+
+    }
+
+    private void initAdapter() {
+
+        mCityCompanyAdapter = new
+                CityCompanyAdapter(mContext, true);
+
+        mCityCompanyAdapter.setLoadingView(R.layout.item_common_loadend_view);
+        mCityCompanyAdapter.setLoadFailView(R.layout.item_common_loadfail_view);
+        mCityCompanyAdapter.setLoadEndView(R.layout.item_common_loadend_view);
+
+
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        rv_company.setLayoutManager(layoutManager);
+
+        rv_company.setAdapter(mCityCompanyAdapter);
+
+        mCityCompanyAdapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(boolean isClickLoadMore) {
+                pageNum += 1;
+
+                if (cityId != -1) {
+
+                    getCityCompanyDataMore(cityId, pageNum, 15);
+
+                }
+            }
+        });
+
+        mCityCompanyAdapter.onItemClickListener(new CityCompanyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int companyId) {
+
+                CompanyInfoActivity.Companion.startSelf((MainActivity) mContext, companyId);
+
+            }
+        });
+
+
+    }
+
+    private void getCityCompanyDataMore(int cityId, int pageNum, int pageSize) {
+
+        ControllerUtils.getCityController().companyCityList(cityId, pageNum, pageSize, new NetObserver<CityCompanyBean.DataBean>(CityCompanyBean.DataBean.class) {
+            @Override
+            protected void onError(@Nullable String msg) {
+
+            }
+
+            @Override
+            protected void onFail(int code, @Nullable String msg) {
+                mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_FAIL());
+            }
+
+            @Override
+            protected void onSuccess(CityCompanyBean.DataBean dataBean) {
+
+                if (dataBean.getRows().isEmpty()) {
+                    mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_INIT());
+                } else {
+
+                    mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_END());
+                    mCityCompanyAdapter.refreshLoadMoreData(dataBean.getRows());
+                    mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_LOADING());
+                }
+
+
+            }
+        });
+
     }
 
     @Override
@@ -107,6 +215,11 @@ public class CityFragment extends BaseDataFragment {
                 case R.id.tv_city_businessCooperation:
 
                     cityType = 2;
+
+                    if (cityId != -1) {
+                        getCityCompanyData(cityId, pageNum, 15);
+
+                    }
                     setCityData();
                     break;
                 case R.id.tv_city_cityInfo:
@@ -114,6 +227,8 @@ public class CityFragment extends BaseDataFragment {
 
                     setCityData();
                     break;
+
+
                 case R.id.ll_city:
                     cityList();
                     break;
@@ -126,9 +241,9 @@ public class CityFragment extends BaseDataFragment {
                     LogUtils.d(TAG, "获取的 cityid " + cityId);
 
                     if (cityId != -1) {
-                        SearchCityActivity.Companion.startSelf(getActivity(),cityId);
+                        SearchCityActivity.Companion.startSelf(getActivity(), cityId);
 
-                    }else {
+                    } else {
 
                         ToastUtil.showCenterToast(mContext, "请先选择城市");
                     }
@@ -137,6 +252,36 @@ public class CityFragment extends BaseDataFragment {
             }
 
         }
+
+    }
+
+    private void getCityCompanyData(int cityId, int pageNum, int pageSize) {
+
+
+        ControllerUtils.getCityController().companyCityList(cityId, pageNum, pageSize, new NetObserver<CityCompanyBean.DataBean>(CityCompanyBean.DataBean.class) {
+            @Override
+            protected void onError(@Nullable String msg) {
+
+            }
+
+            @Override
+            protected void onFail(int code, @Nullable String msg) {
+
+                ToastUtil.showCenterToast(mContext, msg);
+
+            }
+
+            @Override
+            protected void onSuccess(CityCompanyBean.DataBean dataBean) {
+
+                mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_END());
+                mCityCompanyAdapter.refreshData(dataBean.getRows());
+                mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_LOADING());
+
+
+            }
+        });
+
 
     }
 
@@ -149,6 +294,9 @@ public class CityFragment extends BaseDataFragment {
                 tv_city_cityInfo.setTextColor(getResources().getColor(R.color.color333));
                 tv_city_cityInfo.setBackground(getResources().getDrawable(R.color.white));
 
+
+                ll_buss_content.setVisibility(View.VISIBLE);
+                tv_city_html.setVisibility(View.GONE);
                 if (infoBean != null) {
                     tv_city_html.setText(Html.fromHtml(infoBean.getStationDetail().getBusinessCooperation(), new MImageGetter(tv_city_html, getActivity()), null));
                 }
@@ -161,8 +309,27 @@ public class CityFragment extends BaseDataFragment {
                 tv_city_businessCooperation.setTextColor(getResources().getColor(R.color.color333));
                 tv_city_businessCooperation.setBackground(getResources().getDrawable(R.color.white));
 
+
+                ll_buss_content.setVisibility(View.GONE);
+                tv_city_html.setVisibility(View.VISIBLE);
+
+                // 商务合作请求接口
+
+                // 请求数据
+
                 if (infoBean != null) {
+//
                     tv_city_html.setText(Html.fromHtml(infoBean.getStationDetail().getCityInfo(), new MImageGetter(tv_city_html, getActivity()), null));
+//                    WebSettings webSettings = webView.getSettings();
+//                    webSettings.setJavaScriptEnabled(true);//允许使用js
+////不支持屏幕缩放
+//                    webSettings.setSupportZoom(true);
+//                    webSettings.setBuiltInZoomControls(false);
+////不显示webview缩放按钮
+//                    webSettings.setDisplayZoomControls(false);
+//
+//
+//                    webView.loadDataWithBaseURL(null,infoBean.getStationDetail().getCityInfo(), "text/html" , "utf-8", null);
                 }
                 break;
         }
@@ -174,12 +341,18 @@ public class CityFragment extends BaseDataFragment {
             return;
         }
         showLoadingText();
-        ControllerUtils.getHomeControllerInstance().cityList(new NetObserver<CityBean>(CityBean.class) {
+        ControllerUtils.getHomeControllerInstance().cityList(new NetObserver<CityBean.DataBean>(CityBean.DataBean.class) {
             @Override
-            protected void onSuccess(CityBean cityBean) {
+            protected void onSuccess(CityBean.DataBean dataBean) {
                 hideLoadingText();
-                setAddressPicker(cityBean.getCitys());
+                setAddressPicker(dataBean.getCitys());
             }
+
+//            @Override
+//            protected void onSuccess(CityBean cityBean) {
+//                hideLoadingText();
+//                setAddressPicker(cityBean.getData().getCitys());
+//            }
 
             @Override
             protected void onFail(int code, String msg) {
@@ -196,7 +369,7 @@ public class CityFragment extends BaseDataFragment {
         });
     }
 
-    private void setAddressPicker(List<CitysBean> dataBean) {
+    private void setAddressPicker(List<CityBean.DataBean.CitysBean> dataBean) {
         this.options1Items.clear();
         this.options1Items.addAll(dataBean);
         initJsonData();
@@ -210,10 +383,20 @@ public class CityFragment extends BaseDataFragment {
     public void showPickerView() {// 弹出选择器（省市区三级联动）
         if (pvOptions == null) {
             pvOptions = new OptionsPickerBuilder(getActivity(), (options1, options2, options3, v) -> {
-                tv_basetitle.setText(options1Items.get(options1).getRegionCnName());
+
+
+                String cityName = LocaleUtils.INSTANCE.isLocaleEn(mContext) ? options1Items.get(options1).getCityEn() : options1Items.get(options1).getCityCn();
+                tv_basetitle.setText(cityName);
 
                 cityDetail(options1Items.get(options1).getId());
+
+
                 this.cityId = options1Items.get(options1).getId();
+
+                if (cityId != -1) {
+                    getCityCompanyData(cityId, pageNum, 15);
+
+                }
 
                 LogUtils.d(TAG, "获取的城市id  -> " + cityId);
 
@@ -239,7 +422,9 @@ public class CityFragment extends BaseDataFragment {
 
     private CityInfoBean infoBean;
 
+
     private void cityDetail(int id) {
+
         showLoadingText();
         ControllerUtils.getHomeControllerInstance().cityDetail(id, SharedUtils.getLanguage(), new NetObserver<CityInfoBean>(CityInfoBean.class) {
             @Override
@@ -263,6 +448,7 @@ public class CityFragment extends BaseDataFragment {
             }
 
         });
+
 
     }
 }

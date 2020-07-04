@@ -20,7 +20,7 @@ public interface ApiService {
     /**
      * 城市列表
      */
-    @POST("/api/common/cityList")
+    @POST("/api/city/list")
     Observable<ResponseBody> cityList(@Body RequestBody requestBody);
 
     /**
@@ -29,6 +29,11 @@ public interface ApiService {
     @POST("/api/station/detail")
     Observable<ResponseBody> cityDetail(@Body RequestBody requestBody);
 
+
+
+//
+//    @POST("/api/station/detail")
+//    Observable<ResponseBody> businessCooperation(@Body RequestBody requestBody);
     /**
      * 交流信息
      */
@@ -281,6 +286,11 @@ public interface ApiService {
      */
     @POST("/api/city/companyList")
     Observable<ResponseBody> getCitySearchResult(@Body RequestBody requestBody);
+
+
+
+    @POST("/api/city/cityCompany")
+    Observable<ResponseBody> getCityCompanyList(@Body RequestBody requestBody);
 
 
     /**
