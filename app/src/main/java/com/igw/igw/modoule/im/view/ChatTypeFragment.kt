@@ -8,11 +8,14 @@ import com.igw.igw.fragment.BaseMvpDataFragment
 import com.igw.igw.modoule.im.ChatTypeContract
 import com.igw.igw.modoule.im.model.ChatModel
 import com.igw.igw.modoule.im.presenter.ChatPresenter
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.LogUtils
 import com.shengshijingu.yashiji.common.util.ToastUtil
+import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.fragment_chattype.*
+
 
 /**
  *
@@ -76,7 +79,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         ll_business_chat.setOnClickListener {
 
             roomId?.let {
-                if (it.isNotEmpty()){
+                if (it.isNotEmpty()) {
                     mPresenter?.createChatRoom(it
                             , "商务聊天室")
 
@@ -90,7 +93,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
             roomId?.let {
 
-                if (it.isNotEmpty()){
+                if (it.isNotEmpty()) {
                     mPresenter?.createChatRoom(it, "公共聊天室")
 
                 }
@@ -134,7 +137,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
     override fun createSuccessChatRoom(type: String) {
 
-        LogUtils.d(tag,"获取创建好的 room $type")
+        LogUtils.d(tag, "获取创建好的 room $type")
 
         when (type) {
 
@@ -143,7 +146,36 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
                 activity?.let {
 
-                    SingleChatActivity.startSelfOfIntent(it, "5555", "公共聊天室", Conversation.ConversationType.GROUP)
+                    SingleChatActivity.startSelfOfIntent(it, publicChatRoom, "公共聊天室", Conversation.ConversationType.CHATROOM)
+
+
+
+//                    GroupChatRoomActivity.startSelfOfIntent(it, publicChatRoom,"公共聊天室")
+//                    val chatroomId = "聊天室 ID"
+//                    val defMessageCount = 50
+//
+//                    RongIMClient.getInstance().joinChatRoom(publicChatRoom, defMessageCount, object : RongIMClient.OperationCallback() {
+//                        /**
+//                         * 成功回调
+//                         */
+//                        override fun onSuccess() {
+//
+//                            LogUtils.d(TAG,"进入聊天室成功")
+//
+//                        }
+//
+//                        /**
+//                         * 失败回调
+//                         * @param errorCode 错误码
+//                         */
+//                        override fun onError(errorCode: RongIMClient.ErrorCode) {
+//                            LogUtils.d(TAG,"进入聊天室失")
+//
+//                        }
+//                    })
+
+
+//                    SingleChatActivity.startSelfOfIntent(it, "5555", "公共聊天室", Conversation.ConversationType.GROUP)
 
                 }
 
@@ -169,7 +201,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
     override fun onResume() {
         super.onResume()
 
-      mPresenter?.userInfo()
+        mPresenter?.userInfo()
 
     }
 
@@ -208,6 +240,8 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         this.userType = data.userType
         this.roomId = data.roomId
 
+        LoginManager.instance.updateRongUserInfo("${data.id}", data.agencyName, data.headImage)
+
 
         updateView(this.userType!!)
 
@@ -220,7 +254,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
             0 -> {
 
-            // 普通会员
+                // 普通会员
 
                 ll_public_chat.visibility = View.VISIBLE
                 ll_business_chat.visibility = View.GONE
@@ -230,7 +264,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
             1 -> {
 
                 // 商务会员
-                ll_public_chat.visibility =View.GONE
+                ll_public_chat.visibility = View.GONE
                 ll_business_chat.visibility = View.VISIBLE
 
             }
@@ -241,7 +275,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
     override fun userInfoFail(code: Int, msg: String) {
 
-        ToastUtil.showCenterToast(mContext,"获取聊天信息失败")
+        ToastUtil.showCenterToast(mContext, "获取聊天信息失败")
 
     }
 

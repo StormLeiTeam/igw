@@ -6,7 +6,9 @@ import com.igw.igw.modoule.login.loginstate.Contanct.USER_INFO
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.SPUtils
 import com.shengshijingu.yashiji.common.net.Interceptor.CommonHeaderInterceptor
+import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.UserInfo
 
 /**
  *
@@ -87,6 +89,7 @@ class LoginInState : UserState {
                 override fun onSuccess(p0: String?) {
 
                     LogUtils.d(TAG," 融云 token onSuccess  ---- ")
+                    setRongUserInfo()
 
                 }
 
@@ -109,6 +112,21 @@ class LoginInState : UserState {
         }
 
 
+
+
+
+    }
+
+    private fun setRongUserInfo() {
+
+
+        RongIM.setUserInfoProvider(object :RongIM.UserInfoProvider{
+            override fun getUserInfo(p0: String?): UserInfo? {
+
+                return null
+
+           }
+        },true)
 
 
 

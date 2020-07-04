@@ -1,10 +1,16 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
+import android.net.Uri.parse
 import android.util.Log
-import com.igw.igw.app.IGWApplication
 import com.igw.igw.bean.login.LoginBean
-import com.igw.igw.utils.*
+import com.igw.igw.utils.GsonUtils
+import com.igw.igw.utils.LogUtils
+import com.igw.igw.utils.SPUtils
+import com.igw.igw.utils.SharedUtils
+import com.shengshijingu.yashiji.common.Constants
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.UserInfo
 
 /**
  *
@@ -66,6 +72,8 @@ class LoginManager {
 
         (loginState as LoginInState).initRongYun()
 
+        var userInfo = UserInfo("${user.id}", user.agencyName, parse(Constants.BASE_URL + user.headImage))
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
 
     }
 
@@ -169,6 +177,14 @@ class LoginManager {
         }
 
 
+    }
+
+
+    fun updateRongUserInfo(userId: String, nickname: String, headImg: String) {
+
+        var userInfo = UserInfo(userId, nickname, parse(Constants.BASE_URL + headImg))
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
+        
     }
 //    fun updateUserInfo(token: String, userinfoJson: String) {
 //
