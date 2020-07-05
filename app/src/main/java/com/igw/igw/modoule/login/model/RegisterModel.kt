@@ -97,6 +97,11 @@ class RegisterModel : RegisterContract.Model {
     override fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>) {
 
 
+        ControllerUtils.getLoginControllerInstance()
+                .uploadImage(file,observer)
+
+
+
     }
 
 
