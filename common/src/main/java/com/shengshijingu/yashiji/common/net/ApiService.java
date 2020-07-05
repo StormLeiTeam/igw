@@ -20,7 +20,7 @@ public interface ApiService {
     /**
      * 城市列表
      */
-    @POST("/api/common/cityList")
+    @POST("/api/city/list")
     Observable<ResponseBody> cityList(@Body RequestBody requestBody);
 
     /**
@@ -29,6 +29,11 @@ public interface ApiService {
     @POST("/api/station/detail")
     Observable<ResponseBody> cityDetail(@Body RequestBody requestBody);
 
+
+
+//
+//    @POST("/api/station/detail")
+//    Observable<ResponseBody> businessCooperation(@Body RequestBody requestBody);
     /**
      * 交流信息
      */
@@ -267,6 +272,34 @@ public interface ApiService {
     Observable<ResponseBody> readedMessage(@Body RequestBody requestBody);
 
 
+
+
+    //  获取城市标签
+    @POST("/api/city/labelList")
+    Observable<ResponseBody> getCityLabal(@Body RequestBody requestBody);
+
+
+    /**
+     * 获取搜索结果
+     * @param
+     * @return
+     */
+    @POST("/api/city/companyList")
+    Observable<ResponseBody> getCitySearchResult(@Body RequestBody requestBody);
+
+
+
+    @POST("/api/city/cityCompany")
+    Observable<ResponseBody> getCityCompanyList(@Body RequestBody requestBody);
+
+
+    /**
+     * 公司详情
+     * @param requestBody
+     * @return
+     */
+    @POST("api/city/companyDetail")
+    Observable<ResponseBody> companyCityInfo(@Body RequestBody requestBody);
 }
 
 

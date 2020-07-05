@@ -74,7 +74,7 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.yaming116:UpdateApp:1.0.2'
-    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+//    implementation 'com.contrarywind:Android-PickerView:4.1.8'
     implementation 'me.jessyan:autosize:1.1.2'
     //    implementation 'jsc.kit.datetimepicker:DateTimePickerLibrary:0.4.8'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
@@ -85,11 +85,19 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.2.0"
     //    implementation project(path: ':takephoto_library')
-    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
+//    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
+    implementation 'org.devio.takephoto:takephoto_library:4.1.0'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'cn.rongcloud.sdk:im_kit:2.9.18'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     implementation 'cn.rongcloud.sdk:im_lib:2.9.18'
     implementation project(path: ':fuzzysearchlibrary')
+
+    implementation 'com.google.android:flexbox:0.2.5'
+
+//    implementation 'org.sufficientlysecure:html-textview:3.9'
+//    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+
 
 }

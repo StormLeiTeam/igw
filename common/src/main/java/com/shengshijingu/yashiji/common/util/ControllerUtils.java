@@ -4,6 +4,7 @@ import android.media.MediaDataSource;
 import android.service.autofill.TextValueSanitizer;
 
 import com.shengshijingu.yashiji.common.controller.ChatController;
+import com.shengshijingu.yashiji.common.controller.CityController;
 import com.shengshijingu.yashiji.common.controller.CommonController;
 import com.shengshijingu.yashiji.common.controller.HomeController;
 import com.shengshijingu.yashiji.common.controller.IMController;
@@ -82,6 +83,16 @@ public class ControllerUtils {
         }
 
         return chatController;
+    }
+
+
+    private static  CityController cityController;
+    public static CityController getCityController(){
+        if(cityController == null) {
+            cityController = new CityController();
+        }
+
+        return  cityController;
     }
 
 }

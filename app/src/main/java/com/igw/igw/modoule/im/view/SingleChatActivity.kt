@@ -29,7 +29,7 @@ class SingleChatActivity : FragmentActivity() {
 
 
             LogUtils.d(TAG, "获取  friendID $chatId he  name --> $chatName")
-            RongIM.getInstance()?.startConversation(activity, conversationType, chatId, chatName, null)
+            RongIM.getInstance()?.startConversation(activity, conversationType, chatId, chatName)
 
         }
     }

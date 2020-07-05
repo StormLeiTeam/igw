@@ -40,7 +40,7 @@ class RegisterPresenter(model: RegisterContract.Model)
 
 
         mModel.getNationalityData(object: NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java){
-            override fun onSuccess(m: NationalityBean.DataBean?) {
+            override fun onSuccess(m: NationalityBean.DataBean) {
 
 //                val toString = m?.countrys.toString()
 
@@ -80,7 +80,7 @@ class RegisterPresenter(model: RegisterContract.Model)
     fun getCityListData(countryId : Int){
 
         mModel.getCityData(countryId, object: NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java){
-            override fun onSuccess(m: CityListBean.DataBean?) {
+            override fun onSuccess(m: CityListBean.DataBean) {
 
 
                 m?.let {
@@ -111,7 +111,7 @@ class RegisterPresenter(model: RegisterContract.Model)
     fun registerUser(registerBean: RegisterBean) {
 
         mModel.registerUser(registerBean,object :NetObserver<RegisterSuccessBean.DataBean>(RegisterSuccessBean.DataBean::class.java){
-            override fun onSuccess(m: RegisterSuccessBean.DataBean?) {
+            override fun onSuccess(m: RegisterSuccessBean.DataBean) {
 
 
                 LogUtils.d(TAG,"注册成功 ")
@@ -147,7 +147,7 @@ class RegisterPresenter(model: RegisterContract.Model)
 
             }
 
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG,"上传照片失败  --> ")
 
 //                mRootView.loadHeadImageFail(code,msg)

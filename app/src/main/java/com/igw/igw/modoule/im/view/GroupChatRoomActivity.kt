@@ -1,16 +1,13 @@
 package com.igw.igw.modoule.im.view
 
 import android.app.Activity
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import com.igw.igw.R
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
-import io.rong.imkit.RongIM
 import io.rong.imkit.fragment.ConversationFragment
-import io.rong.imlib.model.Conversation
+import io.rong.imlib.RongIMClient
 import kotlinx.android.synthetic.main.common_status_bar.*
 
 
@@ -29,9 +26,25 @@ class GroupChatRoomActivity : AppCompatActivity() {
         public fun startSelfOfIntent(activity: Activity, chatRoomId: String, chatRoomName: String) {
 
 
-            val group = Conversation.ConversationType.GROUP
+//            val group = Conversation.ConversationType.GROUP
 
-            RongIM.getInstance().startConversation(activity, group, chatRoomId, chatRoomName, null)
+            val defMessageCount = 50
+
+            RongIMClient.getInstance().joinExistChatRoom(chatRoomId, defMessageCount, object : RongIMClient.OperationCallback() {
+                /**
+                 * 成功回调
+                 */
+                override fun onSuccess() {
+
+
+                }
+
+                /**
+                 * 失败回调
+                 * @param errorCode 错误码
+                 */
+                override fun onError(errorCode: RongIMClient.ErrorCode) {}
+            })
 
 
         }

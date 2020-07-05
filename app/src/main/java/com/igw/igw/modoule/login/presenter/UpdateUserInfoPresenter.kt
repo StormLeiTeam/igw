@@ -35,7 +35,7 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
 
 
         mModel.getNationalityData(object : NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java) {
-            override fun onSuccess(m: NationalityBean.DataBean?) {
+            override fun onSuccess(m: NationalityBean.DataBean) {
 
 //                val toString = m?.countrys.toString()
 
@@ -74,7 +74,7 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
 
 
         mModel.getCityData(countryId, object : NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java) {
-            override fun onSuccess(m: CityListBean.DataBean?) {
+            override fun onSuccess(m: CityListBean.DataBean) {
 
 
                 m?.let {
@@ -112,12 +112,12 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
                 mRootView.updateUserInfoSuccessful(m)
             }
 
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
 
                 LogUtils.d(TAG, "修改个人信息失败 -- ")
 
 
-                mRootView.updateUserInfoFail(code,msg)
+                mRootView.updateUserInfoFail(code,msg!!)
             }
 
             override fun onError(msg: String?) {
@@ -141,10 +141,10 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
 
             }
 
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG,"上传照片失败  --> ")
 
-                mRootView.loadHeadImageFail(code,msg)
+                mRootView.loadHeadImageFail(code,msg!!)
 
             }
 

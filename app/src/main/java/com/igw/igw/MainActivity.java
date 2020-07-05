@@ -26,6 +26,7 @@ import com.igw.igw.modoule.splash.view.SplashActivity;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
@@ -117,23 +118,24 @@ public class MainActivity extends BaseActivity {
             Log.e("12345", array[i] + "");
         }
 
-        Log.e("12345",SharedUtils.getRongToken());
+        Log.e("12345", SharedUtils.getRongToken());
         RongIM.connect(SharedUtils.getRongToken(), new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
 
             }
+
             @Override
             public void onSuccess(String userid) {
                 Log.d("12345", "--onSuccess" + userid);
 
             }
+
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
                 Log.d("12345", "--onSuccess" + errorCode);
             }
         });
-
 
 
     }
@@ -175,8 +177,7 @@ public class MainActivity extends BaseActivity {
             case R.id.ll_main_my:
 
 
-
-                if(!login) {
+                if (!login) {
 //            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
 //            this@SplashActivity.startActivity(intent)
 //            finish()
@@ -200,10 +201,7 @@ public class MainActivity extends BaseActivity {
             case R.id.ll_main_message:
 
 
-                if(!login) {
-//            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-//            this@SplashActivity.startActivity(intent)
-//            finish()
+                if (!login) {
                     Intent intent = new Intent(this, LoginActivity.class);
 
                     startActivity(intent);
@@ -214,7 +212,7 @@ public class MainActivity extends BaseActivity {
                 if (null == chatTypeFragment) {
                     chatTypeFragment = ChatTypeFragment.Companion.getInstance();
                     fragmentTransaction.add(R.id.fl_main, chatTypeFragment);
-                }else{
+                } else {
                     fragmentTransaction.show(chatTypeFragment);
 
                 }

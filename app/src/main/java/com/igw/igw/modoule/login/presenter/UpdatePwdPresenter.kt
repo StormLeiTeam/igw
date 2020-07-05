@@ -33,7 +33,7 @@ class UpdatePwdPresenter(model: UpdatePwdContract.Model):
     override fun updatePwd(oldPassword: String, newPassword: String) {
 
         mModel.updatePwd(oldPassword,newPassword,object : NetObserver<UpdatePwdBean>(UpdatePwdBean::class.java){
-            override fun onSuccess(m: UpdatePwdBean?) {
+            override fun onSuccess(m: UpdatePwdBean) {
                 mRootView.onSuccess()
             }
 

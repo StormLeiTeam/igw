@@ -35,20 +35,21 @@ import com.igw.igw.widget.ChoicePopWindow
 import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
-import com.jph.takephoto.app.TakePhoto
-import com.jph.takephoto.app.TakePhotoImpl
-import com.jph.takephoto.compress.CompressConfig
-import com.jph.takephoto.model.CropOptions
-import com.jph.takephoto.model.InvokeParam
-import com.jph.takephoto.model.TContextWrap
-import com.jph.takephoto.model.TResult
-import com.jph.takephoto.permission.InvokeListener
-import com.jph.takephoto.permission.PermissionManager
-import com.jph.takephoto.permission.TakePhotoInvocationHandler
+
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.status_bar_view.*
+import org.devio.takephoto.app.TakePhoto
+import org.devio.takephoto.app.TakePhotoImpl
+import org.devio.takephoto.compress.CompressConfig
+import org.devio.takephoto.model.CropOptions
+import org.devio.takephoto.model.InvokeParam
+import org.devio.takephoto.model.TContextWrap
+import org.devio.takephoto.model.TResult
+import org.devio.takephoto.permission.InvokeListener
+import org.devio.takephoto.permission.PermissionManager
+import org.devio.takephoto.permission.TakePhotoInvocationHandler
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -225,6 +226,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //        LogUtils.d(TAG, "${toJson}")
 //
 //        LogUtils.d(TAG,"${fromJson.genders[0].getChName()}")
+
+
 
 
         genders = GsonUtils.instance.fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
@@ -683,8 +686,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         //endDate.set(2020,1,1);
 
         //正确设置方式 原因：注意事项有说明
-        startDate.set(2013, 0, 1)
-        endDate.set(2020, 12, 30)
+        startDate.set(startDate.get(Calendar.YEAR)-100, 0, 1)
+        endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH) + 1, endDate.get(Calendar.DAY_OF_MONTH))
 
         if (pickerBuilder == null) {
 

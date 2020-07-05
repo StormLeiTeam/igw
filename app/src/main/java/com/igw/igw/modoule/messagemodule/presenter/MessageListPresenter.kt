@@ -36,10 +36,10 @@ class MessageListPresenter(model: MessageContract.Model) :
      */
     override fun messageCenterList() {
         mModel.messageCenterList(object : NetObserver<MessageCenterBean.DataBean>(MessageCenterBean.DataBean::class.java) {
-            override fun onSuccess(m: MessageCenterBean.DataBean?) {
+            override fun onSuccess(m: MessageCenterBean.DataBean) {
 
                 LogUtils.d(TAG, "消息中心列表 --onSuccess ")
-                m?.let { mRootView.onSuccess(it.rows) }
+                m.let { mRootView.onSuccess(it.rows) }
 
             }
 
@@ -99,7 +99,7 @@ class MessageListPresenter(model: MessageContract.Model) :
 
         mModel.dealMessage(id,isAgree,
                 object :NetObserver<DealMessageBean.DataBean>(DealMessageBean.DataBean::class.java){
-                    override fun onSuccess(m: DealMessageBean.DataBean?) {
+                    override fun onSuccess(m: DealMessageBean.DataBean) {
 
                         mRootView.onDealMessageSuccess(m)
 
@@ -123,10 +123,10 @@ class MessageListPresenter(model: MessageContract.Model) :
 
         mModel.readedMessage(id,isRead,
         object :NetObserver<ReadedMessage.DataBean>(ReadedMessage.DataBean::class.java){
-            override fun onSuccess(m: ReadedMessage.DataBean?) {
+            override fun onSuccess(m: ReadedMessage.DataBean) {
 
 
-                m?.let {
+                m.let {
 
                     mRootView.readedSuccess(it)
 

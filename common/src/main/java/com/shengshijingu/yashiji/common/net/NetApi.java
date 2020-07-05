@@ -40,7 +40,7 @@ public class NetApi {
         OkHttpClient.Builder okHttpClient = genericClient().newBuilder();
         okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
         okHttpClient.addInterceptor(httpLoggingInterceptor);
-        okHttpClient.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());
+//        okHttpClient.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -73,4 +73,6 @@ public class NetApi {
         return httpClient;
 
     }
+
+
 }

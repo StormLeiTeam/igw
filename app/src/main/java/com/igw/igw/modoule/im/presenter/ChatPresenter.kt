@@ -2,6 +2,7 @@ package com.igw.igw.modoule.im.presenter
 
 import com.igw.igw.bean.chat.ChatRoomBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
+import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatTypeContract
 import com.igw.igw.mvp.presenter.BasePresenter
 import com.igw.igw.network.NetObserver
@@ -32,7 +33,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
     override fun createChatRoom(chatRoomId: String, chatRoomName: String) {
 
         mModel.createChatRoom(chatRoomId,chatRoomName,object :NetObserver<ChatRoomBean.DataBean>(ChatRoomBean.DataBean::class.java){
-            override fun onSuccess(m: ChatRoomBean.DataBean?) {
+            override fun onSuccess(m: ChatRoomBean.DataBean) {
 
                 mRootView.createSuccessChatRoom(chatRoomId)
             }
@@ -56,7 +57,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
     override fun destoryChatRoom(chatRoomId: String) {
 
         mModel.destoryChatRoom(chatRoomId, object :NetObserver<ChatRoomBean.DataBean>(ChatRoomBean.DataBean::class.java){
-            override fun onSuccess(m: ChatRoomBean.DataBean?) {
+            override fun onSuccess(m: ChatRoomBean.DataBean) {
 
                 mRootView.createSuccessChatRoom(chatRoomId)
 
@@ -79,7 +80,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
 
         mModel.chatRoomUsers(chatRoomId,
                 object :NetObserver<ChatRoomUsesBean>(ChatRoomUsesBean::class.java){
-                    override fun onSuccess(m: ChatRoomUsesBean?) {
+                    override fun onSuccess(m: ChatRoomUsesBean) {
 
 
                     }
@@ -92,5 +93,30 @@ class ChatPresenter(model:ChatTypeContract.Model):
 
 
                 })
+    }
+
+    override fun userInfo() {
+
+        mModel.userInfo(object : NetObserver<UserInfoBean.DataBean>(UserInfoBean.DataBean::class.java){
+            override fun onSuccess(m: UserInfoBean.DataBean) {
+
+                mRootView.userInfoSuccessful(m)
+
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                if (msg != null) {
+                    mRootView.userInfoFail(code,msg)
+                }
+
+            }
+
+            override fun onError(msg: String?) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
+
     }
 }

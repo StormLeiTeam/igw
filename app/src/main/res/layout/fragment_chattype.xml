@@ -15,6 +15,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_business_chat"
             android:layout_width="match_parent"
             android:layout_height="49dp"
@@ -40,6 +41,7 @@
         <include layout="@layout/default_line"/>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_public_chat"
             android:layout_width="match_parent"
             android:layout_height="49dp"
@@ -68,6 +70,8 @@
 
 
         <LinearLayout
+
+
             android:id="@+id/ll_recent_chat"
             android:layout_width="match_parent"
             android:layout_height="49dp"

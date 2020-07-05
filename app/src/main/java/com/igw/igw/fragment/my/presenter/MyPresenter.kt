@@ -44,14 +44,14 @@ public class MyPresenter(model: MyContract.Model) :
                 mRootView.userInfoSuccessful(m)
             }
 
-            override fun onFail(code: Int, msg: String) {
+            override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG,"获取个人信息 --> fail  $msg ")
 
-                mRootView.userInfoFail(code,msg)
+                mRootView.userInfoFail(code,msg!!)
 
             }
 
-            override fun onError(msg: String) {
+            override fun onError(msg: String?) {
 
                 LogUtils.d(TAG,"获取个人信息 --> error $msg ")
 //                mRootView.userInfoFail(,msg)
@@ -64,7 +64,7 @@ public class MyPresenter(model: MyContract.Model) :
     override fun updateVersion() {
 
         mModel.updateVersion(object : NetObserver<VersionBean>(VersionBean::class.java){
-            override fun onSuccess(m: VersionBean?) {
+            override fun onSuccess(m: VersionBean) {
                 LogUtils.d(TAG,"更新版本信息 --> successful")
 
                 m?.let {
