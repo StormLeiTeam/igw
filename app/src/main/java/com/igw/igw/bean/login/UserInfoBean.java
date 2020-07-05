@@ -19,6 +19,16 @@ public class UserInfoBean {
     private DataBean data;
     private String message;
 
+    public String getAttachmentPath() {
+        return attachmentPath;
+    }
+
+    public void setAttachmentPath(String attachmentPath) {
+        this.attachmentPath = attachmentPath;
+    }
+
+    private String attachmentPath;
+
     public int getCode() {
         return code;
     }

@@ -6,21 +6,18 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.Gravity
 import android.view.Gravity.BOTTOM
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
-import com.bumptech.glide.Glide
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
@@ -35,11 +32,9 @@ import com.igw.igw.widget.ChoicePopWindow
 import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
-
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
 import org.devio.takephoto.app.TakePhoto
 import org.devio.takephoto.app.TakePhotoImpl
 import org.devio.takephoto.compress.CompressConfig
@@ -50,11 +45,9 @@ import org.devio.takephoto.model.TResult
 import org.devio.takephoto.permission.InvokeListener
 import org.devio.takephoto.permission.PermissionManager
 import org.devio.takephoto.permission.TakePhotoInvocationHandler
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.crypto.NullCipher
-import kotlin.contracts.ReturnsNotNull
 
 
 /**
@@ -125,13 +118,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private var mGender: GenderBean? = null // 性别 必填
     private var mBirthday: String = "" // 出生日期 必填
     private var mNickName: String = "" //  昵称 选填
-    private var mAgencyName : String = "" // 机构/学校 选填
-    private var mDescription : String = ""  // 自我介绍
-    private var mEmail: String ="" // 自我介绍 // 选填
-    private var mMobilePhone:String  = "" // 手机号码 必填
-    private var mPassword : String = ""  // 密码 必填
+    private var mAgencyName: String = "" // 机构/学校 选填
+    private var mDescription: String = ""  // 自我介绍
+    private var mEmail: String = "" // 自我介绍 // 选填
+    private var mMobilePhone: String = "" // 手机号码 必填
+    private var mPassword: String = ""  // 密码 必填
     private var mInviteCode: String = "" // 邀请码
-    private var mHeadImage : File? = null
+    private var mHeadImage: File? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -228,8 +221,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //        LogUtils.d(TAG,"${fromJson.genders[0].getChName()}")
 
 
-
-
         genders = GsonUtils.instance.fromJsonString2list<GenderBean>(GENDER_JSON, GenderBean::class.java)
 
         genderPopWindow?.let {
@@ -294,7 +285,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun setUpListener() {
 
 
-        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+        status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
 
             override fun onClick() {
 
@@ -324,11 +315,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //                if (!file.parentFile.exists()) file.parentFile.mkdirs()
 ////                return Uri.fromFile(file)
 //
-//                var contentUri: Uri = FileProvider.getUriForFile(this@RegisterActivity, BuildConfig.APPLICATION_ID.toString() + ".fileprovider", file)
+////                var contentUri: Uri = FileProvider.getUriForFile(this@RegisterActivity, BuildConfig.APPLICATION_ID.toString() + ".fileprovider", file)
                 val imageRri = getImageCropUri()
-
-
+//
+//
                 takePhoto?.onPickFromGalleryWithCrop(imageRri, cropOptions)
+//                ImageUploadUtil.getInstance().startPictureActivity(this@RegisterActivity)
+
             }
 
         })
@@ -338,6 +331,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
                 val url = getImageCropUri()
                 takePhoto?.onPickFromCaptureWithCrop(url, cropOptions)
+//                ImageUploadUtil.getInstance().checkPermission(this@RegisterActivity)
 
             }
 
@@ -479,7 +473,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     }
 
 
-
     private fun changeLocale() {
 
 //        //
@@ -504,11 +497,11 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun registerSubmitForNet() {
 
 
-        if (!cb_check.isChecked){
+        if (!cb_check.isChecked) {
 
             // 请先勾选
 
-            ToastUtil.showCenterToast(this,R.string.check_user_agreement)
+            ToastUtil.showCenterToast(this, R.string.check_user_agreement)
 
 
             return
@@ -543,8 +536,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             return
         }
 
-       mBirthday =   tv_select_ymd.text.toString().trim()
-        LogUtils.d(TAG,"获取的生日  -->  $mBirthday")
+        mBirthday = tv_select_ymd.text.toString().trim()
+        LogUtils.d(TAG, "获取的生日  -->  $mBirthday")
 
         if (mBirthday.isEmpty()) {
 
@@ -565,7 +558,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         }
 
 
-        if (et_password.text.toString().trim().isEmpty()){
+        if (et_password.text.toString().trim().isEmpty()) {
 
             ToastUtil.showCenterToast(this, R.string.warning_not_input_password)
 
@@ -573,7 +566,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             return
         }
 
-        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())){
+        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())) {
             ToastUtil.showCenterToast(this, R.string.warning_two_password_not_same)
 
 
@@ -610,7 +603,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //        }
 
 
-        LogUtils.d(TAG,registerBean.toString())
+        LogUtils.d(TAG, registerBean.toString())
 
 
         mPresenter.registerUser(registerBean)
@@ -656,7 +649,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             }
 
             if (!it.isShowing) {
-                it.showAtLocation(root_main,
+                it.showAtLocation(
+                        root_main,
                         BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
 
             }
@@ -686,12 +680,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         //endDate.set(2020,1,1);
 
         //正确设置方式 原因：注意事项有说明
-        startDate.set(startDate.get(Calendar.YEAR)-100, 0, 1)
+        startDate.set(startDate.get(Calendar.YEAR) - 100, 0, 1)
         endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH) + 1, endDate.get(Calendar.DAY_OF_MONTH))
 
         if (pickerBuilder == null) {
 
-            pickerBuilder = TimePickerBuilder(this, OnTimeSelectListener { date, v -> //选中事件回调
+            pickerBuilder = TimePickerBuilder(this, OnTimeSelectListener { date, v ->
+                //选中事件回调
 
 
                 // 选中
@@ -742,7 +737,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         if (dialog != null) {
 
-            var params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            var params = FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM)
 
             params.leftMargin = 0
@@ -867,12 +863,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     override fun registerSuccess() {
         hideLoadingText()
 
-        finish()    }
+        finish()
+    }
 
     override fun registerFail(code: Int, msg: String) {
         hideLoadingText()
 
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
     }
 
 
@@ -973,7 +970,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         getTakePhoto().onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-
     }
 
 
@@ -993,18 +989,20 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         result?.let {
             mHeadImage = File(it.image?.originalPath)
 
-            LogUtils.d(TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
+            mPresenter.uploadImaga(mHeadImage!!)
+            LogUtils.d(
+                    TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
 
 
             )
 
-            if (mHeadImage!!.exists()){
+            if (mHeadImage!!.exists()) {
 
                 GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
 
-            }else{
+            } else {
 
-                ToastUtil.showCenterToast(this,R.string.select_headimage)
+                ToastUtil.showCenterToast(this, R.string.select_headimage)
             }
 
             val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
