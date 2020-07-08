@@ -78,7 +78,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
 
     override fun chatRoomUsers(chatRoomId: String) {
 
-        mModel.chatRoomUsers(chatRoomId,
+        mModel.chatRoomUsers(chatRoomId,"",
                 object :NetObserver<ChatRoomUsesBean>(ChatRoomUsesBean::class.java){
                     override fun onSuccess(m: ChatRoomUsesBean) {
 

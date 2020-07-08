@@ -19,8 +19,10 @@ import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
+import com.igw.igw.widget.storm.searchpop.SearchFriendPopWindow
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.rong.imlib.model.Conversation
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_my_friend.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
@@ -44,6 +46,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
 
     private lateinit var mSearchAdapter: MyFriendSearchAdapter
 
+    private lateinit var searchFriendPopWindow: SearchFriendPopWindow
 
     override fun initView() {
 
@@ -55,6 +58,9 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
         status_bar_main.setConfirmText("中/En")
         status_bar_main.setConfirmTextColor(R.color.black_000000)
         status_bar_main.setConfirmTextSize(15F)
+
+
+        searchFriendPopWindow = SearchFriendPopWindow(this)
 
 
         initAdapter()
@@ -87,6 +93,39 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
     private fun setUpListener() {
 
 
+        ll_outside.setOnClickListener{
+            et_search.text?.clear()
+            et_search.clearFocus()
+
+        }
+
+        status_bar_main.setOnBackClickListener(object : StatusBarView.OnBackClickListener {
+            override fun onClick() {
+
+                if (ll_search_list.visibility == View.VISIBLE) {
+                    ll_search_list.visibility = View.GONE
+
+                    return
+                }
+
+                finish()
+            }
+
+
+        })
+
+        search_outside.setOnClickListener {
+
+            if (ll_search_list.visibility == View.VISIBLE) {
+                ll_search_list.visibility = View.GONE
+                et_search.text?.clear()
+                et_search.clearFocus()
+                friend_line.requestFocus()
+
+            }
+        }
+
+
         mAdapter.onItemClickListener(object : MyFriendAdapter.OnItemClickListener {
             override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
 
@@ -108,9 +147,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
             // 最近聊天
             LogUtils.d(TAG, "跳转  -- ")
 
-//            RecentChatActivity.startSelf(this)
-//
-//            )
+
 
             ChatTypeActivity.startSelf(this)
 
@@ -120,32 +157,15 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
 
 
 
-
-
         et_search.setOnFocusChangeListener { v, hasFocus ->
 
+
+            LogUtils.d(TAG, "获取焦点 , $hasFocus")
+
             ll_search_list.visibility = if (hasFocus) View.VISIBLE else View.GONE
+
+
         }
-
-
-        et_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-
-                mSearchAdapter.filter.filter(s)
-
-            }
-
-        })
 
 
         //滑动字母表跳转位置
@@ -181,7 +201,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
 
         // 进入到单聊模式
 
-        LogUtils.d(TAG, "选择单聊  --0 ")
+        LogUtils.d(TAG, "选择单聊  --${item.id} ")
 
         SingleChatActivity.startSelfOfIntent(this, item.friendUserId.toString(), item.friendNickName, Conversation.ConversationType.PRIVATE)
 
@@ -216,6 +236,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
         val friends = data.friends
 
         mAdapter.refreshData(friends)
+
         hideLoadingText()
 
         initSearchAdapter(data)
@@ -226,20 +247,57 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
     private fun initSearchAdapter(data: FriendBean.DataBean) {
 
 
-        mSearchAdapter = MyFriendSearchAdapter(dataList = data.friends)
+        mSearchAdapter = MyFriendSearchAdapter(data.friends)
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.VERTICAL
+
+
         rv_search.layoutManager = manager
         rv_search.adapter = mSearchAdapter
 
 
-        mSearchAdapter.onItemClickListener(object : OnItemClickListener<FriendBean.DataBean.FriendsBean> {
-            override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
+//        searchFriendPopWindow.setAdapter(data)
 
-                singleChat(item)
+
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                ll_search_list.visibility = View.VISIBLE
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
+                LogUtils.d(TAG, "获取值 ----------------")
+
+                s?.let {
+//                    searchFriendPopWindow.filter(s)
+                    mSearchAdapter.filter.filter(s)
+//                    searchFriendPopWindow.showPopupWindow(et_search)
+
+
+                }
+
+
             }
 
         })
+
+        mSearchAdapter.onItemClickListener(object : OnItemClickListener<FriendBean.DataBean.FriendsBean> {
+            override fun onItemClick(item: FriendBean.DataBean.FriendsBean, position: Int) {
+
+
+                ll_search_list.visibility = View.GONE
+                singleChat(item)
+            }
+
+
+        })
+
 
     }
 

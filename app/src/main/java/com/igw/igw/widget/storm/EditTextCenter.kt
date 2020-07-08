@@ -13,6 +13,7 @@ import android.util.AttributeSet
 import android.view.TextureView
 import android.widget.TextView
 import com.igw.igw.R
+import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.SoftKeyBoardManager
 import com.igw.igw.utils.UIUtils
 /**
@@ -89,6 +90,7 @@ class EditTextCenter : AppCompatEditText {
             SoftKeyBoardManager.setOnSoftKeyBoardChangeListener(mContext as Activity,object :SoftKeyBoardManager.OnSoftKeyBoardChangeListener{
                 override fun keyBoardShow(height: Int) {
 
+//                    this@EditTextCenter.isFocusable = true
                     // 键盘显示
                     isCursorVisible = true
                     isDraw = false
@@ -109,6 +111,8 @@ class EditTextCenter : AppCompatEditText {
 
                     // 键盘消失
                     isCursorVisible = false
+//                    this@EditTextCenter.isFocusable = false
+
                     isDraw = TextUtils.isEmpty(text.toString())
 
                     if (!TextUtils.isEmpty(hintText)) {
@@ -135,6 +139,7 @@ class EditTextCenter : AppCompatEditText {
 
         if (isShowCenter && isDraw){
 
+//            LogUtils.d(TAG,"显示在中间")
             setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(mContext, drawableIcon), null, null, null)
             var textWidth = paint.measureText(hint.toString())
 
@@ -149,6 +154,7 @@ class EditTextCenter : AppCompatEditText {
             super.onDraw(canvas)
         }else{
 
+//            LogUtils.d(TAG,"显示在左边")
 
             if (isShowLeft){
 

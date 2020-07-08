@@ -32,7 +32,6 @@ import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BaseActivity {
 
-
     public static final String TAG = "MainActivity";
 
     private FragmentManager fragmentManager;

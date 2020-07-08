@@ -11,29 +11,39 @@
     <include layout="@layout/common_status_bar" />
 
 
-
-
-    <com.igw.igw.widget.storm.EditTextCenter
-        android:maxLines="1"
-        android:id="@+id/et_search"
+    <LinearLayout
+        android:id="@+id/ll_outside"
         android:layout_width="match_parent"
-        android:layout_height="29dp"
-        app:isOpen="true"
-        app:isCenter="true"
-        app:isShowLeft="true"
-        android:paddingStart="8dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="18dp"
-        android:textSize="12sp"
-        android:background="@drawable/bg_search"
-        android:drawableStart="@drawable/search"
-        android:drawablePadding="10dp"
-        android:hint="@string/hint_search" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <com.igw.igw.widget.storm.EditTextCenter
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="67dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/bg_search"
+            android:drawableStart="@drawable/search"
+            android:drawablePadding="10dp"
+            android:hint="@string/hint_search"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:textSize="12sp"
+            app:isCenter="true"
+            app:isOpen="true"
+            app:isShowLeft="true" />
+
+    </LinearLayout>
 
 
-    <include layout="@layout/default_line" />
+
+
+    <include
+        android:id="@+id/friend_line"
+        layout="@layout/default_line" />
 
 
     <RelativeLayout
@@ -48,8 +58,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/ll_near_chat"
@@ -105,34 +115,34 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_height="49dp"
                     android:gravity="center_vertical"
-                    android:layout_height="49dp">
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_marginStart="10.5dp"
-                        android:background="@drawable/ordinaryusers"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10.5dp"
+                        android:background="@drawable/ordinaryusers" />
 
                     <TextView
-                        android:textColor="@color/color333"
-                        android:layout_marginStart="12.5dp"
-                        android:textSize="14sp"
-                        android:text="@string/bg_friends_ordinaryusers_chat"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12.5dp"
+                        android:text="@string/bg_friends_ordinaryusers_chat"
+                        android:textColor="@color/color333"
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
-                <include layout="@layout/default_line"/>
 
+                <include layout="@layout/default_line" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_friends"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
 
             </LinearLayout>
@@ -140,34 +150,37 @@
 
             <com.igw.igw.widget.storm.SideBar
                 android:id="@+id/sb_letter"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/dp_10"
                 android:layout_width="9.5dp"
                 android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="end|center"
-                android:layout_marginBottom="108.5dp"
-                android:layout_marginTop="72.5dp" />
+                android:layout_marginTop="72.5dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="108.5dp" />
 
 
         </RelativeLayout>
 
 
-
         <LinearLayout
             android:id="@+id/ll_search_list"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:background="#88000000"
-            android:layout_height="match_parent">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_search"
                 android:layout_width="match_parent"
-                android:background="@color/white"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
 
-
+            <View
+                android:id="@+id/search_outside"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000" />
 
 
         </LinearLayout>

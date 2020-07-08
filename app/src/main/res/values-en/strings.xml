@@ -126,4 +126,8 @@
     <string name="intro">"简介: "</string>
     <string name="componyinfo_city_title">城市展台</string>
     <string name="company_label">"标签: "</string>
+    <string name="friend_note">好友备注</string>
+    <string name="person_organization_or_school">Name of institution/School</string>
+    <string name="individual_resume">individual_resume</string>
+    <string name="del_friend">del_friend</string>
 </resources>

@@ -27,7 +27,7 @@ class ChatTypeContract {
         fun destoryChatRoom(chatRoomId:String,observer: NetObserver<ChatRoomBean.DataBean>)
 
 
-        fun chatRoomUsers(chatRoomId: String,observer: NetObserver<ChatRoomUsesBean>)
+        fun chatRoomUsers(chatRoomId: String, nickName: String , observer: NetObserver<ChatRoomUsesBean>)
 
         fun userInfo(observer: NetObserver<UserInfoBean.DataBean>)
 

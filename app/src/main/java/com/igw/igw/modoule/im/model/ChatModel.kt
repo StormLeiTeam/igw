@@ -15,26 +15,27 @@ import com.shengshijingu.yashiji.common.util.ControllerUtils
  *
  * @Describe
  */
-class ChatModel :ChatTypeContract.Model {
-
+class ChatModel : ChatTypeContract.Model {
 
 
     override fun createChatRoom(chatRoomId: String, chatRoomName: String, observer: NetObserver<ChatRoomBean.DataBean>) {
 
 
-        ControllerUtils.getImController().createChatRoom(chatRoomId,chatRoomName,observer)
+        ControllerUtils.getImController().createChatRoom(chatRoomId, chatRoomName, observer)
 
     }
 
     override fun destoryChatRoom(chatRoomId: String, observer: NetObserver<ChatRoomBean.DataBean>) {
 
 
-        ControllerUtils.getImController().destoryChatroom(chatRoomId,observer)
+        ControllerUtils.getImController().destoryChatroom(chatRoomId, observer)
     }
 
-    override fun chatRoomUsers(chatRoomId: String, observer: NetObserver<ChatRoomUsesBean>) {
 
-        ControllerUtils.getImController().chatroomUsers(chatRoomId, observer)
+
+    override fun chatRoomUsers(chatRoomId: String, nickName: String, observer: NetObserver<ChatRoomUsesBean>) {
+
+        ControllerUtils.getImController().chatroomUsers(chatRoomId, nickName, observer)
 
 
     }

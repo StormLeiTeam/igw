@@ -254,7 +254,7 @@ public interface ApiService {
 
     /**
      * 开屏页面
-     * @param requestBody
+     * @param
      * @return
      */
     @POST("/api/advertise/info")
@@ -300,6 +300,37 @@ public interface ApiService {
      */
     @POST("api/city/companyDetail")
     Observable<ResponseBody> companyCityInfo(@Body RequestBody requestBody);
+
+
+    /**
+     * 添加好友
+     * @param requestBody
+     * @return
+     */
+    @POST("api/friend/addFriend")
+    Observable<ResponseBody> addFriend(@Body RequestBody requestBody);
+
+
+    /**
+     * 删除好友
+     * @param requestBody
+     * @return
+     */
+    @POST("api/friend/delFriend")
+    Observable<ResponseBody> delFriend(@Body RequestBody requestBody);
+
+
+
+    /**
+     * 给好友备注
+     * @param requestBody
+     * @return
+     */
+    @POST("api/friend/noteUser")
+    Observable<ResponseBody> noteUser(@Body RequestBody requestBody);
+
+
+
 }
 
 

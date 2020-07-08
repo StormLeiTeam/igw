@@ -3,6 +3,7 @@ package com.igw.igw.modoule.im.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filterable
 import android.widget.TextView
 import com.igw.igw.R
 import com.igw.igw.bean.FriendBean
@@ -23,29 +24,29 @@ import io.rong.imkit.widget.adapter.MessageListAdapter
  *
  * @Describe
  */
-class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.FriendsBean,RvViewHolder>  {
+class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.FriendsBean, RvViewHolder> {
 
 
     constructor(rule: IFuzzySearchRule?) : super(rule)
 
-    constructor(dataList: MutableList<FriendBean.DataBean.FriendsBean>?):super(null,dataList)
+    constructor(dataList: MutableList<FriendBean.DataBean.FriendsBean>?) : super(null, dataList)
     constructor(rule: IFuzzySearchRule?, dataList: MutableList<FriendBean.DataBean.FriendsBean>?) : super(rule, dataList)
 
 
-    companion object{
+    companion object {
         val TAG = "MyFriendSearchAdapter"
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvViewHolder {
 
-        return RvViewHolder.create(parent.context,getItemLayoutId(),parent)
+        return RvViewHolder.create(parent.context, getItemLayoutId(), parent)
 
     }
 
     private fun getItemLayoutId(): Int {
 
-        return  R.layout.item_friend
+        return R.layout.item_friend
     }
 
     override fun onBindViewHolder(holder: RvViewHolder, position: Int) {
@@ -55,8 +56,7 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
         firstLetter.visibility = View.GONE
 
 
-
-        var  nickName = holder.getView<TextView>(R.id.tv_friend_nick_name)
+        var nickName = holder.getView<TextView>(R.id.tv_friend_nick_name)
 
         var address = holder.getView<TextView>(R.id.tv_address)
 
@@ -71,11 +71,11 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
 
             LocaleUtils.isLocaleEn(holder.itemView.context)
 
-            if (LocaleUtils.isLocaleEn(holder.itemView.context)){
+            if (LocaleUtils.isLocaleEn(holder.itemView.context)) {
                 address.text = it[position].friendCityEnName
 
 
-            }else{
+            } else {
                 address.text = it[position].friendCityCnName
 
             }
@@ -83,9 +83,9 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
             GlideUtils.loadImage(holder.itemView.context, it[position].friendHeadImage, headImg)
 
 
-            mListener?.let {
+            holder.itemView.setOnClickListener{
 
-                it.onItemClick(mDataList[position], position)
+                mListener?.onItemClick(mDataList[position], position)
 
             }
 
@@ -98,7 +98,7 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
     private var mListener: OnItemClickListener<FriendBean.DataBean.FriendsBean>? = null
 
 
-    public fun onItemClickListener(listener:OnItemClickListener<FriendBean.DataBean.FriendsBean>){
+    public fun onItemClickListener(listener: OnItemClickListener<FriendBean.DataBean.FriendsBean>) {
 
         this.mListener = listener
     }
