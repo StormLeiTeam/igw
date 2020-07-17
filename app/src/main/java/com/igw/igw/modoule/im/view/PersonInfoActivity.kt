@@ -23,6 +23,7 @@ import com.igw.igw.widget.storm.StatusBarView
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.Constants.BASE_URL
 import com.shengshijingu.yashiji.common.util.ToastUtil
+import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_person_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
@@ -87,7 +88,7 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
         GlideUtils.loadImage(this,
                 Constants.BASE_URL + bean.headImage, iv_head_image);
 
-        tv_person_name.text = bean.agencyName
+        tv_person_name.text = bean.nickName
         if (bean.sex == 1) {
             iv_sex.setBackgroundResource(R.drawable.man)
 
@@ -121,14 +122,14 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
         btn_send_msg.visibility = View.GONE
         
         // 判断是否为好友
-//        if (values) {
-//            btn_del_friend.visibility = View.GONE
-//            btn_send_msg.visibility = View.GONE
-//        }else{
-//            btn_del_friend.visibility = View.VISIBLE
-//            btn_send_msg.visibility = View.VISIBLE
-//
-//        }
+        if (bean.isFriend == 0) {
+            btn_del_friend.visibility = View.GONE
+            btn_send_msg.visibility = View.GONE
+        }else{
+            btn_del_friend.visibility = View.VISIBLE
+            btn_send_msg.visibility = View.VISIBLE
+
+        }
     }
 
     private fun setUpListener() {
@@ -147,6 +148,10 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
 
         btn_send_msg.setOnClickListener {
 
+            bean?.let {
+                SingleChatActivity.startSelfOfIntent(this,it.userId.toString(),it.nickName, Conversation.ConversationType.PRIVATE)
+
+            }
 
         }
 
@@ -168,6 +173,7 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
 
     override fun initPresenter() {
         mPresenter = PersonInfoPresenter(PersonInfoModel())
+        mPresenter.attachView(this)
     }
 
     override fun getLayoutId(): Int = R.layout.activity_person_info

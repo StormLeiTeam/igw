@@ -89,7 +89,7 @@ class LoginInState : UserState {
                 override fun onSuccess(p0: String?) {
 
                     LogUtils.d(TAG," 融云 token onSuccess  ---- ")
-                    setRongUserInfo()
+
 
                 }
 
@@ -111,7 +111,7 @@ class LoginInState : UserState {
 
         }
 
-
+        setRongUserInfo()
 
 
 
@@ -123,6 +123,7 @@ class LoginInState : UserState {
         RongIM.setUserInfoProvider(object :RongIM.UserInfoProvider{
             override fun getUserInfo(p0: String?): UserInfo? {
 
+                LogUtils.d(TAG,"异步注册 用户信息  ")
                 return null
 
            }

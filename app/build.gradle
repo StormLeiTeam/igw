@@ -19,6 +19,19 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.igw.igw",
+                JPUSH_APPKEY : "c60890e77b03380b321ae79b",//值来自开发者平台取得的AppKey
+                JPUSH_CHANNEL: "default_developer",
+        ]
+
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a',
+            'x86' , 'x86_64' , 'mips' , 'mips64'
+        }
+
 
     }
 
@@ -98,6 +111,6 @@ dependencies {
 //    implementation 'org.sufficientlysecure:html-textview:3.9'
 //    implementation 'androidx.appcompat:appcompat:1.1.0'
 
-
-
+    implementation 'cn.jiguang.sdk:jpush:3.6.6'
+    implementation 'cn.jiguang.sdk:jcore:2.3.8'
 }

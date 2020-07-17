@@ -1,5 +1,6 @@
 package com.igw.igw.fragment.my.presenter
 
+import com.igw.igw.bean.FriendBean
 import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.fragment.my.MyContract
@@ -63,8 +64,8 @@ public class MyPresenter(model: MyContract.Model) :
 
     override fun updateVersion() {
 
-        mModel.updateVersion(object : NetObserver<VersionBean>(VersionBean::class.java){
-            override fun onSuccess(m: VersionBean) {
+        mModel.updateVersion(object : NetObserver<VersionBean.DataBean>(VersionBean.DataBean::class.java){
+            override fun onSuccess(m: VersionBean.DataBean) {
                 LogUtils.d(TAG,"更新版本信息 --> successful")
 
                 m?.let {
@@ -83,6 +84,41 @@ public class MyPresenter(model: MyContract.Model) :
 
             override fun onError(msg: String?) {
                 LogUtils.d(TAG,"更新版本信息 --> error  ")
+
+            }
+
+
+        })
+
+    }
+
+    override fun getFriendsList() {
+
+
+        mModel.getFriendsList(object :NetObserver<FriendBean.DataBean>(FriendBean.DataBean::class.java){
+            override fun onSuccess(m: FriendBean.DataBean) {
+
+                LogUtils.d(TAG," 获取好友列表  -->  onSuccess")
+
+                mRootView.onSuccessFriends(m)
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                LogUtils.d(TAG," 获取好友列表  -->  onFail")
+
+                msg?.let {
+                    mRootView.onFailFriends(code, it)
+
+                }
+
+
+            }
+
+            override fun onError(msg: String?) {
+
+                LogUtils.d(TAG," 获取好友列表  -->  onError")
+
+
 
             }
 

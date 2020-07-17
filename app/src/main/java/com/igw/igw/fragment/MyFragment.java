@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.bean.FriendBean;
 import com.igw.igw.bean.VersionBean;
 import com.igw.igw.bean.login.LoginBean;
 import com.igw.igw.bean.login.UserInfoBean;
@@ -30,7 +31,6 @@ import com.shengshijingu.yashiji.common.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
-import retrofit2.http.HEAD;
 
 /**
  * 创建时间  2020/3/105:42 PM .
@@ -67,6 +67,9 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private LinearLayout ll_my_friend;
 
     private UserInfoBean.DataBean mData; // 用户数据
+
+    private TextView tv_my_friend;
+    private TextView tv_change_lanuage;
 
     public static MyFragment getInstance() {
         MyFragment myFragment = new MyFragment();
@@ -115,7 +118,8 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         iv_head_view = bindView(R.id.iv_head_view);
         ll_update_version = bindView(R.id.ll_update_version);
         ll_my_friend = bindView(R.id.ll_my_friend);
-
+        tv_my_friend = bindView(R.id.tv_my_friend);
+        tv_change_lanuage = bindView(R.id.tv_change_lanuage);
 
         initData();
 
@@ -141,6 +145,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 //            onLoad(2);
             mPresenter.userInfo();
+            mPresenter.getFriendsList();
 
         } else {
 
@@ -159,6 +164,15 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 
     private void setUpListener() {
+
+
+        tv_change_lanuage.setOnClickListener(v -> {
+
+            LogUtils.d(TAG,"用户点击事件  --切换语言 ");
+
+            ((MainActivity)mContext).changeLanuage(R.id.ll_main_my);
+//            .changeLanuage(R.id.ll_main_my);
+        });
 
         tv_nickName.setOnClickListener(v -> {
 
@@ -236,6 +250,8 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
      */
     private void checkAppVersion() {
 
+
+        mPresenter.updateVersion();
 
     }
 
@@ -324,7 +340,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
      * @param data
      */
     @Override
-    public void versionSuccessful(@NotNull VersionBean data) {
+    public void versionSuccessful(@NotNull VersionBean.DataBean data) {
 
     }
 
@@ -343,5 +359,18 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
             getMPresenter().detachView();
 
         }
+    }
+
+    @Override
+    public void onSuccessFriends(@NotNull FriendBean.DataBean data) {
+
+        tv_my_friend.setText( mContext.getResources().getString(R.string.my_friend) + "(" + data.getFriends().size() + ")");
+
+
+    }
+
+    @Override
+    public void onFailFriends(int code, @NotNull String msg) {
+
     }
 }

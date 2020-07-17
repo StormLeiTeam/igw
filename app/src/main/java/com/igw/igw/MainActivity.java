@@ -23,6 +23,7 @@ import com.igw.igw.modoule.im.view.ChatTypeFragment;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.modoule.login.view.LoginActivity;
 import com.igw.igw.modoule.splash.view.SplashActivity;
+import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
@@ -135,6 +136,41 @@ public class MainActivity extends BaseActivity {
                 Log.d("12345", "--onSuccess" + errorCode);
             }
         });
+
+
+        boolean localeEn = LocaleUtils.INSTANCE.isLocaleEn(this);
+
+        if (localeEn) {
+            LogUtils.d(TAG, "语言状态为英文 ");
+        } else {
+            LogUtils.d(TAG, "语言状态为中文");
+        }
+
+        int message_friend_add = getIntent().getIntExtra("message_friend_add", 0);
+        if (message_friend_add == 1) {
+            LogUtils.d(TAG, "获取推送信息 ");
+            showPagerDependButton(R.id.iv_home_msg);
+        }
+
+
+        updateLanuageOfIntent();
+
+
+//        switch (modelId) {
+//            case  R.id.ll_main_my:
+//                showPagerDependButton(R.id.ll_main_my);
+//
+//                break;
+//        }
+    }
+
+    private void updateLanuageOfIntent() {
+
+        int modelId = getIntent().getIntExtra("change_language", -1);
+
+        if (modelId != -1) {
+            showPagerDependButton(modelId);
+        }
 
 
     }
@@ -340,5 +376,11 @@ public class MainActivity extends BaseActivity {
 
 //        getSupportFragmentManager().findFragmentByTag(MyFragment.class.getName())
 //                myFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public void changeLanuage(int modelId) {
+
+        LocaleUtils.INSTANCE.changeLocale(this, "change_language", modelId);
     }
 }

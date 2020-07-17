@@ -9,6 +9,10 @@ import java.util.List;
  * @Describe
  */
 public class MessageCenterBean {
+
+
+
+
     /**
      * code : 200
      * data : {"total":4,"rows":[{"ctime":"2020-05-15 15:09:32","id":1,"isAgree":0,"isRead":0,"messageContent":"测试内容","messageName":"测试","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:42","id":2,"isAgree":0,"isRead":0,"messageContent":"测试内容1","messageName":"测试1","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:48","id":3,"isAgree":0,"isRead":0,"messageContent":"测试内容2","messageName":"测试2","messageType":2,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1},{"ctime":"2020-05-15 15:09:54","id":4,"isAgree":0,"isRead":0,"messageContent":"测试内容3","messageName":"测试3","messageType":1,"messageUrl":"","sortWithOutOrderBy":"","sort_":"","userId":1}]}

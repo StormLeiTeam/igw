@@ -54,7 +54,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         val TAG = "UpdateUserInfoActivity"
 
 
-        val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"女\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
+        val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"man\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
 
 //
 //        fun startSelfforResult(activity: View.OnClickListener, data: String) {
@@ -145,6 +145,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
 
+//        getSystemNationality()
         setUpPopWindow()
         initData()
         setUpImagePicker()
@@ -153,6 +154,33 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         getLocalUserinfo()
 
         setUpListener()
+    }
+
+    private fun getSystemNationality() {
+
+
+
+
+
+        var locale = LocaleUtils.getUserLocale(this)
+
+        if (null == locale) {
+            return
+        }
+
+
+        if (locale.equals(Locale.ENGLISH)) {
+            LogUtils.d(TAG, "当前用户保存的是english")
+            LocaleUtils.changeLocale(this, LocaleUtils.LOCALE_ENGLISH)
+
+        } else {
+            LogUtils.d(TAG, "当前用户保存的是 中文")
+
+            LocaleUtils.changeLocale(this, LocaleUtils.LOCALE_CHINESE)
+
+        }
+
+
     }
 
     private fun setUpImagePicker() {
@@ -188,7 +216,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
             it.setData(genders)
 
 
-            when (LocaleUtils.getCurrentlocale(this)) {
+            when (LocaleUtils.getUserLocale(this)) {
 
                 LocaleUtils.LOCALE_ENGLISH -> {
 
@@ -222,7 +250,14 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     private fun setUpListener() {
         status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
-                LocaleUtils.changeLocale(this@UpdateUserInfoActivity)
+
+                mUserInfo?.let {
+
+
+                    LocaleUtils.changeLocale(this@UpdateUserInfoActivity, "user_info", GsonUtils.instance.toJson(it))
+
+
+                }
             }
 
 
@@ -769,7 +804,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
             it.setData(mCountrys)
-            when (LocaleUtils.getCurrentlocale(this)) {
+            when (LocaleUtils.getUserLocale(this)) {
 
                 LocaleUtils.LOCALE_ENGLISH -> {
 
@@ -859,7 +894,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
                 it.setData(mCitys)
 
-                when (LocaleUtils.getCurrentlocale(this)) {
+                when (LocaleUtils.getUserLocale(this)) {
 
                     LocaleUtils.LOCALE_ENGLISH -> {
 

@@ -139,7 +139,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
         status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
-                LocaleUtils.changeLocale(this@ChatRoomMembersActivity)
+                LocaleUtils.changeLocale(this@ChatRoomMembersActivity,"chatRoomId",targetId)
             }
 
 
@@ -188,6 +188,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
      */
     private fun getMembersForNet(nickName: String) {
 
+        LogUtils.d(TAG,"targetid -> $targetId   nickname -> $nickName")
         mPresenter.chatroomUsers(targetId, nickName)
 
 
@@ -219,6 +220,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
     override fun onSuccessChatRoomUser(data: ChatRoomUsesBean.DataBean) {
 
         // 获取成功
+        status_bar_main.setTitle("公共聊天室成员(${data.roomUsers.size})")
 
         mAdapter.refreshData(data.roomUsers)
         hideLoadingText()
@@ -254,7 +256,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
     }
 
     override fun addFriendSuccess(data: AddFriendBean.DataBean) {
-        ToastUtil.showCenterToast(this, "添加好友成功")
+        ToastUtil.showCenterToast(this, "添加好友已经发送")
         getMembersForNet("")
 
     }

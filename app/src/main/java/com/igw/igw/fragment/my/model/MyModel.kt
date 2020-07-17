@@ -1,5 +1,6 @@
 package com.igw.igw.fragment.my.model
 
+import com.igw.igw.bean.FriendBean
 import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.fragment.my.MyContract
@@ -21,10 +22,17 @@ class MyModel : MyContract.Model{
 
     }
 
-    override fun updateVersion(observer: NetObserver<VersionBean>) {
+    override fun updateVersion(observer: NetObserver<VersionBean.DataBean>) {
 
 
         ControllerUtils.getCommonController().updateVersion(observer)
+
+    }
+
+    override fun getFriendsList(observer: NetObserver<FriendBean.DataBean>) {
+
+
+        ControllerUtils.getImController().getFriends(observer)
 
     }
 

@@ -240,8 +240,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         this.userType = data.userType
         this.roomId = data.roomId
 
-        LoginManager.instance.updateRongUserInfo("${data.id}", data.agencyName, data.headImage)
-
+        LoginManager.instance.updateRongUserInfo("${data.id}", data.nickName, data.headImage)
 
         updateView(this.userType!!)
 

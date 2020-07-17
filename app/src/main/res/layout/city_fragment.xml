@@ -65,7 +65,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_base_right"
+                    android:id="@+id/tv_language_select"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -100,7 +100,7 @@
                     android:layout_weight="1"
                     android:background="@color/colorF33"
                     android:gravity="center"
-                    android:text="城市信息"
+                    android:text="@string/city_information"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_16" />
 
@@ -112,7 +112,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="商务合作"
+                    android:text="@string/business_cooperation"
                     android:textColor="@color/color333"
                     android:textSize="@dimen/dp_16" />
 

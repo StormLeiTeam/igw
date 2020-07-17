@@ -21,6 +21,7 @@ import com.igw.igw.modoule.messagemodule.MessageContract;
 import com.igw.igw.modoule.messagemodule.adapter.MessageCenterAdapter;
 import com.igw.igw.modoule.messagemodule.model.MessageListModel;
 import com.igw.igw.modoule.messagemodule.presenter.MessageListPresenter;
+import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.StatusBarUtils;
 import com.igw.igw.utils.statusbarutils.StatusBarUtil;
@@ -53,8 +54,12 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     private MessageCenterAdapter mAdapter;
 
     private ImageView iv_back;
+    private TextView tv_readed;
+    private TextView tv_cn_en_select;
+
 
     private int noReadCount = 0;
+
 
     public static MessageFragment getInstance() {
         MessageFragment messageFragment = new MessageFragment();
@@ -106,12 +111,25 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
         super.initViews();
 
         iv_back = bindView(R.id.iv_base_back);
-
+        tv_readed = bindView(R.id.tv_readed);
+        tv_cn_en_select = bindView(R.id.tv_cn_en_select);
         setUpListener();
 
     }
 
     private void setUpListener() {
+
+        tv_cn_en_select.setOnClickListener(v -> {
+
+//            LocaleUtils.INSTANCE.changeLocale((MainActivity)mContext);
+
+        });
+
+        tv_readed.setOnClickListener(v -> {
+
+            // 标价已读
+        });
+
 
         iv_back.setOnClickListener(v -> {
 
@@ -131,7 +149,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
                 LogUtils.d(TAG, "item 点击事件 ");
 
 
-                getMPresenter().readedMessage(bean.getId(), 1);
+//                getMPresenter().readedMessage(bean.getId(), 1);
+
 
 
 
@@ -246,6 +265,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     @Override
     public void onDealMessageSuccess(@Nullable DealMessageBean.DataBean data) {
 
+        ToastUtil.showCenterToast(mContext, "消息处理成功");
     }
 
     @Override
@@ -261,6 +281,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
         noReadCount--;
         mBadgeView.setText("" + noReadCount);
         mBadgeView.show();
+
 
 
 

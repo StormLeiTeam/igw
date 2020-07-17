@@ -331,6 +331,17 @@ public interface ApiService {
 
 
 
+
+
+    /**
+     * 给好友备注
+     * @param requestBody
+     * @return
+     */
+    @POST("api/common/lastVersion")
+    Observable<ResponseBody> checkVersion(@Body RequestBody requestBody);
+
+
 }
 
 

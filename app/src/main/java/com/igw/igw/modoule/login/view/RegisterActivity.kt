@@ -61,7 +61,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         val TAG = "RegisterActivity"
 
-        val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"女\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
+        val GENDER_JSON = "[{\"chName\":\"男\",\"enName\":\"man\",\"id\":1,\"isEnglish\":false},{\"chName\":\"女\",\"enName\":\"women\",\"id\":2,\"isEnglish\":false}]"
 
 
         public fun startSelf(activity: BaseActivity<*>) {
@@ -228,7 +228,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             it.setData(genders)
 
 
-            when (LocaleUtils.getCurrentlocale(this)) {
+            when (LocaleUtils.getUserLocale(this)) {
 
                 LocaleUtils.LOCALE_ENGLISH -> {
 
@@ -266,15 +266,21 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun getSystemNationality() {
 
 
-        val locale = LocaleUtils.getCurrentlocale(this)
+        var locale = LocaleUtils.getUserLocale(this)
+
+        if (null == locale) {
+            return
+        }
+
+
         if (locale.equals(Locale.ENGLISH)) {
             LogUtils.d(TAG, "当前用户保存的是english")
-            LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH)
+            LocaleUtils.changeLocale(this, LocaleUtils.LOCALE_ENGLISH)
 
         } else {
             LogUtils.d(TAG, "当前用户保存的是 中文")
 
-            LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
+            LocaleUtils.changeLocale(this, LocaleUtils.LOCALE_CHINESE)
 
         }
 
@@ -890,7 +896,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
 
             it.setData(mCountrys)
-            when (LocaleUtils.getCurrentlocale(this)) {
+            when (LocaleUtils.getUserLocale(this)) {
 
                 LocaleUtils.LOCALE_ENGLISH -> {
 
@@ -928,7 +934,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
             it.setData(mCitys)
 
-            when (LocaleUtils.getCurrentlocale(this)) {
+            when (LocaleUtils.getUserLocale(this)) {
 
                 LocaleUtils.LOCALE_ENGLISH -> {
 

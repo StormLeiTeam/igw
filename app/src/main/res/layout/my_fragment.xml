@@ -77,13 +77,13 @@
                             android:textSize="12dp" />
 
                         <TextView
+                            android:id="@+id/tv_change_lanuage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="@dimen/dp_10"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="@dimen/dp_12"
-                            android:layout_toRightOf="@+id/iv_my_headpic"
+                            android:layout_marginEnd="@dimen/dp_12"
                             android:gravity="right"
                             android:text="中/en"
                             android:textColor="@color/color333"
@@ -112,7 +112,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="人民币"
+                                    android:text="@string/RMB"
                                     android:textColor="@color/color333"
                                     android:textSize="@dimen/dp_13" />
 
@@ -152,7 +152,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="美元"
+                                    android:text="@string/dollar"
                                     android:textColor="@color/color333"
                                     android:textSize="@dimen/dp_13" />
 
@@ -195,7 +195,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="充值"
+                            android:text="@string/recharge"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -233,13 +233,14 @@
                             android:src="@mipmap/icon_my_goodfriend" />
 
                         <TextView
+                            android:id="@+id/tv_my_friend"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="我的好友(100)"
+                            android:text="@string/my_friend"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -283,7 +284,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="个人资料修改"
+                            android:text="@string/Update_personal_data"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -328,7 +329,7 @@
                             android:layout_weight="1"
                                 android:textColor="@color/color333"
                             android:gravity="center_vertical"
-                            android:text="密码修改"
+                            android:text="@string/update_password"
                             android:textSize="@dimen/dp_12" />
 
 
@@ -371,7 +372,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="版本更新"
+                            android:text="@string/Version_update"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -414,7 +415,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="关于"
+                            android:text="@string/about"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -458,7 +459,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="帮助与反馈"
+                            android:text="@string/help_feedback"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 
@@ -502,7 +503,7 @@
                             android:layout_marginLeft="@dimen/dp_13"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="退出登录"
+                            android:text="@string/login_out"
                             android:textColor="@color/color333"
                             android:textSize="@dimen/dp_12" />
 

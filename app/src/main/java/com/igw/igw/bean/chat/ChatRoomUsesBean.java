@@ -9,9 +9,11 @@ import java.util.List;
  * @Describe
  */
 public class ChatRoomUsesBean {
+
+
     /**
      * code : 200
-     * data : {"roomUsers":[{"agencyName":"明咯咙","cityCnName":"北京","cityEnName":"BEIJING","countryCnName":"中国","countryEnName":"CHINA","countryFlag":"","headImage":"/gameword-user-service/upload/18235188642/image/20200429/20200429175403_841_headImage","nickName":"hah\n哈哈","sex":1,"userDesc":"我哈哈哈哈哈哈哈哈","userId":1}]}
+     * data : {"roomUsers":[{"agencyName":"明咯咙","cityCnName":"北京","cityEnName":"BEIJING","countryCnName":"中国","countryEnName":"CHINA","countryFlag":"","headImage":"/gameword-user-service/upload/18235188642/image/20200429/20200429175403_841_headImage","isAdmin":0,"isBlock":0,"isFriend":1,"nickName":"hah\n哈哈","sex":1,"userDesc":"我哈哈哈哈哈哈哈哈","userId":1}]}
      * message : 操作成功
      */
 
@@ -63,6 +65,9 @@ public class ChatRoomUsesBean {
              * countryEnName : CHINA
              * countryFlag :
              * headImage : /gameword-user-service/upload/18235188642/image/20200429/20200429175403_841_headImage
+             * isAdmin : 0
+             * isBlock : 0
+             * isFriend : 1
              * nickName : hah
              哈哈
              * sex : 1
@@ -77,6 +82,9 @@ public class ChatRoomUsesBean {
             private String countryEnName;
             private String countryFlag;
             private String headImage;
+            private int isAdmin;
+            private int isBlock;
+            private int isFriend;
             private String nickName;
             private int sex;
             private String userDesc;
@@ -138,6 +146,30 @@ public class ChatRoomUsesBean {
                 this.headImage = headImage;
             }
 
+            public int getIsAdmin() {
+                return isAdmin;
+            }
+
+            public void setIsAdmin(int isAdmin) {
+                this.isAdmin = isAdmin;
+            }
+
+            public int getIsBlock() {
+                return isBlock;
+            }
+
+            public void setIsBlock(int isBlock) {
+                this.isBlock = isBlock;
+            }
+
+            public int getIsFriend() {
+                return isFriend;
+            }
+
+            public void setIsFriend(int isFriend) {
+                this.isFriend = isFriend;
+            }
+
             public String getNickName() {
                 return nickName;
             }
@@ -171,8 +203,4 @@ public class ChatRoomUsesBean {
             }
         }
     }
-
-//
-
-
 }

@@ -1,6 +1,10 @@
 package com.igw.igw.modoule.splash.view
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.os.LocaleList
 import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
@@ -19,6 +23,7 @@ import rx.Observer
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -38,6 +43,14 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
 
     private var countimeSubscription: Subscription? = null
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
 
     /**
      * 开启倒计时

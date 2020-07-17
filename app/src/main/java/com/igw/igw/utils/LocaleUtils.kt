@@ -3,7 +3,9 @@ package com.igw.igw.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Build
+import android.os.LocaleList
 import com.google.gson.Gson
 import com.igw.igw.activity.BaseActivity
 import retrofit2.http.PUT
@@ -20,6 +22,8 @@ import java.util.*
  *
  */
 object LocaleUtils {
+
+    public final val TAG = "LocaleUtils"
 
     public final val LOCALE_CHINESE = Locale.CHINESE;  // 中文
 
@@ -39,10 +43,10 @@ object LocaleUtils {
     public fun isLocaleEn(context: Context): Boolean {
 
 
-        val currentlocale = getCurrentlocale(context)
+        val currentlocale = getUserLocale(context)
 
 
-        return currentlocale.equals(Locale.ENGLISH)
+        return currentlocale == LocaleUtils.LOCALE_ENGLISH
 
 
     }
@@ -50,13 +54,11 @@ object LocaleUtils {
     /**
      * 获取用户设置的语言文文字
      */
-    public fun getUserLocale(context: Context): Locale {
+    public fun getUserLocale(context: Context): Locale? {
 
         var localeJson = SPUtils.getInstance(LOCALE_SP_NAME).getString(LOCALE_KEY, "")
 
-
-        return jsonToLocale(localeJson);
-
+        return localeJson?.let { jsonToLocale(it) }
 
     }
 
@@ -92,25 +94,6 @@ object LocaleUtils {
     }
 
 
-//
-//    /**
-//     * 更新Locale
-//     * @param pContext Context
-//     * @param pNewUserLocale New User Locale
-//     */
-//    public static void updateLocale(Context pContext, Locale pNewUserLocale) {
-//        if (needUpdateLocale(pContext, pNewUserLocale)) {
-//            Configuration _Configuration = pContext.getResources().getConfiguration();
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                _Configuration.setLocale(pNewUserLocale);
-//            } else {
-//                _Configuration.locale =pNewUserLocale;
-//            }
-//            DisplayMetrics _DisplayMetrics = pContext.getResources().getDisplayMetrics();
-//            pContext.getResources().updateConfiguration(_Configuration, _DisplayMetrics);
-//            saveUserLocale(pContext, pNewUserLocale);
-//        }
-//    }
     /**
      * 更新语言
      */
@@ -132,7 +115,6 @@ object LocaleUtils {
 
                 context.resources.updateConfiguration(configuration, displayMetrics)
 
-                saveUserLocale(context, it)
 
             }
 
@@ -159,10 +141,12 @@ object LocaleUtils {
     /**
      * json 转换成 locale 对象
      */
-    private fun jsonToLocale(json: String?): Locale {
+    private fun jsonToLocale(json: String?): Locale? {
 
         val gson = Gson()
-        return gson.fromJson(json, Locale::class.java)
+
+        return json?.let { gson.fromJson(it, Locale::class.java) }
+
 
     }
 
@@ -179,14 +163,31 @@ object LocaleUtils {
     }
 
 
+    public fun changeLocale(activity: Activity, userLocale: Locale) {
+
+        LocaleUtils.updateLocale(activity, userLocale)
+
+        activity.finish()
+
+
+        var intent = Intent(activity, activity.javaClass)
+
+        activity.startActivity(intent)
+        activity.overridePendingTransition(0, 0);
+    }
+
     public fun changeLocale(activity: Activity) {
 
         if (LocaleUtils.isLocaleEn(activity)) {
-
+            LogUtils.d(TAG, "当前语言为英语")
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
+            saveUserLocale(activity, LocaleUtils.LOCALE_CHINESE)
 
         } else {
+            LogUtils.d(TAG, "当前语言为中文")
+
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
+            saveUserLocale(activity, LocaleUtils.LOCALE_ENGLISH)
 
 
         }
@@ -209,13 +210,16 @@ object LocaleUtils {
     public fun changeLocale(activity: Activity, tag: String, value: Any) {
 
         if (LocaleUtils.isLocaleEn(activity)) {
-
+            LogUtils.d(TAG, "当前语言为英语")
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
+            saveUserLocale(activity, LocaleUtils.LOCALE_CHINESE)
 
         } else {
+
+            LogUtils.d(TAG, "当前语言为中文")
+
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
-
-
+            saveUserLocale(activity, LocaleUtils.LOCALE_ENGLISH)
         }
 
 
@@ -232,10 +236,67 @@ object LocaleUtils {
 
         }
 
+        if (value is String) {
+
+            intent.putExtra(tag, value)
+
+        }
+
         activity.startActivity(intent)
         activity.overridePendingTransition(0, 0);
 
 //        reconfirmAct()
+
+    }
+
+
+
+
+
+//
+//    private fun loadRes(context: Context): Context {
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//
+//            val resources = context.resources
+//
+//            val userLocale = LocaleUtils.getUserLocale(context)
+//
+//            val configuration = resources.configuration
+//
+//            if (userLocale == null) {
+//                return context
+//            }
+//            configuration.setLocale(userLocale)
+//            configuration.setLocales(LocaleList(userLocale))
+//            return context.createConfigurationContext(configuration)
+//
+//
+//        } else (
+//                return context
+//                )
+//    }
+
+    fun attachBaseContext(context: Context, userLocale: Locale?): Context {
+//
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            val resources = context.resources
+            val configuration = resources.configuration
+            if (null == userLocale) {
+                return context
+            } else {
+
+                configuration.setLocale(userLocale)
+                configuration.setLocales(LocaleList(userLocale))
+                return context.createConfigurationContext(configuration)
+
+            }
+
+        } else {
+            return context
+        }
+
 
     }
 

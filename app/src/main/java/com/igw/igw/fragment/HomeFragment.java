@@ -3,12 +3,11 @@ package com.igw.igw.fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
-import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 
 /**
@@ -26,6 +25,7 @@ public class HomeFragment extends BaseDataFragment {
     private ImageView iv_home_msg;
 
     private RelativeLayout rv_city_chat;
+    private TextView tv_language_select;
 
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -69,11 +69,27 @@ public class HomeFragment extends BaseDataFragment {
 
         iv_home_msg = bindView(R.id.iv_home_msg);
 
+        tv_language_select = bindView(R.id.tv_language_select);
+
         iv_home_msg.setOnClickListener(v -> {
 
             MainActivity mainActivity = (MainActivity) getActivity();
 
             mainActivity.showPagerDependButton(R.id.iv_home_msg);
+
+        });
+
+
+        setUpListener();
+    }
+
+    private void setUpListener() {
+
+
+        tv_language_select.setOnClickListener(v -> {
+            ((MainActivity)mContext).changeLanuage(R.id.ll_main_home);
+
+//            LocaleUtils.INSTANCE.changeLocale((MainActivity(mContext)));
 
         });
     }
@@ -92,7 +108,6 @@ public class HomeFragment extends BaseDataFragment {
                     mainActivity.showPagerDependButton(R.id.ll_main_order);
                     break;
                 case R.id.iv_home_msg:
-
 
 
                     mainActivity.showPagerDependButton(R.id.iv_home_msg);

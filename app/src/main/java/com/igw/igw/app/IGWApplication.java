@@ -2,19 +2,29 @@ package com.igw.igw.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.LogManager;
 import java.util.logging.LoggingMXBean;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.nfc.Tag;
+import android.support.design.widget.TabLayout;
+import android.util.DisplayMetrics;
 
+import com.bumptech.glide.load.data.LocalUriFetcher;
 import com.igw.igw.BuildConfig;
 import com.igw.igw.httpclient.HttpClientManager;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.utils.ConfigUtil;
+import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
 import com.shengshijingu.yashiji.common.Constants;
+
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 
 /**
@@ -24,6 +34,9 @@ import io.rong.imkit.RongIM;
  */
 
 public class IGWApplication extends Application {
+
+
+    public static final String TAG = "IGWApplication";
 
     private static IGWApplication context;
 
@@ -38,6 +51,9 @@ public class IGWApplication extends Application {
         super.onCreate();
         initConfig();
         context = this;
+
+        initLanuage();
+        initJpush();
         initLogConfig();
         RongIM.init(this, "p5tvi9dspqek4");
         LoginManager.Companion.getInstance().init();
@@ -45,6 +61,56 @@ public class IGWApplication extends Application {
 
 
 
+    }
+
+    private void initLanuage() {
+
+
+        LocaleUtils.INSTANCE.saveUserLocale(this, LocaleUtils.INSTANCE.getLOCALE_CHINESE());
+
+//        Locale userLocale = LocaleUtils.INSTANCE.getUserLocale(this);
+//
+//
+//        LogUtils.d(TAG,"当前保存的用户语言是 检测 ");
+//
+//        if (userLocale == null) {
+//            return;
+//        }
+//        if(userLocale.equals(LocaleUtils.INSTANCE.getLOCALE_ENGLISH())) {
+//
+//            LogUtils.d(TAG,"当前保存的用户语言是 英语");
+//
+////            LocaleUtils.INSTANCE.changeLocale(this, LocaleUtils.INSTANCE.getLOCALE_ENGLISH());
+//
+//
+//            changeLanuageRes(0);
+//        }else {
+//
+//            LogUtils.d(TAG,"当前保存的用户语言是 中文");
+////            LocaleUtils.INSTANCE.changeLocale(this, LocaleUtils.INSTANCE.getLOCALE_CHINESE());
+//            changeLanuageRes(1);
+//
+//        }
+
+
+//        LocaleUtils.INSTANCE.changeLocale(this,userLocale);
+    }
+
+    private void changeLanuageRes(int i) {
+
+        Resources resources = getResources();
+
+        Configuration configuration = resources.getConfiguration();
+
+        DisplayMetrics dm = resources.getDisplayMetrics();
+
+        configuration.locale = i==0? Locale.ENGLISH : Locale.SIMPLIFIED_CHINESE;
+        resources.updateConfiguration(configuration, dm);
+    }
+
+    private void initJpush() {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     private void initLogConfig() {

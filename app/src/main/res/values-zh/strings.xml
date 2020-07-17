@@ -128,4 +128,17 @@
     <string name="person_organization_or_school">所属机构/ 学校</string>
     <string name="individual_resume">个人简介</string>
     <string name="del_friend">删除好友</string>
+    <string name="send_message">发送消息</string>
+    <string name="RMB">人民币</string>
+    <string name="dollar">美元</string>
+    <string name="recharge">充值</string>
+    <string name="my_friend">我的好友</string>
+    <string name="Update_personal_data">个人资料修改</string>
+    <string name="update_password">密码修改</string>
+    <string name="Version_update">版本更新</string>
+    <string name="about">关于</string>
+    <string name="help_feedback">帮助与反馈</string>
+    <string name="login_out">退出登录</string>
+    <string name="city_information">城市信息</string>
+    <string name="business_cooperation">商务合作</string>
 </resources>

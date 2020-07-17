@@ -2,6 +2,7 @@ package com.igw.igw.activity;
 
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -17,12 +18,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.load.data.LocalUriFetcher;
 import com.igw.igw.R;
 import com.igw.igw.app.IGWApplication;
 import com.igw.igw.mvp.presenter.BasePresenter;
 import com.igw.igw.utils.ColorUtils;
+import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.statusbarutils.StatusBarUtil;
 import com.shengshijingu.yashiji.common.dialog.LoadingDialog;
+
+import java.util.Locale;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements OnClickListener {
 
@@ -39,6 +45,50 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public ImageView iv_base_background;
 
     public RelativeLayout rl_base_background;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+
+        Locale userLocale = LocaleUtils.INSTANCE.getUserLocale(newBase);
+        super.attachBaseContext(LocaleUtils.INSTANCE.attachBaseContext(newBase,userLocale));
+
+
+    }
+
+
+    //
+//    override fun attachBaseContext(newBase: Context?) {
+//        super.attachBaseContext(newBase)
+//
+//
+//
+//        loadRes(newBase!!)
+//
+//
+//    }
+//
+//    private fun loadRes(context: Context): Context {
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//
+//            val resources = context.resources
+//
+//            val userLocale = LocaleUtils.getUserLocale(context)
+//
+//            val configuration = resources.configuration
+//
+//            if (userLocale == null) {
+//                return context
+//            }
+//            configuration.setLocale(userLocale)
+//            configuration.setLocales(LocaleList(userLocale))
+//            return context.createConfigurationContext(configuration)
+//
+//
+//        } else (
+//        return context
+//                )
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

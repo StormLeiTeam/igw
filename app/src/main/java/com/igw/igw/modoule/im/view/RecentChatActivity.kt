@@ -2,24 +2,36 @@ package com.igw.igw.modoule.im.view
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.net.Uri
+import android.os.BaseBundle
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.v4.app.FragmentActivity
 import com.igw.igw.R
+import com.igw.igw.bean.FriendBean
+import com.igw.igw.bean.login.UserInfoBean
+import com.igw.igw.modoule.im.RecentChatContract
+import com.igw.igw.modoule.im.model.RecentChatModel
+import com.igw.igw.modoule.im.presenter.RecentChatPresenter
+import com.igw.igw.modoule.login.loginstate.LoginManager
+import com.igw.igw.mvp.presenter.BasePresenter
+import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.StatusBarView
+import com.shengshijingu.yashiji.common.Constants
+import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.rong.imkit.RongIM
 import io.rong.imkit.fragment.ConversationListFragment
 import io.rong.imlib.model.Conversation
-import io.rong.push.RongPushClient
+import io.rong.imlib.model.UserInfo
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.city_fragment.*
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
+
 
 /**
  * 最近聊天
  */
-class RecentChatActivity : FragmentActivity() {
+class RecentChatActivity<P : RecentChatPresenter> : FragmentActivity() , RecentChatContract.View{
 
     companion object{
 
@@ -34,6 +46,8 @@ class RecentChatActivity : FragmentActivity() {
         }
     }
 
+    protected  var mPresenter : RecentChatPresenter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recent_chat)
@@ -44,11 +58,20 @@ class RecentChatActivity : FragmentActivity() {
         status_bar_main.setTitle(resources.getString(R.string.title_recent_chat))
         status_bar_main.setTitleTextColor(R.color.black_000000)
         status_bar_main.setTitleTextSize(16f)
-        setUpFragment()
 
+        initPresenter()
         initChat()
 
+        setUpFragment()
+
+
         setUpListener()
+    }
+
+    private fun initPresenter() {
+
+        mPresenter = RecentChatPresenter(RecentChatModel())
+        mPresenter!!.attachView(this)
     }
 
     private fun setUpListener() {
@@ -66,6 +89,9 @@ class RecentChatActivity : FragmentActivity() {
     }
 
     private fun initChat() {
+
+        mPresenter!!.getFriendsList()
+        mPresenter!!.userInfo()
 //
 //        Map<String, Boolean> supportedConversation = new HashMap<>();
 //       supportedConversation.put(RongPushClient.ConversationType.PRIVATE.getValue(), false)
@@ -82,9 +108,19 @@ class RecentChatActivity : FragmentActivity() {
     }
 
     private fun setUpFragment() {
-
+        val uri: Uri = Uri.parse("rong://" +
+                applicationInfo.packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false") //群组
+//                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false") //公共服务号
+//                .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false") //订阅号
+//                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true") //系统
+                .build()
 
         val chatFragment  =  ConversationListFragment()
+//
+        chatFragment.uri = uri;
 
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
@@ -92,5 +128,40 @@ class RecentChatActivity : FragmentActivity() {
         transaction.replace(R.id.container,chatFragment)
         transaction.commit()
 
+    }
+
+    override fun onSuccessFriends(data: FriendBean.DataBean) {
+
+
+//        for (friend in data.friends) {
+//
+//            var userInfo =  UserInfo("${friend.friendUserId}",friend.friendNickName, Uri.parse("${friend.friendHeadImage}"))
+//            RongIM.getInstance().refreshUserInfoCache(userInfo);
+//        }
+
+    }
+
+    override fun onFailFriends(code: Int, msg: String) {
+
+    }
+
+    override fun userInfoSuccessful(data: UserInfoBean.DataBean) {
+//        LoginManager.instance.updateRongUserInfo("${data.id}", data.nickName, data.headImage)
+
+//        LogUtils.d(TAG, "获取个人位置信息 00 ")
+//        var userInfo =  UserInfo("${data.id}",data.nickName, Uri.parse("${Constants.BASE_URL + data.headImage}"))
+//        RongIM.getInstance().refreshUserInfoCache(userInfo);
+    }
+
+    override fun userInfoFail(code: Int, msg: String) {
+
+        ToastUtil.showCenterToast(this, "msg")
+
+    }
+
+    override fun fail(o: Any?) {
+    }
+
+    override fun success(o: Any?) {
     }
 }

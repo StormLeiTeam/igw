@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.im.adapter
 
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
@@ -80,7 +81,56 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
 
             1 -> {
 
-                // 是管理员
+                // 非管理员
+                var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
+                var tv_administrator = holder.getView<TextView>(R.id.tv_administrator)
+                var tv_name = holder.getView<TextView>(R.id.tv_name)
+                var add_friend = holder.getView<Button>(R.id.btn_add_friend)
+
+
+                loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
+
+                tv_name.text = mDatas!![position].nickName
+
+                if (mDatas!![position].isFriend == 1) {
+
+                    add_friend.visibility = View.GONE
+
+                } else {
+                    add_friend.visibility = View.VISIBLE
+
+                }
+
+
+                if (mDatas!![position].isAdmin == 1) {
+
+                    tv_administrator.visibility = View.VISIBLE
+
+                } else {
+
+                    tv_administrator.visibility = View.GONE
+
+                }
+
+
+
+                add_friend.setOnClickListener {
+                    mListener?.onAddFriend(mDatas!![position], position)
+
+                }
+
+                holder.itemView.setOnClickListener {
+                    mListener?.onItemClick(mDatas!![position], position)
+
+                }
+
+
+            }
+
+
+            else -> {
+
+                // 当前用户不是管理员
 
                 var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
                 var tv_name = holder.getView<TextView>(R.id.tv_name)
@@ -91,7 +141,28 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
 
 
                 loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
-                tv_name.text = mDatas!![position].agencyName
+                tv_name.text = mDatas!![position].nickName
+
+
+                if (mDatas!![position].isFriend == 1) {
+
+                    add_friend.visibility = View.GONE
+
+                } else {
+                    add_friend.visibility = View.VISIBLE
+
+                }
+
+
+                if (mDatas!![position].isBlock == 0) {
+                    // 未被禁言
+
+                    tv_banned.visibility = View.VISIBLE
+                    tv_unBanned.visibility = View.GONE
+                } else {
+                    tv_banned.visibility = View.GONE
+                    tv_unBanned.visibility = View.VISIBLE
+                }
 
 
 //
@@ -124,47 +195,8 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
 
                 }
 
-                holder.itemView.setOnClickListener{
-
-                    mListener?.onItemClick(mDatas!![position], position)
-
-                }
-
-
-            }
-
-            else -> {
-
-                // 非管理员
-
-                var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
-                var tv_administrator = holder.getView<TextView>(R.id.tv_administrator)
-                var tv_name = holder.getView<TextView>(R.id.tv_name)
-                var add_friend = holder.getView<Button>(R.id.btn_add_friend)
-
-
-                loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
-
-                tv_name.text = mDatas!![position].agencyName
-
-
-//                if (LocaleUtils.isLocaleEn(mContext)) {
-//
-//
-//                } else {
-//
-//
-//                }
-
-
-
-
-                add_friend.setOnClickListener {
-                    mListener?.onAddFriend(mDatas!![position], position)
-
-                }
-
                 holder.itemView.setOnClickListener {
+
                     mListener?.onItemClick(mDatas!![position], position)
 
                 }

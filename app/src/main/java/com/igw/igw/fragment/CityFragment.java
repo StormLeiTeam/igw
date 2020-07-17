@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bumptech.glide.load.data.LocalUriFetcher;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
 import com.igw.igw.app.BaseAdapter;
@@ -69,6 +70,8 @@ public class CityFragment extends BaseDataFragment {
 
     private LinearLayout ll_buss_content;
     private RecyclerView rv_company;
+    private TextView tv_language_select;
+
 
 
     private int cityType = 1;
@@ -121,6 +124,7 @@ public class CityFragment extends BaseDataFragment {
         webView = bindView(R.id.web);
 
         ll_buss_content = bindView(R.id.ll_buss_content);
+        tv_language_select = bindView(R.id.tv_language_select);
 
         rv_company = bindView(R.id.tv_company);
 
@@ -132,7 +136,18 @@ public class CityFragment extends BaseDataFragment {
 
 
 
+        setUpListener();
 
+
+    }
+
+    private void setUpListener() {
+
+        tv_language_select.setOnClickListener(v -> {
+
+
+            ((MainActivity)mContext).changeLanuage(R.id.ll_main_order);
+        });
     }
 
     private void initAdapter() {
@@ -425,8 +440,15 @@ public class CityFragment extends BaseDataFragment {
 
     private void cityDetail(int id) {
 
+
+
         showLoadingText();
-        ControllerUtils.getHomeControllerInstance().cityDetail(id, SharedUtils.getLanguage(), new NetObserver<CityInfoBean>(CityInfoBean.class) {
+
+        int lanuage = LocaleUtils.INSTANCE.isLocaleEn(mContext)? 2: 1;
+
+        LogUtils.d(TAG, "开始进来的时候 的语言类型  ---> " + lanuage);
+
+        ControllerUtils.getHomeControllerInstance().cityDetail(id, lanuage, new NetObserver<CityInfoBean>(CityInfoBean.class) {
             @Override
             protected void onSuccess(CityInfoBean o) {
                 hideLoadingText();

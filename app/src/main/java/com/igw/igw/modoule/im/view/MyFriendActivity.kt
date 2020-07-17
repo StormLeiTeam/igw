@@ -15,6 +15,7 @@ import com.igw.igw.modoule.im.adapter.MyFriendSearchAdapter
 import com.igw.igw.modoule.im.adapter.OnItemClickListener
 import com.igw.igw.modoule.im.model.MyFriendModel
 import com.igw.igw.modoule.im.presenter.MyFriendPresenter
+import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
@@ -203,7 +204,10 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
 
         LogUtils.d(TAG, "选择单聊  --${item.id} ")
 
-        SingleChatActivity.startSelfOfIntent(this, item.friendUserId.toString(), item.friendNickName, Conversation.ConversationType.PRIVATE)
+        FriendInfoActivity.startSelf(this, GsonUtils.instance.toJson(item))
+
+
+//        SingleChatActivity.startSelfOfIntent(this, item.friendUserId.toString(), item.friendNickName, Conversation.ConversationType.PRIVATE)
 
     }
 
