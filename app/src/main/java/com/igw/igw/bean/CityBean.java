@@ -92,6 +92,14 @@ public class CityBean {
             private String utime;
             private boolean isEN = false;
 
+            public boolean isEN() {
+                return isEN;
+            }
+
+            public void setEN(boolean EN) {
+                isEN = EN;
+            }
+
             public String getCityCn() {
                 return cityCn;
             }

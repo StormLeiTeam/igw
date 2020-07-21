@@ -201,6 +201,17 @@ public class MainActivity extends BaseActivity {
                 position = 1;
                 break;
             case R.id.iv_home_msg:
+
+
+                if (!login) {
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+
+                    startActivity(intent);
+
+                    return;
+                }
+
                 if (null == messageFragment) {
                     messageFragment = MessageFragment.getInstance();
                     fragmentTransaction.add(R.id.fl_main, messageFragment);
@@ -376,6 +387,7 @@ public class MainActivity extends BaseActivity {
 
 //        getSupportFragmentManager().findFragmentByTag(MyFragment.class.getName())
 //                myFragment.onActivityResult(requestCode, resultCode, data);
+
     }
 
 

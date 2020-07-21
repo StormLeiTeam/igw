@@ -2,6 +2,7 @@ package com.igw.igw.modoule.messagemodule.model
 
 import com.igw.igw.bean.message.DealMessageBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.bean.message.ReadAllBean
 import com.igw.igw.bean.message.ReadedMessage
 import com.igw.igw.modoule.messagemodule.MessageContract
 import com.igw.igw.network.NetObserver
@@ -34,10 +35,17 @@ class MessageListModel : MessageContract.Model {
 
     }
 
-    override fun readedMessage(id: Int, isRead:Int, observer: NetObserver<ReadedMessage.DataBean>) {
+    override fun readedMessage(id: Int, observer: NetObserver<ReadedMessage.DataBean>) {
+        ControllerUtils.getMessageController().readMessage(id,observer)
 
-        ControllerUtils.getMessageController().readedMessage(id,isRead,observer)
     }
+
+    override fun readAll(observer: NetObserver<ReadAllBean.DataBean>) {
+
+        ControllerUtils.getMessageController().readAll(observer)
+
+    }
+
 
 
 }

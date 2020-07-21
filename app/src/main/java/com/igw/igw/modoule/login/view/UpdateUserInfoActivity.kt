@@ -257,6 +257,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
                     LocaleUtils.changeLocale(this@UpdateUserInfoActivity, "user_info", GsonUtils.instance.toJson(it))
 
 
+
+
                 }
             }
 
@@ -564,17 +566,17 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         mChiocePopwindow?.let {
 
-            if (LocaleUtils.isLocaleEn(this)) {
-
-                it.setCancelText("cancle")
-                it.setChoiceOneText("select ")
-                it.setChoiceTwoText("take photo")
-            } else {
-
-                it.setCancelText("取消")
-                it.setChoiceOneText("从相册选取图片")
-                it.setChoiceTwoText("拍照")
-            }
+//            if (LocaleUtils.isLocaleEn(this)) {
+//
+//                it.setCancelText("cancle")
+//                it.setChoiceOneText("select ")
+//                it.setChoiceTwoText("take photo")
+//            } else {
+//
+//                it.setCancelText("取消")
+//                it.setChoiceOneText("从相册选取图片")
+//                it.setChoiceTwoText("拍照")
+//            }
 
             if (!it.isShowing) {
                 it.showAtLocation(root_main,
@@ -640,17 +642,10 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         }
 
-        if (!LocaleUtils.isLocaleEn(this)) {
-            //ture
+        pvTime = pickerBuilder!!.setCancelText(resources.getString(R.string.cancel))
+                .setSubmitText(resources.getString(R.string.data_sure)).build()
 
-            pvTime = pickerBuilder!!.setCancelText("取消")
-                    .setSubmitText("确认").build()
-        } else {
 
-            pvTime = pickerBuilder!!.setCancelText("Cancel")
-                    .setSubmitText("Sure").build()
-
-        }
 
 
         var dialog = pvTime!!.dialog

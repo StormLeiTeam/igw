@@ -77,7 +77,7 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
                             if (locale) {
 
-                                it.text = "skip in ${t?.toInt()} seconds\n"
+                                it.text = "skip in ${t?.toInt()} s\n"
                             } else {
                                 it.text = "跳过${t?.toInt()}s"
                             }

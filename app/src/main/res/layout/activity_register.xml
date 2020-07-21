@@ -701,7 +701,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45.5dp"
                 android:background="@drawable/bg_login_submit"
-                android:text="立即注册"
+                android:text="@string/register_now"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 

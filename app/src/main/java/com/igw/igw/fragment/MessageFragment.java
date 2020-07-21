@@ -16,6 +16,7 @@ import com.igw.igw.MainActivity;
 import com.igw.igw.R;
 import com.igw.igw.bean.message.DealMessageBean;
 import com.igw.igw.bean.message.MessageCenterBean;
+import com.igw.igw.bean.message.ReadAllBean;
 import com.igw.igw.bean.message.ReadedMessage;
 import com.igw.igw.modoule.messagemodule.MessageContract;
 import com.igw.igw.modoule.messagemodule.adapter.MessageCenterAdapter;
@@ -119,15 +120,21 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
     private void setUpListener() {
 
+
+
         tv_cn_en_select.setOnClickListener(v -> {
 
-//            LocaleUtils.INSTANCE.changeLocale((MainActivity)mContext);
+            ((MainActivity)mContext).changeLanuage(R.id.iv_home_msg);
+
 
         });
 
         tv_readed.setOnClickListener(v -> {
 
             // 标价已读
+
+            getMPresenter().readAll();
+
         });
 
 
@@ -148,6 +155,11 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
                 LogUtils.d(TAG, "item 点击事件 ");
 
+                if (1 == bean.getIsRead()) {
+                    return;
+                }
+
+                getMPresenter().readMessage(bean.getId());
 
 //                getMPresenter().readedMessage(bean.getId(), 1);
 
@@ -251,8 +263,16 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
             }
 
+
+
             mBadgeView.setText("" + noReadCount);
-            mBadgeView.show();
+            if (noReadCount <= 0) {
+                mBadgeView.hide();
+
+            } else {
+                mBadgeView.show();
+
+            }
 
         }else{
             
@@ -278,11 +298,11 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     @Override
     public void readedSuccess(@NotNull ReadedMessage.DataBean data) {
 
-        noReadCount--;
-        mBadgeView.setText("" + noReadCount);
-        mBadgeView.show();
+//        noReadCount--;
+//        mBadgeView.setText("" + noReadCount);
+//        mBadgeView.show();
 
-
+        getMPresenter().messageCenterList();
 
 
 
@@ -292,6 +312,21 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     public void readedFail(int code, @NotNull String msg) {
 
         ToastUtil.showCenterToast(mContext,msg);
+
+    }
+
+    @Override
+    public void readAllSuccess(@Nullable ReadAllBean.DataBean data) {
+
+        noReadCount = 0 ;
+        mBadgeView.setText("" + noReadCount);
+        mBadgeView.show();
+        getMPresenter().messageCenterList();
+
+    }
+
+    @Override
+    public void readAllFail(int code, @NotNull String msg) {
 
     }
 }

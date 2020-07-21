@@ -263,17 +263,6 @@ public interface ApiService {
 
 
 
-    /**
-     * 是否阅读
-     * @param requestBody
-     * @return
-     */
-    @POST("/api/advertise/info")
-    Observable<ResponseBody> readedMessage(@Body RequestBody requestBody);
-
-
-
-
     //  获取城市标签
     @POST("/api/city/labelList")
     Observable<ResponseBody> getCityLabal(@Body RequestBody requestBody);
@@ -341,6 +330,19 @@ public interface ApiService {
     @POST("api/common/lastVersion")
     Observable<ResponseBody> checkVersion(@Body RequestBody requestBody);
 
+
+    /**
+     * 阅读消息
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/message/readMessage")
+    Observable<ResponseBody> readMessage(@Body RequestBody requestBody);
+
+
+
+    @POST("/api/message/readAll")
+    Observable<ResponseBody> readAll(@Body RequestBody requestBody);
 
 }
 

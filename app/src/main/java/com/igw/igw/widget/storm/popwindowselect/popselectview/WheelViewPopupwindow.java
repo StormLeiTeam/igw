@@ -50,7 +50,7 @@ public class WheelViewPopupwindow<T> extends PopupWindow {
     public WheelViewPopupwindow(Context mContext) {
         this.mContext = mContext;
 
-        LogUtils.d(TAG,"---> " +mContext == null);
+//        LogUtils.d(TAG,"---> " +mContext == null);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRootView = inflater.inflate(R.layout.layout_wheelview_popupwindow, null);
         initView();

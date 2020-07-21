@@ -2,6 +2,7 @@ package com.igw.igw.modoule.messagemodule.presenter
 
 import com.igw.igw.bean.message.DealMessageBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.bean.message.ReadAllBean
 import com.igw.igw.bean.message.ReadedMessage
 import com.igw.igw.modoule.messagemodule.MessageContract
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -119,15 +120,14 @@ class MessageListPresenter(model: MessageContract.Model) :
 
     }
 
-    override fun readedMessage(id: Int,isRead:Int) {
+    override fun readMessage(id: Int) {
 
-        mModel.readedMessage(id,isRead,
-        object :NetObserver<ReadedMessage.DataBean>(ReadedMessage.DataBean::class.java){
+        mModel.readedMessage(id,object : NetObserver<ReadedMessage.DataBean>(ReadedMessage.DataBean::class.java){
             override fun onSuccess(m: ReadedMessage.DataBean) {
 
+                LogUtils.d(TAG,"readedMessage --> onSuccess")
 
                 m.let {
-
                     mRootView.readedSuccess(it)
 
                 }
@@ -135,19 +135,86 @@ class MessageListPresenter(model: MessageContract.Model) :
 
             override fun onFail(code: Int, msg: String?) {
 
+                LogUtils.d(TAG,"readedMessage --> onFail")
 
                 mRootView.readedFail(code,msg!!)
+
             }
 
             override fun onError(msg: String?) {
+
+                LogUtils.d(TAG,"readedMessage --> onError")
+
+            }
+
+
+        })
+    }
+
+    override fun readAll() {
+
+
+        mModel.readAll(object : NetObserver<ReadAllBean.DataBean>(ReadAllBean.DataBean::class.java){
+            override fun onSuccess(m: ReadAllBean.DataBean) {
+
+
+                LogUtils.d(TAG,"  ReadALL  -->  onSuccess")
+                m.let {
+                    mRootView.readAllSuccess(it)
+                }
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                LogUtils.d(TAG,"  ReadALL  -->  onFail")
+                mRootView.readAllFail(code, msg!!)
+
+
+            }
+
+            override fun onError(msg: String?) {
+                LogUtils.d(TAG,"  ReadALL  -->  onError")
+
+
             }
 
 
         })
 
 
-
     }
+
+
+
+
+//    override fun readedMessage(id: Int,isRead:Int) {
+//
+//        mModel.readedMessage(id,isRead,
+//        object :NetObserver<ReadedMessage.DataBean>(ReadedMessage.DataBean::class.java){
+//            override fun onSuccess(m: ReadedMessage.DataBean) {
+//
+//
+//                m.let {
+//
+//                    mRootView.readedSuccess(it)
+//
+//                }
+//            }
+//
+//            override fun onFail(code: Int, msg: String?) {
+//
+//
+//                mRootView.readedFail(code,msg!!)
+//            }
+//
+//            override fun onError(msg: String?) {
+//            }
+//
+//
+//        })
+
+
+
+//    }
 
 
 }

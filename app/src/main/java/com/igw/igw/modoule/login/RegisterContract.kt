@@ -33,6 +33,8 @@ interface RegisterContract {
 
         fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
 
+
+
     }
 
     interface View : IBaseView {
@@ -42,6 +44,10 @@ interface RegisterContract {
 
         fun registerFail(code: Int, msg: String)
 
+
+        fun loadHeadImageSuccessful(data: HeadImageBean.DataBean)
+
+        fun loadHeadImageFail(code: Int, msg: String)
 
 //        fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
 

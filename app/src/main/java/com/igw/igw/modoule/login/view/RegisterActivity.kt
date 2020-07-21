@@ -23,6 +23,7 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.CityListBean
 import com.igw.igw.bean.login.GenderBean
+import com.igw.igw.bean.login.HeadImageBean
 import com.igw.igw.bean.login.RegisterBean
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.model.RegisterModel
@@ -32,8 +33,27 @@ import com.igw.igw.widget.ChoicePopWindow
 import com.igw.igw.widget.storm.StatusBarView
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.igw.igw.widget.storm.popwindowselect.popselectview.WheelViewPopupwindow
+import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.btn_submit
+import kotlinx.android.synthetic.main.activity_register.et_agencyname
+import kotlinx.android.synthetic.main.activity_register.et_description
+import kotlinx.android.synthetic.main.activity_register.et_email
+import kotlinx.android.synthetic.main.activity_register.et_explain
+import kotlinx.android.synthetic.main.activity_register.et_inviteCode
+import kotlinx.android.synthetic.main.activity_register.et_lastname_explain
+import kotlinx.android.synthetic.main.activity_register.et_nickname
+import kotlinx.android.synthetic.main.activity_register.et_password
+import kotlinx.android.synthetic.main.activity_register.et_password_again
+import kotlinx.android.synthetic.main.activity_register.et_phonenumber
+import kotlinx.android.synthetic.main.activity_register.iv_head_img
+import kotlinx.android.synthetic.main.activity_register.root_main
+import kotlinx.android.synthetic.main.activity_register.tv_select_city
+import kotlinx.android.synthetic.main.activity_register.tv_select_gender
+import kotlinx.android.synthetic.main.activity_register.tv_select_nationality
+import kotlinx.android.synthetic.main.activity_register.tv_select_ymd
+import kotlinx.android.synthetic.main.activity_update_user_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import org.devio.takephoto.app.TakePhoto
 import org.devio.takephoto.app.TakePhotoImpl
@@ -45,7 +65,6 @@ import org.devio.takephoto.model.TResult
 import org.devio.takephoto.permission.InvokeListener
 import org.devio.takephoto.permission.PermissionManager
 import org.devio.takephoto.permission.TakePhotoInvocationHandler
-import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.*
 
@@ -127,6 +146,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private var mHeadImage: File? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         getTakePhoto().onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
@@ -156,7 +176,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         status_bar_main.setConfirmText("中/En")
         status_bar_main.setConfirmTextSize(15F)
 
-        getSystemNationality()
+//        getSystemNationality()
         setUpImagePicker()
 
         setUpPop()
@@ -297,6 +317,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
                 changeLocale()
 
+
+
             }
 
 
@@ -307,7 +329,17 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         btn_submit.setOnClickListener {
 
 
-            registerSubmitForNet()
+//            registerSubmitForNet()
+
+            if (mHeadImage != null && mHeadImage!!.exists()) {
+                // 如果有头像文件
+
+                mPresenter.uploadImaga(mHeadImage!!)
+
+            }else{
+
+                registerSubmitForNet()
+            }
 
 
         }
@@ -490,9 +522,10 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 //
 //        }
 
-        LocaleUtils.changeLocale(this)
+//        LocaleUtils.changeLocale(this)
         //重新启动
 
+        LocaleUtils.changeLocale(this)
 
     }
 
@@ -503,15 +536,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private fun registerSubmitForNet() {
 
 
-        if (!cb_check.isChecked) {
-
-            // 请先勾选
-
-            ToastUtil.showCenterToast(this, R.string.check_user_agreement)
-
-
-            return
-        }
 
         if (mNationality == null) {
             ToastUtil.showCenterToast(this, R.string.warning_nationality)
@@ -537,6 +561,15 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             return
         }
 
+
+        if (!cb_check.isChecked) {
+
+            // 请先勾选
+            ToastUtil.showCenterToast(this, R.string.check_user_agreement)
+            return
+        }
+
+
         if (mGender == null) {
 
             return
@@ -549,6 +582,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
             return
         }
+
+
 
 
         mNickName = et_nickname.text.toString().trim()
@@ -603,8 +638,13 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         registerBean.mobilePhone = mMobilePhone
         registerBean.password = mPassword
         registerBean.inviteCode = mInviteCode
+
+
+        if (mImagePath.isNotEmpty()) {
+            registerBean.headImage = mImagePath
+        }
 //        mHeadImage?.let {
-//            registerBean.setHeadImage(it)
+//            registerBean.headImage = it
 //
 //        }
 
@@ -642,17 +682,17 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         mChiocePopwindow?.let {
 
-            if (LocaleUtils.isLocaleEn(this)) {
-
-                it.setCancelText("cancle")
-                it.setChoiceOneText("select ")
-                it.setChoiceTwoText("take photo")
-            } else {
-
-                it.setCancelText("取消")
-                it.setChoiceOneText("从相册选取图片")
-                it.setChoiceTwoText("拍照")
-            }
+//            if (LocaleUtils.isLocaleEn(this)) {
+//
+//                it.setCancelText("cancle")
+//                it.setChoiceOneText("select ")
+//                it.setChoiceTwoText("take photo")
+//            } else {
+//
+//                it.setCancelText("取消")
+//                it.setChoiceOneText("从相册选取图片")
+//                it.setChoiceTwoText("拍照")
+//            }
 
             if (!it.isShowing) {
                 it.showAtLocation(
@@ -726,17 +766,20 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         }
 
-        if (!LocaleUtils.isLocaleEn(this)) {
-            //ture
+//        if (!LocaleUtils.isLocaleEn(this)) {
+//            //ture
+//
+//            pvTime = pickerBuilder!!.setCancelText("取消")
+//                    .setSubmitText("确认").build()
+//        } else {
+//
+//            pvTime = pickerBuilder!!.setCancelText("Cancel")
+//                    .setSubmitText("Sure").build()
+//
+//        }
 
-            pvTime = pickerBuilder!!.setCancelText("取消")
-                    .setSubmitText("确认").build()
-        } else {
-
-            pvTime = pickerBuilder!!.setCancelText("Cancel")
-                    .setSubmitText("Sure").build()
-
-        }
+        pvTime = pickerBuilder!!.setCancelText(resources.getString(R.string.cancel))
+                .setSubmitText(resources.getString(R.string.data_sure)).build()
 
 
         var dialog = pvTime!!.dialog
@@ -857,11 +900,27 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     fun setUserAgreement() {
 
-        var content = "我同意《i-gw用户协议》"
+        val isEn = LocaleUtils.isLocaleEn(this)
 
-        val spannable = SpannableStringBuilder(content)
+        var contentCn = "我同意《i-gw用户协议》"
+        var contentEn = "I agree <i-gw user agreement>"
+
+        var spannable = SpannableStringBuilder(contentCn)
+
         tv_user_agreement.movementMethod = LinkMovementMethod.getInstance()
-        spannable.setSpan(TextClickPrivacy(this), 3, content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        if (isEn) {
+            spannable =  SpannableStringBuilder(contentEn)
+            spannable.setSpan(TextClickPrivacy(this), 7, contentEn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        } else {
+            spannable =  SpannableStringBuilder(contentCn)
+
+            spannable.setSpan(TextClickPrivacy(this), 3, contentCn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        }
+
+
         tv_user_agreement.text = spannable
 
     }
@@ -876,6 +935,24 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         hideLoadingText()
 
         ToastUtil.showCenterToast(this, msg)
+    }
+
+
+    private var  mImagePath: String =  ""
+
+    override fun loadHeadImageSuccessful(data: HeadImageBean.DataBean) {
+        this.mImagePath = data.attachmentUrl
+
+        GlideUtils.loadImage(this, Constants.BASE_URL + mImagePath,iv_head_img)
+        registerSubmitForNet()
+
+
+    }
+
+    override fun loadHeadImageFail(code: Int, msg: String) {
+
+
+        ToastUtil.showCenterToast(this,msg)
     }
 
 
@@ -995,7 +1072,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         result?.let {
             mHeadImage = File(it.image?.originalPath)
 
-            mPresenter.uploadImaga(mHeadImage!!)
+//            mPresenter.uploadImaga(mHeadImage!!)
             LogUtils.d(
                     TAG, "获取的文件是否存在 -> ${mHeadImage!!.exists()}"
 
@@ -1011,10 +1088,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 ToastUtil.showCenterToast(this, R.string.select_headimage)
             }
 
-            val bytes2String = FileUtils.bytes2String(FileUtils.File2bytes(mHeadImage)!!)
-
-            LogUtils.d(TAG, "处理过后的图片  --> $bytes2String")
-
+//            loadHeadImageSuccessful
         }
 
     }
@@ -1041,17 +1115,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     }
 
 
-    private fun resertAct() {
-
-        finish()
-
-        var intent = Intent(this, RegisterActivity::class.java)
-
-        startActivity(intent)
-        overridePendingTransition(0, 0);
-
-
-    }
 
 
 }

@@ -46,7 +46,7 @@ object LocaleUtils {
         val currentlocale = getUserLocale(context)
 
 
-        return currentlocale == LocaleUtils.LOCALE_ENGLISH
+        return currentlocale == LOCALE_ENGLISH
 
 
     }
@@ -56,9 +56,25 @@ object LocaleUtils {
      */
     public fun getUserLocale(context: Context): Locale? {
 
-        var localeJson = SPUtils.getInstance(LOCALE_SP_NAME).getString(LOCALE_KEY, "")
+        var locale = SPUtils.getInstance(LOCALE_SP_NAME).getString(LOCALE_KEY, "")
 
-        return localeJson?.let { jsonToLocale(it) }
+
+        if (locale.equals("")) {
+            locale = "cn"
+        }
+
+        when (locale) {
+
+            "cn" -> {
+
+                return LOCALE_CHINESE
+            }
+
+            else -> {
+                return LOCALE_ENGLISH
+
+            }
+        }
 
     }
 
@@ -87,9 +103,17 @@ object LocaleUtils {
      * 保存用户设置的locale
      */
     public fun saveUserLocale(context: Context, locale: Locale) {
-        var localeJson = localeToJson(locale)
+//        var localeJson = localeToJson(locale)
+//
+//        SPUtils.getInstance(LOCALE_SP_NAME).put(LOCALE_KEY, localeJson)
 
-        SPUtils.getInstance(LOCALE_SP_NAME).put(LOCALE_KEY, localeJson)
+
+        if (locale == LOCALE_CHINESE) {
+            SPUtils.getInstance(LOCALE_SP_NAME).put(LOCALE_KEY, "cn", true)
+        } else {
+            SPUtils.getInstance(LOCALE_SP_NAME).put(LOCALE_KEY, "en", true)
+
+        }
 
     }
 
@@ -104,12 +128,12 @@ object LocaleUtils {
 
                 val configuration = context.resources.configuration
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    configuration.setLocale(it)
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                configuration.setLocale(it)
 
-                } else {
-                    configuration.locale = it
-                }
+//                } else {
+//                    configuration.locale = it
+//                }
 
                 val displayMetrics = context.resources.displayMetrics
 
@@ -132,7 +156,7 @@ object LocaleUtils {
      */
     public fun needUpdateLocale(context: Context, locale: Locale): Boolean {
 
-        return locale != null && getCurrentlocale(context) != locale
+        return getUserLocale(context) != locale
 
 
     }
@@ -179,15 +203,16 @@ object LocaleUtils {
     public fun changeLocale(activity: Activity) {
 
         if (LocaleUtils.isLocaleEn(activity)) {
-            LogUtils.d(TAG, "当前语言为英语")
+            LogUtils.d(TAG, "切换成中文")
+            saveUserLocale(activity, LOCALE_CHINESE)
+
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
-            saveUserLocale(activity, LocaleUtils.LOCALE_CHINESE)
 
         } else {
-            LogUtils.d(TAG, "当前语言为中文")
+            LogUtils.d(TAG, "切换成英语")
+            saveUserLocale(activity, LOCALE_ENGLISH)
 
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
-            saveUserLocale(activity, LocaleUtils.LOCALE_ENGLISH)
 
 
         }
@@ -197,7 +222,7 @@ object LocaleUtils {
         activity.finish()
 
 
-        var intent = Intent(activity, activity.javaClass)
+        var intent = Intent(activity, activity::class.java)
 
         activity.startActivity(intent)
         activity.overridePendingTransition(0, 0);
@@ -211,15 +236,13 @@ object LocaleUtils {
 
         if (LocaleUtils.isLocaleEn(activity)) {
             LogUtils.d(TAG, "当前语言为英语")
+            saveUserLocale(activity, LOCALE_CHINESE)
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_CHINESE)
-            saveUserLocale(activity, LocaleUtils.LOCALE_CHINESE)
-
         } else {
 
             LogUtils.d(TAG, "当前语言为中文")
-
+            saveUserLocale(activity, LOCALE_ENGLISH)
             LocaleUtils.updateLocale(activity, LocaleUtils.LOCALE_ENGLISH)
-            saveUserLocale(activity, LocaleUtils.LOCALE_ENGLISH)
         }
 
 
@@ -248,9 +271,6 @@ object LocaleUtils {
 //        reconfirmAct()
 
     }
-
-
-
 
 
 //

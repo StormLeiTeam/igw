@@ -73,11 +73,35 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
     fun setUserAgreement() {
 
-        var content = "我同意《i-gw用户协议》"
+        var content  =  resources.getString(R.string.user_agreement)
+        var isEn = LocaleUtils.isLocaleEn(this)
 
-        val spannable = SpannableStringBuilder(content)
+        var contentCn = "我同意《i-gw用户协议》"
+        var contentEn = "I agree <i-gw user agreement>"
+//        if (isEn) {
+//
+//        }
+
+        var spannable = SpannableStringBuilder(contentCn)
+
         tv_user_agreement.movementMethod = LinkMovementMethod.getInstance()
-        spannable.setSpan(TextClickPrivacy(this), 3, content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+//        spannable = SpannableStringBuilder(contentEn)
+//        spannable.setSpan(TextClickPrivacy(this), if (isEn) 7 else 3, contentEn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//
+
+        if (isEn) {
+            spannable =  SpannableStringBuilder(contentEn)
+            spannable.setSpan(TextClickPrivacy(this), 7, contentEn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        } else {
+            spannable =  SpannableStringBuilder(contentCn)
+
+            spannable.setSpan(TextClickPrivacy(this), 3, contentCn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        }
+
+
         tv_user_agreement.text = spannable
 
     }
@@ -91,7 +115,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 //            sendVerifyCode()
 //        }
 
-        tv_forget_pwd.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tv_forget_pwd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tv_forget_pwd.setOnClickListener {
 
             // 忘记密码
@@ -139,16 +163,20 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
         // select lanuage  mode
         tv_language_select.setOnClickListener {
 
-            if (LocaleUtils.needUpdateLocale(this, LocaleUtils.LOCALE_ENGLISH)) {
-                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_ENGLISH)
-                LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH)
 
-            } else {
-                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_CHINESE)
-                LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
-            }
+            LocaleUtils.changeLocale(this)
 
-            resertAct()
+//
+//            if (LocaleUtils.needUpdateLocale(this, LocaleUtils.LOCALE_ENGLISH)) {
+//                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_ENGLISH)
+//                LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH)
+//
+//            } else {
+//                LocaleUtils.saveUserLocale(this, LocaleUtils.LOCALE_CHINESE)
+//                LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_CHINESE)
+//            }
+//
+//            resertAct()
 
 
         }
@@ -229,14 +257,8 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     //登陆
     private fun login() {
 
-        showLoadingText("登录中...")
+//        showLoadingText("登录中...")
 
-        if (!cb_check.isChecked) {
-
-            ToastUtil.showCenterToast(this, R.string.check_user_agreement)
-
-            return
-        }
 
         when (mode_state) {
 
@@ -259,7 +281,19 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
 //                mPresenter.loginByAccent()
 
+
+                if (!cb_check.isChecked) {
+
+                    ToastUtil.showCenterToast(this, R.string.check_user_agreement)
+
+                    return
+                }
+
+
+                showLoadingText(resources.getString(R.string.loading_login))
+
                 mPresenter.loginByAccent(accent, pwd)
+
             }
 
             2 -> {
@@ -278,12 +312,24 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
                 var email = et_email.text.toString().trim()
                 var code = et_code.text.toString().trim()
 
+
+                if (!cb_check.isChecked) {
+
+                    ToastUtil.showCenterToast(this, R.string.check_user_agreement)
+
+                    return
+                }
+
+
+
                 mPresenter.loginByEmail(email, code)
+
             }
         }
 
 
     }
+
 
     private fun resertAct() {
 
@@ -330,8 +376,8 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
         finish()
 
 
-        ToastUtil.showCenterToast(this,R.string.login_success)
-        Log.e("12345","登录成功");
+        ToastUtil.showCenterToast(this, R.string.login_success)
+        Log.e("12345", "登录成功");
 
     }
 
@@ -347,7 +393,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
         hideLoadingText()
 
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
 
         LoginManager.instance.loginOut()
 
@@ -355,7 +401,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
     override fun sendVerifyCodeSuccess() {
 
-        ToastUtil.showCenterToast(this,"验证码已发送")
+        ToastUtil.showCenterToast(this, "验证码已发送")
 
     }
 

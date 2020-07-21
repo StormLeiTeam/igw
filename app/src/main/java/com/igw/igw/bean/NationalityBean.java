@@ -117,7 +117,6 @@ public class NationalityBean {
 
             @Override
             public String getWheelText() {
-
                 if (isEnglish) { // 英语
 
                     return regionEnName;

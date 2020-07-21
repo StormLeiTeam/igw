@@ -53,7 +53,7 @@
         android:paddingTop="7dp"
         android:paddingEnd="13.5dp"
         android:paddingBottom="7dp"
-        android:text="跳过"
+        android:text="@string/skip"
         android:textColor="@color/grey_ffa9a9a9"
         android:textSize="14sp" />
 

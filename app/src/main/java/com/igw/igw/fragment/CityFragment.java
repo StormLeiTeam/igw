@@ -2,7 +2,9 @@ package com.igw.igw.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import android.media.tv.TvView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -28,6 +30,7 @@ import com.igw.igw.bean.city.CityCompanyBean;
 import com.igw.igw.modoule.city.adapter.CityCompanyAdapter;
 import com.igw.igw.modoule.city.view.CompanyInfoActivity;
 import com.igw.igw.modoule.city.view.SearchCityActivity;
+import com.igw.igw.modoule.im.RecentChat1Activity;
 import com.igw.igw.network.NetObserver;
 import com.igw.igw.utils.ActivityUtils;
 import com.igw.igw.utils.ColorUtils;
@@ -132,7 +135,9 @@ public class CityFragment extends BaseDataFragment {
 
         cityDetail(1);
         cityId = 1;
-        tv_basetitle.setText("北京");
+
+
+        tv_basetitle.setText(mContext.getResources().getString(R.string.beijing));
 
 
 
@@ -312,7 +317,7 @@ public class CityFragment extends BaseDataFragment {
 
                 ll_buss_content.setVisibility(View.VISIBLE);
                 tv_city_html.setVisibility(View.GONE);
-                if (infoBean != null) {
+                if (null != infoBean) {
                     tv_city_html.setText(Html.fromHtml(infoBean.getStationDetail().getBusinessCooperation(), new MImageGetter(tv_city_html, getActivity()), null));
                 }
 
@@ -387,6 +392,20 @@ public class CityFragment extends BaseDataFragment {
     private void setAddressPicker(List<CityBean.DataBean.CitysBean> dataBean) {
         this.options1Items.clear();
         this.options1Items.addAll(dataBean);
+
+        if (LocaleUtils.INSTANCE.isLocaleEn(mContext)) {
+            for (CityBean.DataBean.CitysBean options1Item : options1Items) {
+
+                options1Item.setEN(true);
+            }
+
+        }else{
+            for (CityBean.DataBean.CitysBean options1Item : options1Items) {
+
+                options1Item.setEN(false);
+            }
+        }
+
         initJsonData();
     }
 
@@ -401,6 +420,8 @@ public class CityFragment extends BaseDataFragment {
 
 
                 String cityName = LocaleUtils.INSTANCE.isLocaleEn(mContext) ? options1Items.get(options1).getCityEn() : options1Items.get(options1).getCityCn();
+
+
                 tv_basetitle.setText(cityName);
 
                 cityDetail(options1Items.get(options1).getId());

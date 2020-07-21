@@ -3,14 +3,14 @@ package com.igw.igw.modoule.login.loginstate
 import android.content.Context
 import android.net.Uri.parse
 import android.util.Log
+import cn.jpush.android.api.JPushInterface
 import com.igw.igw.bean.login.LoginBean
-import com.igw.igw.utils.GsonUtils
-import com.igw.igw.utils.LogUtils
-import com.igw.igw.utils.SPUtils
-import com.igw.igw.utils.SharedUtils
+import com.igw.igw.utils.*
 import com.shengshijingu.yashiji.common.Constants
+import com.shengshijingu.yashiji.common.Constants.userId
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
+
 
 /**
  *
@@ -75,6 +75,23 @@ class LoginManager {
         var userInfo = UserInfo("${user.id}", user.agencyName, parse(Constants.BASE_URL + user.headImage))
         RongIM.getInstance().refreshUserInfoCache(userInfo);
 
+        bindJush(user)
+
+    }
+
+    private fun bindJush(user: LoginBean.DataBean) {
+
+
+        val set: MutableSet<String> = HashSet()
+        set.add("userid")
+        JPushInterface.setAliasAndTags(AppUtils.appContext, "${user.id}", null, null)
+
+
+        JPushInterface.setTags(AppUtils.appContext, set) { i: Int, s: String?, set1: Set<String?>? ->
+            if (i == 0) {
+            } else {
+            }
+        }
     }
 
 

@@ -6,7 +6,7 @@
     <string name="login_send_code">Send verification code</string>
     <string name="login_email_hint">e-mail</string>
     <string name="login_mode_email_acccent">e-mail Verification code</string>\
-    <string name="login_mode_pwd_acccent">Account password login</string>
+    <string name="login_mode_pwd_acccent">account password login</string>
     <string name="login_pwd_hint">password</string>
     <string name="login_account_hint">account</string>
     <string name="forget_pwd">Forget Password</string>
@@ -111,7 +111,7 @@
     <string name="warning_not_input_password">The password cannot be empty</string>
     <string name="warning_two_password_not_same">The two input passwords are inconsistent</string>
     <string name="hint_search">search member</string>
-    <string name="bg_friends_recent_chat">最近聊天</string>
+    <string name="bg_friends_recent_chat">Recent chat</string>
     <string name="bg_friends_businessusers_chat">Business users</string>
     <string name="bg_friends_ordinaryusers_chat">The average user</string>
     <string name="title_my_friends_list">My Friend</string>
@@ -143,5 +143,34 @@
     <string name="login_out">Login out</string>
     <string name="city_information">City information</string>
     <string name="business_cooperation">Business cooperation</string>
+    <string name="skip">skip </string>
+    <string name="loading_login">logining...</string>
+    <string name="beijing">BEIJING</string>
+    <string name="cancel">cancel</string>
+    <string name="complete">complete</string>
+    <string name="communication_title">Title:</string>
+    <string name="communication_title_hint">Please enter the title of the communication</string>
+    <string name="communication_content">Content：</string>
+    <string name="communication_content_hint">Please enter the content of the exchange</string>
+    <string name="communicaion_contact_information">Contact information</string>
+    <string name="communication_name">Name：</string>
+    <string name="communication_name_hint">Please enter your name</string>
+    <string name="communication_phone">Phone：</string>
+    <string name="communication_phone_hint">Please enter my contact information</string>
+    <string name="communication_email_hint">Please enter my email</string>
+    <string name="communication_others">Others：</string>
+    <string name="communication_ohters_hint">Other information about the connection</string>
+    <string name="submit">submit</string>
+    <string name="toast_input_exchange">Please enter the title of the communication</string>
+    <string name="toast_input_content">Please enter the content of the exchange</string>
+    <string name="toast_input_name">Please enter your name</string>
+    <string name="toast_input_phone">Please enter my contact information</string>
+    <string name="toast_input_email">Please enter my email</string>
+    <string name="user_agreement">I agree &#060;i-gw user agreement&#062;</string>
+    <string name="select_photo_album">photo from the album</string>
+    <string name="take_photo">Taking pictures</string>
+    <string name="data_sure">Sure</string>
+    <string name="register_now">Register now</string>
+
 
 </resources>

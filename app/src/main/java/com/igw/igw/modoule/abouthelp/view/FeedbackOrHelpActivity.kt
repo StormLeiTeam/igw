@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.LinearInterpolator
-import com.bumptech.glide.load.data.LocalUriFetcher
-import com.google.gson.JsonNull
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.app.BaseAdapter
@@ -23,7 +21,6 @@ import com.igw.igw.widget.storm.StatusBarView
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_feedback_or_help.*
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
 
 class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpContract.View {
 
@@ -146,6 +143,7 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
     override fun success(o: Any?) {
     }
 
+
     override fun initView() {
 
 
@@ -209,13 +207,16 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
     private fun setUpListener() {
 
 
-        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
-            override fun onClick() {
 
-                LocaleUtils.changeLocale(this@FeedbackOrHelpActivity)
-            }
-
-        })
+//        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+//            override fun onClick() {
+//
+//                LogUtils.d(TAG, "点击了中引文切换 ")
+//                LocaleUtils.changeLocale(this@FeedbackOrHelpActivity)
+//
+//            }
+//
+//        })
 
         mAdapter.onItemClickListener(object :HelpAdapter.OnItemClickListener{
             override fun onItemClick(data: HelpBean.DataBean.RowsBean?, position: Int) {
@@ -239,16 +240,7 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
         status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
-                //
-                if (LocaleUtils.isLocaleEn(this@FeedbackOrHelpActivity)) {
-                    LocaleUtils.updateLocale(this@FeedbackOrHelpActivity, LocaleUtils.LOCALE_CHINESE)
-
-                } else {
-                    LocaleUtils.updateLocale(this@FeedbackOrHelpActivity, LocaleUtils.LOCALE_ENGLISH)
-
-                }
-
-                //更新页面
+                LocaleUtils.changeLocale(this@FeedbackOrHelpActivity)
 
 
             }

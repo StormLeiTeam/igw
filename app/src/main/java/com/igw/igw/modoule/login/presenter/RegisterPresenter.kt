@@ -143,14 +143,14 @@ class RegisterPresenter(model: RegisterContract.Model)
             override fun onSuccess(m: HeadImageBean.DataBean) {
                 LogUtils.d(TAG,"上传照片成功  --> ")
 
-//                mRootView.loadHeadImageSuccessful(m)
+                mRootView.loadHeadImageSuccessful(m)
 
             }
 
             override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG,"上传照片失败  --> ")
 
-//                mRootView.loadHeadImageFail(code,msg)
+                mRootView.loadHeadImageFail(code,msg!!)
 
             }
 

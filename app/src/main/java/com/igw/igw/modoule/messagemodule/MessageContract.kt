@@ -2,6 +2,7 @@ package com.igw.igw.modoule.messagemodule
 
 import com.igw.igw.bean.message.DealMessageBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.bean.message.ReadAllBean
 import com.igw.igw.bean.message.ReadedMessage
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
@@ -29,11 +30,11 @@ class MessageContract {
         fun onDealMessageFail(code: Int, msg: String)
 
 
-
-        fun readedSuccess(data:ReadedMessage.DataBean)
+        fun readedSuccess(data: ReadedMessage.DataBean)
         fun readedFail(code: Int, msg: String)
 
-
+        fun readAllSuccess(data: ReadAllBean.DataBean?)
+        fun readAllFail(code: Int, msg: String)
 
     }
 
@@ -43,11 +44,13 @@ class MessageContract {
 
         fun messageCenterList(observer: NetObserver<MessageCenterBean.DataBean>)
 
-        fun dealMessage(id:Int,isAgree: Int,observer: NetObserver<DealMessageBean.DataBean>)
+        fun dealMessage(id: Int, isAgree: Int, observer: NetObserver<DealMessageBean.DataBean>)
 
 
         // 接口 未给出
-        fun readedMessage(id: Int,isRead:Int, observer: NetObserver<ReadedMessage.DataBean>)
+        fun readedMessage(id: Int, observer: NetObserver<ReadedMessage.DataBean>)
+
+        fun readAll(observer: NetObserver<ReadAllBean.DataBean>)
 
     }
 
@@ -58,6 +61,11 @@ class MessageContract {
 
         fun dealMessage(id: Int, isAgree: Int)
 
-        fun readedMessage(id: Int,isRead:Int)
+        /**
+         *阅读
+         */
+        fun readMessage(id: Int)
+
+        fun readAll()
     }
 }
