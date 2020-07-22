@@ -177,6 +177,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
                 LogUtils.d(TAG, "点击了同意");
 
                 getMPresenter().dealMessage(bean.getId(),1);
+                getMPresenter().readMessage(bean.getId());
+
 //                getMPresenter().readedMessage(bean.getId(), 1);
 
             }
@@ -188,6 +190,8 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
                 LogUtils.d(TAG, "点击了拒绝");
 
                 getMPresenter().dealMessage(bean.getId(),2);
+                getMPresenter().readMessage(bean.getId());
+
 //                getMPresenter().readedMessage(bean.getId(), 1);
 
             }
@@ -286,6 +290,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     public void onDealMessageSuccess(@Nullable DealMessageBean.DataBean data) {
 
         ToastUtil.showCenterToast(mContext, "消息处理成功");
+
     }
 
     @Override

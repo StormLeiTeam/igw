@@ -12,6 +12,7 @@ import com.igw.igw.utils.GlideUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.RvViewHolder
 import com.igw.igw.widget.storm.StormCircleImageView
+import com.shengshijingu.yashiji.common.Constants
 import com.tuacy.fuzzysearchlibrary.FuzzySearchBaseAdapter
 import com.tuacy.fuzzysearchlibrary.IFuzzySearchRule
 import io.rong.imkit.widget.adapter.MessageListAdapter
@@ -80,7 +81,7 @@ class MyFriendSearchAdapter : FuzzySearchBaseAdapter<FriendBean.DataBean.Friends
 
             }
 
-            GlideUtils.loadImage(holder.itemView.context, it[position].friendHeadImage, headImg)
+            GlideUtils.loadImage(holder.itemView.context, Constants.BASE_URL+  it[position].friendHeadImage, headImg)
 
 
             holder.itemView.setOnClickListener{

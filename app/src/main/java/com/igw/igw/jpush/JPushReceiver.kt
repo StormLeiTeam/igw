@@ -33,6 +33,7 @@ class JPushReceiver : JPushMessageReceiver() {
     var Activity: String = ""
 
 
+
     /**
      * 通知栏消息到达的回调
      */

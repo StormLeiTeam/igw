@@ -20,4 +20,7 @@ object Contanct {
     val KEY_LOGIN_STATE = "login_state"
 
     val KEY_RONGTOKEN = "rong_token"
+
+    val KEY_USER_ID = "user_id"
+
 }

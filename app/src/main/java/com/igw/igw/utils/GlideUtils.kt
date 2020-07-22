@@ -38,6 +38,11 @@ object GlideUtils {
     }
 
 
+    fun loadImage(context: Context, resId: Int, imageView: ImageView) {
+
+        Glide.with(context).load(resId).into(imageView)
+
+    }
 
     private fun getRequestOptions(placeHolder: Int, error: Int): RequestOptions {
 

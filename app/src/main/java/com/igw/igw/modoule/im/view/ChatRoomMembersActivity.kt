@@ -23,6 +23,7 @@ import com.igw.igw.modoule.im.ChatRoomMembersContract
 import com.igw.igw.modoule.im.adapter.ChatRoomAdapter
 import com.igw.igw.modoule.im.model.ChatRoomMembersModel
 import com.igw.igw.modoule.im.presenter.ChatRoomMembersPresenter
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.LogUtils
@@ -88,14 +89,14 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 
     private fun setUpListener() {
 
-        et_search.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+        et_search.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent): Boolean {
-                if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED){
+                if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
 
 
-                    if (event.keyCode == KeyEvent.KEYCODE_ENTER){
+                    if (event.keyCode == KeyEvent.KEYCODE_ENTER) {
 
-                        LogUtils.d(TAG," 获取 点击了回车事件 ")
+                        LogUtils.d(TAG, " 获取 点击了回车事件 ")
                         var content = et_search.text.toString()
                         getMembersForNet(content)
                         return true
@@ -135,11 +136,10 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 //        })
 
 
-
         status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
-                LocaleUtils.changeLocale(this@ChatRoomMembersActivity,"chatRoomId",targetId)
+                LocaleUtils.changeLocale(this@ChatRoomMembersActivity, "chatRoomId", targetId)
             }
 
 
@@ -170,6 +170,13 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 
             override fun onAddFriend(bean: ChatRoomUsesBean.DataBean.RoomUsersBean, position: Int) {
 
+                val userId = LoginManager.instance.userId()
+
+                if (userId.isNotEmpty() && userId == "${bean.userId}") {
+
+                    ToastUtil.showCenterToast(this@ChatRoomMembersActivity, resources.getString(R.string.no_add_self))
+                    return;
+                }
                 mPresenter.addFriend(bean.userId)
 
             }
@@ -188,7 +195,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
      */
     private fun getMembersForNet(nickName: String) {
 
-        LogUtils.d(TAG,"targetid -> $targetId   nickname -> $nickName")
+        LogUtils.d(TAG, "targetid -> $targetId   nickname -> $nickName")
         mPresenter.chatroomUsers(targetId, nickName)
 
 

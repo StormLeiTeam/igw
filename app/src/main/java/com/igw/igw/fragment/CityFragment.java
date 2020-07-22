@@ -294,6 +294,10 @@ public class CityFragment extends BaseDataFragment {
             @Override
             protected void onSuccess(CityCompanyBean.DataBean dataBean) {
 
+                if (dataBean.getRows().size() <=0 ) {
+                    return;
+                }
+
                 mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_END());
                 mCityCompanyAdapter.refreshData(dataBean.getRows());
                 mCityCompanyAdapter.setFooterViewState(BaseAdapter.Companion.getLOAD_LOADING());
@@ -305,7 +309,9 @@ public class CityFragment extends BaseDataFragment {
 
     }
 
-    private void setCityData() {
+    private void  setCityData() {
+
+
         switch (cityType) {
             case 2:
                 tv_city_businessCooperation.setBackground(getResources().getDrawable(R.color.colorF33));
@@ -317,7 +323,7 @@ public class CityFragment extends BaseDataFragment {
 
                 ll_buss_content.setVisibility(View.VISIBLE);
                 tv_city_html.setVisibility(View.GONE);
-                if (null != infoBean) {
+                if (null != infoBean && null !=  infoBean.getStationDetail().getBusinessCooperation()  ) {
                     tv_city_html.setText(Html.fromHtml(infoBean.getStationDetail().getBusinessCooperation(), new MImageGetter(tv_city_html, getActivity()), null));
                 }
 

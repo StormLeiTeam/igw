@@ -127,6 +127,16 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     }
 
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (!hidden) {
+            mPresenter.getFriendsList();
+        }
+    }
+
     private void initData() {
 
         // 获取个人信息
@@ -154,6 +164,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
             //昵称
             tv_nickName.setText(R.string.not_login_in);
             tv_desc.setText("");
+
             tvMoneyRmb.setText("$0.0");
             tvMoneyDollar.setText("¥0.0");
 

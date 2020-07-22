@@ -11,6 +11,9 @@ import com.igw.igw.utils.GlideUtils
 import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.RvViewHolder
 import com.igw.igw.widget.storm.StormCircleImageView
+import com.shengshijingu.yashiji.common.Constants
+import org.jetbrains.annotations.Contract
+import kotlin.contracts.contract
 
 /**
  *
@@ -106,7 +109,7 @@ class MyFriendAdapter(context: Context,isOpenLoadMore: Boolean ): BaseAdapter<Fr
             }
 
 
-            GlideUtils.loadImage(mContext,it[position].friendHeadImage,headImg)
+            GlideUtils.loadImage(mContext, Constants.BASE_URL+ it[position].friendHeadImage,headImg)
 
 
             setUpListener(rvViewHolder, position)

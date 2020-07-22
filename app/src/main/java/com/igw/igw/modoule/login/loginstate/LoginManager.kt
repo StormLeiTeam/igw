@@ -10,6 +10,7 @@ import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.Constants.userId
 import io.rong.imkit.RongIM
 import io.rong.imlib.model.UserInfo
+import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 
 /**
@@ -63,32 +64,35 @@ class LoginManager {
         SharedUtils.setAccessToken(user.token)
         SharedUtils.setRongToken(user.rongyunToken)
 
-        Log.e("12345",user.rongyunToken+"==="+user.token)
+        Log.e("12345", user.rongyunToken + "===" + user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_ID, "${user.id}")
 
         (loginState as LoginInState).initData(user.token)
         (loginState as LoginInState).initRongToken(user.rongyunToken)
 
         (loginState as LoginInState).initRongYun()
+        (loginState as LoginInState).bindJpush("${user.id}")
+
 
         var userInfo = UserInfo("${user.id}", user.agencyName, parse(Constants.BASE_URL + user.headImage))
         RongIM.getInstance().refreshUserInfoCache(userInfo);
 
-        bindJush(user)
+//        bindJush(user)
 
     }
 
     private fun bindJush(user: LoginBean.DataBean) {
 
-
         val set: MutableSet<String> = HashSet()
-        set.add("userid")
-        JPushInterface.setAliasAndTags(AppUtils.appContext, "${user.id}", null, null)
+        set.add("${user.id}")
+//        JPushInterface.setAliasAndTags(AppUtils.appContext, "${user.id}", null, null)
 
 
         JPushInterface.setTags(AppUtils.appContext, set) { i: Int, s: String?, set1: Set<String?>? ->
             if (i == 0) {
+                LogUtils.d(TAG, "设置成功")
             } else {
             }
         }
@@ -129,13 +133,18 @@ class LoginManager {
             }
 
 
-            var  rongToken = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_RONGTOKEN)
+            var rongToken = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_RONGTOKEN)
             rongToken?.let {
                 (loginState as LoginInState).initRongToken(rongToken)
                 (loginState as LoginInState).initRongYun()
 
             }
 
+            val userId = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_ID)
+            userId?.let {
+                (loginState as LoginInState).bindJpush(userId)
+
+            }
 
 
         } else {
@@ -181,11 +190,22 @@ class LoginManager {
         return token
     }
 
+   public fun userId(): String {
 
-    fun rongYunToken(context: Context){
+        if (loginState is
+                        LoginInState) {
+
+            return (loginState as LoginInState).getUserId().toString()
+
+        }
+        return ""
+
+    }
+
+    fun rongYunToken(context: Context) {
 
 
-        var token :String? = null
+        var token: String? = null
 
         if (loginState is LoginInState) {
 
@@ -201,7 +221,7 @@ class LoginManager {
 
         var userInfo = UserInfo(userId, nickname, parse(Constants.BASE_URL + headImg))
         RongIM.getInstance().refreshUserInfoCache(userInfo);
-        
+
     }
 //    fun updateUserInfo(token: String, userinfoJson: String) {
 //

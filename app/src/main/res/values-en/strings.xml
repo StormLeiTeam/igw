@@ -171,6 +171,7 @@
     <string name="take_photo">Taking pictures</string>
     <string name="data_sure">Sure</string>
     <string name="register_now">Register now</string>
+    <string name="no_add_self">不能添加自己</string>
 
 
 </resources>

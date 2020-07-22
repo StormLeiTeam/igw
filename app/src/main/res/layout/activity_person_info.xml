@@ -240,7 +240,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_send_msg"
-                    android:text="@string/del_friend"
+                    android:text="@string/send_message"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_14" />
 

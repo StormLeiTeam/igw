@@ -735,8 +735,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
         mUserInfo?.let {
-
-
+//
+//           if (LocaleUtils.isLocaleEn(this)) tv_select_nationality.text = it.
+//            tv_select_nationality.setText()
             et_explain.setText(it.lastName)
             et_lastname_explain.setText(it.firstName)
             tv_select_ymd.text = it.birthday
