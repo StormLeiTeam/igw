@@ -172,6 +172,7 @@
     <string name="data_sure">Sure</string>
     <string name="register_now">Register now</string>
     <string name="no_add_self">不能添加自己</string>
+    <string name="toast_no_login">未登陆, 请先登陆</string>
 
 
 </resources>

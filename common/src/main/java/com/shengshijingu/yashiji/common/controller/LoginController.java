@@ -248,7 +248,7 @@ public class LoginController extends Controller {
     public void uploadImage(File file,Observer observer){
 
 
-        ApiSubscribe(NetApi.getApiService().upLoadImage(getAuthBody(file,"headImage")),observer);
+        ApiSubscribe(NetApi.getApiService().upLoadImage(getAuthBody(file,"headImage.jpg")),observer);
     }
 //    private fun getAuthBody(file: File, fileName: String): MultipartBody.Part {
 //

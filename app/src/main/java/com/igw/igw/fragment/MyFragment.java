@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
 import com.igw.igw.bean.FriendBean;
@@ -28,6 +29,7 @@ import com.igw.igw.utils.GsonUtils;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.widget.storm.StormCircleImageView;
 import com.shengshijingu.yashiji.common.Constants;
+import com.shengshijingu.yashiji.common.util.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -96,7 +98,6 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         onFirstLoadSuccess();
 
 //        tv_update_pwd = mBaseView.findViewById(R.id.tv_update_pwd);
-
 
 
     }
@@ -168,6 +169,10 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
             tvMoneyRmb.setText("$0.0");
             tvMoneyDollar.setText("¥0.0");
 
+            tv_my_friend.setText(mContext.getResources().getString(R.string.my_friend));
+
+            GlideUtils.INSTANCE.loadImage(mContext, R.drawable.normal_headimage, iv_head_view);
+
         }
 
 
@@ -179,9 +184,9 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
         tv_change_lanuage.setOnClickListener(v -> {
 
-            LogUtils.d(TAG,"用户点击事件  --切换语言 ");
+            LogUtils.d(TAG, "用户点击事件  --切换语言 ");
 
-            ((MainActivity)mContext).changeLanuage(R.id.ll_main_my);
+            ((MainActivity) mContext).changeLanuage(R.id.ll_main_my);
 //            .changeLanuage(R.id.ll_main_my);
         });
 
@@ -189,7 +194,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
             boolean login = LoginManager.Companion.getInstance().isLogin();
 
-            if(!login) {
+            if (!login) {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);
             }
@@ -198,7 +203,20 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_my_friend.setOnClickListener(v -> {
 
 
+            if (!LoginManager.Companion.getInstance().isLogin()) {
+
+                ToastUtil.showCenterToast(mContext, mContext.getResources().getString(R.string.toast_no_login));
+                return;
+            }
+
             MyFriendActivity.Companion.startSelf((MainActivity) mContext);
+
+//            if (LoginManager.Companion.getInstance().isLogin()) {
+//                MyFriendActivity.Companion.startSelf((MainActivity) mContext);
+//            }else{
+//                Intent intent = new Intent(mContext, LoginActivity.class);
+//                mContext.startActivity(intent);
+//            }
 
 
         });
@@ -230,6 +248,13 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
             @Override
             public void onClick(View v) {
 
+
+                if (!LoginManager.Companion.getInstance().isLogin()) {
+
+                    ToastUtil.showCenterToast(mContext, mContext.getResources().getString(R.string.toast_no_login));
+                    return;
+                }
+
                 if (mData != null) {
                     String userInfo = GsonUtils.getInstance().toJson(mData);
 //                    UpdateUserInfoActivity.Companion.startSelfforResult(, userInfo);
@@ -247,6 +272,12 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         tv_update_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!LoginManager.Companion.getInstance().isLogin()) {
+
+                    ToastUtil.showCenterToast(mContext, mContext.getResources().getString(R.string.toast_no_login));
+                    return;
+                }
 
                 UpdateActivity.Companion.startSelf((MainActivity) mContext);
 
@@ -324,7 +355,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
         LogUtils.d(TAG, "获取的图片地址 " + mData.getHeadImage());
 
-        GlideUtils.INSTANCE.loadImage(this.mContext, Constants.BASE_URL + mData.getHeadImage(), iv_head_view);
+        GlideUtils.INSTANCE.loadImageNormal(this.mContext, Constants.BASE_URL + mData.getHeadImage(), R.drawable.normal_headimage, iv_head_view);
 
     }
 
@@ -375,7 +406,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     @Override
     public void onSuccessFriends(@NotNull FriendBean.DataBean data) {
 
-        tv_my_friend.setText( mContext.getResources().getString(R.string.my_friend) + "(" + data.getFriends().size() + ")");
+        tv_my_friend.setText(mContext.getResources().getString(R.string.my_friend) + "(" + data.getFriends().size() + ")");
 
 
     }
