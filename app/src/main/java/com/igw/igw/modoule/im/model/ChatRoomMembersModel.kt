@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.im.model
 
 import com.igw.igw.bean.chat.AddFriendBean
+import com.igw.igw.bean.chat.BannedBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatRoomMembersContract
@@ -50,6 +51,13 @@ class ChatRoomMembersModel : ChatRoomMembersContract.Model {
 
 
         ControllerUtils.getImController().addFriend(friendUserId, observer)
+
+    }
+
+    override fun banned(chatRoomId: String, userId: String, blockType: Int, observer: NetObserver<BannedBean.DataBean>) {
+
+
+        ControllerUtils.getImController().banned(chatRoomId, userId, blockType, observer)
 
     }
 }

@@ -36,10 +36,10 @@ class RegisterPresenter(model: RegisterContract.Model)
     /**
      * 获取 国籍信息
      */
-    fun getNationalityData(){
+    fun getNationalityData(language: Int){
 
 
-        mModel.getNationalityData(object: NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java){
+        mModel.getNationalityData(language, object: NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java){
             override fun onSuccess(m: NationalityBean.DataBean) {
 
 //                val toString = m?.countrys.toString()
@@ -77,9 +77,9 @@ class RegisterPresenter(model: RegisterContract.Model)
     /**
      * 根据国籍id 获取城市列表
      */
-    fun getCityListData(countryId : Int){
+    fun getCityListData(countryId : Int,language: Int){
 
-        mModel.getCityData(countryId, object: NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java){
+        mModel.getCityData(countryId,language, object: NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java){
             override fun onSuccess(m: CityListBean.DataBean) {
 
 

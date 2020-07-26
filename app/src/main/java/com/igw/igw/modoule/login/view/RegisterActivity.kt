@@ -144,7 +144,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     private var mPassword: String = ""  // 密码 必填
     private var mInviteCode: String = "" // 邀请码
     private var mHeadImage: File? = null
-
+    private var language: Int = 1  // 默认问中文  1 中文  2英文
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,6 +177,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         status_bar_main.setConfirmTextSize(15F)
 
 //        getSystemNationality()
+
+        language = if (LocaleUtils.isLocaleEn(this)) 2 else 1
         setUpImagePicker()
 
         setUpPop()
@@ -318,7 +320,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
                 changeLocale()
 
 
-
             }
 
 
@@ -336,7 +337,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
                 mPresenter.uploadImaga(mHeadImage!!)
 
-            }else{
+            } else {
 
                 registerSubmitForNet()
             }
@@ -445,7 +446,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
             }
 
             mCitys = null
-            mPresenter.getCityListData(mNationality!!.id)
+            mPresenter.getCityListData(mNationality!!.id,language)
             isCityClick = false
 
 
@@ -485,7 +486,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
                 } else {
 
-                    mPresenter.getCityListData(mNationality!!.id)
+                    mPresenter.getCityListData(mNationality!!.id, language)
+
                     isCityClick = true
                 }
 
@@ -534,7 +536,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
      * 提交注册
      */
     private fun registerSubmitForNet() {
-
 
 
         if (mNationality == null) {
@@ -851,7 +852,8 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
      */
     private fun requestData() {
 
-        mPresenter.getNationalityData()
+
+        mPresenter.getNationalityData(language)
 
     }
 
@@ -910,11 +912,11 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         tv_user_agreement.movementMethod = LinkMovementMethod.getInstance()
 
         if (isEn) {
-            spannable =  SpannableStringBuilder(contentEn)
+            spannable = SpannableStringBuilder(contentEn)
             spannable.setSpan(TextClickPrivacy(this), 7, contentEn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         } else {
-            spannable =  SpannableStringBuilder(contentCn)
+            spannable = SpannableStringBuilder(contentCn)
 
             spannable.setSpan(TextClickPrivacy(this), 3, contentCn.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
@@ -938,12 +940,12 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     }
 
 
-    private var  mImagePath: String =  ""
+    private var mImagePath: String = ""
 
     override fun loadHeadImageSuccessful(data: HeadImageBean.DataBean) {
         this.mImagePath = data.attachmentUrl
 
-        GlideUtils.loadImage(this, Constants.BASE_URL + mImagePath,iv_head_img)
+        GlideUtils.loadImage(this, Constants.BASE_URL + mImagePath, iv_head_img)
         registerSubmitForNet()
 
 
@@ -952,7 +954,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
     override fun loadHeadImageFail(code: Int, msg: String) {
 
 
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
     }
 
 
@@ -1113,8 +1115,6 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
         return type
 
     }
-
-
 
 
 }

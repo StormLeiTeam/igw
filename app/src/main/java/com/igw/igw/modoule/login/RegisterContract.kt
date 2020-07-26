@@ -24,9 +24,9 @@ interface RegisterContract {
     interface Model : IBaseModel {
 
         //获取国籍
-        fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>)
+        fun getNationalityData(language: Int,observer: NetObserver<NationalityBean.DataBean>)
 
-        fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>)
+        fun getCityData(countryId: Int, language: Int,observer: NetObserver<CityListBean.DataBean>)
 
         fun registerUser(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
 

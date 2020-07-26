@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.im
 
 import com.igw.igw.bean.chat.AddFriendBean
+import com.igw.igw.bean.chat.BannedBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.mvp.model.IBaseModel
@@ -45,6 +46,9 @@ class ChatRoomMembersContract {
         fun addFriendFail(code: Int, msg: String)
 
 
+        fun bannedSuccess(data: BannedBean.DataBean)
+        fun bannedFail (code: Int, msg: String)
+
     }
 
 
@@ -55,6 +59,8 @@ class ChatRoomMembersContract {
         fun userInfo(observer: NetObserver<UserInfoBean.DataBean>)
 
         fun addFriend(friendUserId: Int, observer: NetObserver<AddFriendBean.DataBean>)
+
+        fun banned(chatRoomId: String, userId: String,blockType: Int, observer: NetObserver<BannedBean.DataBean>)
 
 
     }
@@ -73,6 +79,8 @@ class ChatRoomMembersContract {
 
         fun addFriend(friendUserId: Int)
 
+
+        fun banned(chatroomId: String, userId: String, blockType: Int )
 
     }
 

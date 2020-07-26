@@ -171,4 +171,6 @@
     <string name="register_now">立即注册</string>
     <string name="no_add_self">不能添加自己</string>
     <string name="toast_no_login">未登陆, 请先登陆</string>
+    <string name="operation_successful">操作成功</string>
+    <string name="chatroomusers_myself">当前为本人</string>
 </resources>

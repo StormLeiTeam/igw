@@ -118,6 +118,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     private var mInviteCode: String = "" // 邀请码
     private var mHeadImage: File? = null
 
+    private var language : Int = 1;  /// 1 中文 2 英文
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getTakePhoto().onCreate(savedInstanceState)
@@ -144,6 +146,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         status_bar_main.setConfirmTextSize(15F)
 
 
+        language = if (LocaleUtils.isLocaleEn(this)) 2 else 1
 
 //        getSystemNationality()
         setUpPopWindow()
@@ -374,7 +377,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
             }
 
             mCitys = null
-            mPresenter.getCityData(mNationality!!.id, false)
+            mPresenter.getCityData(mNationality!!.id, language, false)
             isCityClick = false
 
 
@@ -415,7 +418,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
                 } else {
 
-                    mPresenter.getCityData(mNationality!!.id, false)
+                    mPresenter.getCityData(mNationality!!.id, language,  false)
                     isCityClick = true
                 }
 
@@ -691,7 +694,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     private fun getCountryForNet() {
 
-        mPresenter.getNationalityData()
+        mPresenter.getNationalityData(language)
     }
 
     private fun getLocalUserinfo() {
@@ -702,7 +705,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
         mUserInfo?.let {
-            mPresenter.getCityData(it.countryId, true)
+            mPresenter.getCityData(it.countryId, language , true)
 
         }
 

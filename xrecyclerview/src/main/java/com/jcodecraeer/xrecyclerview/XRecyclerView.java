@@ -528,7 +528,7 @@ public class XRecyclerView extends RecyclerView {
             return adapter.onCreateViewHolder(parent, viewType);
         }
 
-        @Override
+            @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (isHeader(position)) {
                 return;

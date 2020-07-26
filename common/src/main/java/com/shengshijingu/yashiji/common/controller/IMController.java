@@ -80,6 +80,7 @@ public class IMController extends Controller {
 
     /**
      * 好友备注
+     *
      * @param noteName
      * @param userId
      * @param observer
@@ -90,13 +91,14 @@ public class IMController extends Controller {
         params.put("noteName", noteName);
         params.put("userId", userId);
 
-        ApiSubscribe(NetApi.getApiService().noteUser(getRequestBody(params)),observer);
+        ApiSubscribe(NetApi.getApiService().noteUser(getRequestBody(params)), observer);
 
     }
 
 
     /**
      * 删除好友
+     *
      * @param friendUserId
      * @param observer
      */
@@ -111,10 +113,11 @@ public class IMController extends Controller {
 
     /**
      * 添加好友
+     *
      * @param friendUserId
      * @param observer
      */
-    public void addFriend(int friendUserId, Observer observer){
+    public void addFriend(int friendUserId, Observer observer) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("friendUserId", friendUserId);
@@ -123,4 +126,20 @@ public class IMController extends Controller {
     }
 
 
+    /**
+     * 禁言
+     * @param chatRoomId
+     * @param bannedUserId
+     * @param observer
+     */
+    public void banned(String chatRoomId, String bannedUserId,int blockType, Observer observer) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("chatroomId", chatRoomId);
+        params.put("userId", bannedUserId);
+        params.put("blockType", blockType);
+
+        ApiSubscribe(NetApi.getApiService().banned(getRequestBody(params)), observer);
+
+
+    }
 }

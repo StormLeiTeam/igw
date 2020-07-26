@@ -171,8 +171,10 @@
     <string name="take_photo">Taking pictures</string>
     <string name="data_sure">Sure</string>
     <string name="register_now">Register now</string>
-    <string name="no_add_self">不能添加自己</string>
-    <string name="toast_no_login">未登陆, 请先登陆</string>
+    <string name="no_add_self">You can not add yourself</string>
+    <string name="toast_no_login">Before landing, please login first</string>
+    <string name="operation_successful">Operation is successful</string>
+    <string name="chatroomusers_myself">For me at present</string>
 
 
 </resources>

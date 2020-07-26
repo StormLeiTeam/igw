@@ -94,7 +94,7 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
     private fun setUpListener() {
 
 
-        ll_outside.setOnClickListener{
+        ll_outside.setOnClickListener {
             et_search.text?.clear()
             et_search.clearFocus()
 
@@ -175,7 +175,6 @@ class MyFriendActivity : BaseActivity<MyFriendPresenter>(), MyFriendContract.Vie
             val position = mAdapter.getPositonForSection(it[0])
 
             if (position != -1) {
-
 
                 mManager.scrollToPositionWithOffset(position, 0)
             }

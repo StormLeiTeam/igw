@@ -344,6 +344,16 @@ public interface ApiService {
     @POST("/api/message/readAll")
     Observable<ResponseBody> readAll(@Body RequestBody requestBody);
 
+
+    /**
+     * 禁言处理
+     * @param requestBody
+     * @return
+     */
+    @POST("/api/rongyun/updateUserBlock")
+    Observable<ResponseBody> banned(@Body RequestBody requestBody);
+
+
 }
 
 

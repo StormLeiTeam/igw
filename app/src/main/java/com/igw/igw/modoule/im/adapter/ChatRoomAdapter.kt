@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.igw.igw.R
 import com.igw.igw.app.BaseAdapter
 import com.igw.igw.bean.chat.ChatRoomUsesBean
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.GlideUtils
 import com.igw.igw.utils.GlideUtils.loadImage
 import com.igw.igw.utils.LocaleUtils
@@ -34,6 +35,8 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
 
     var userType: Int = 2;
 
+    var userId: String = LoginManager.instance.userId()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvViewHolder {
 
@@ -51,10 +54,10 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
 
     private fun getItemLayoutId(): Int {
 
-        if (userType == 1) { // 当前用户不是管理员
-            return R.layout.item_chat_room_users
-        } else { // 当前用户是管理员
+        if (userType == 1) {// 当前用户是管理员
             return R.layout.item_chat_room_administrator
+        } else { // 当前用户是管理员
+            return R.layout.item_chat_room_users
         }
     }
 
@@ -76,10 +79,97 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
     private fun bindData(holder: RvViewHolder, position: Int) {
 
 
-        when (userType) {
+        var chatRoomId: String = mDatas?.get(position)?.userId.toString()
+
+
+        when (userType) { // 1 管理员
 
 
             1 -> {
+
+                // 当前用户是管理员
+
+                var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
+                var tv_name = holder.getView<TextView>(R.id.tv_name)
+                var tv_banned = holder.getView<Button>(R.id.btn_banned)
+                var tv_unBanned = holder.getView<Button>(R.id.btn_unbanned)
+                var add_friend = holder.getView<Button>(R.id.btn_add_friend)
+
+
+
+//
+//                if (userId == chatRoomId) {
+//                    tv_banned.visibility = View.GONE
+//                    tv_unBanned.visibility = View.GONE
+//
+//                    add_friend.visibility = View.GONE
+//                }
+
+
+                loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
+                tv_name.text = mDatas!![position].nickName
+
+
+                if (mDatas!![position].isFriend == 1) {
+
+                    add_friend.visibility = View.GONE
+
+                } else {
+                    add_friend.visibility = View.VISIBLE
+
+                }
+
+
+                if (userId == chatRoomId) {
+                    tv_banned.visibility = View.GONE
+                    tv_unBanned.visibility = View.GONE
+
+                    add_friend.visibility = View.GONE
+                }else{
+
+                    if (mDatas!![position].isBlock == 1) {
+                        // 禁言状态
+                        tv_banned.visibility = View.GONE
+                        tv_unBanned.visibility = View.VISIBLE
+                    } else {
+                        tv_banned.visibility = View.VISIBLE
+                        tv_unBanned.visibility = View.GONE
+                    }
+
+                }
+
+
+
+
+
+
+                tv_banned.setOnClickListener {
+
+                    mListener?.onBanned(mDatas!![position], position)
+
+                }
+
+                tv_unBanned.setOnClickListener {
+                    mListener?.onUnbanned(mDatas!![position], position)
+
+                }
+
+                add_friend.setOnClickListener {
+
+                    mListener?.onAddFriend(mDatas!![position], position)
+
+                }
+
+                holder.itemView.setOnClickListener {
+
+                    mListener?.onItemClick(mDatas!![position], position)
+
+                }
+
+
+            }
+
+            else -> {
 
                 // 非管理员
                 var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
@@ -88,16 +178,25 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
                 var add_friend = holder.getView<Button>(R.id.btn_add_friend)
 
 
+
                 loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
 
                 tv_name.text = mDatas!![position].nickName
 
-                if (mDatas!![position].isFriend == 1) {
 
+
+
+                if (userId == chatRoomId) {
                     add_friend.visibility = View.GONE
+                }else{
+                    if (mDatas!![position].isFriend == 1) {
 
-                } else {
-                    add_friend.visibility = View.VISIBLE
+                        add_friend.visibility = View.GONE
+
+                    } else {
+                        add_friend.visibility = View.VISIBLE
+
+                    }
 
                 }
 
@@ -120,83 +219,6 @@ class ChatRoomAdapter(context: Context, isOpenLoadMore: Boolean)
                 }
 
                 holder.itemView.setOnClickListener {
-                    mListener?.onItemClick(mDatas!![position], position)
-
-                }
-
-
-            }
-
-
-            else -> {
-
-                // 当前用户不是管理员
-
-                var headImage = holder.getView<StormCircleImageView>(R.id.iv_head_img)
-                var tv_name = holder.getView<TextView>(R.id.tv_name)
-                var tv_banned = holder.getView<Button>(R.id.btn_banned)
-                var tv_unBanned = holder.getView<Button>(R.id.btn_unbanned)
-                var add_friend = holder.getView<Button>(R.id.btn_add_friend)
-
-
-
-                loadImage(mContext, Constants.BASE_URL + mDatas!![position].headImage, headImage)
-                tv_name.text = mDatas!![position].nickName
-
-
-                if (mDatas!![position].isFriend == 1) {
-
-                    add_friend.visibility = View.GONE
-
-                } else {
-                    add_friend.visibility = View.VISIBLE
-
-                }
-
-
-                if (mDatas!![position].isBlock == 0) {
-                    // 未被禁言
-
-                    tv_banned.visibility = View.VISIBLE
-                    tv_unBanned.visibility = View.GONE
-                } else {
-                    tv_banned.visibility = View.GONE
-                    tv_unBanned.visibility = View.VISIBLE
-                }
-
-
-//
-//                if (LocaleUtils.isLocaleEn(mContext)) {
-//
-//                    // en
-//
-//                } else {
-//
-//                    //cn
-//
-//
-//
-//                }
-
-                tv_banned.setOnClickListener {
-
-                    mListener?.onBanned(mDatas!![position], position)
-
-                }
-
-                tv_unBanned.setOnClickListener {
-                    mListener?.onUnbanned(mDatas!![position], position)
-
-                }
-
-                add_friend.setOnClickListener {
-
-                    mListener?.onAddFriend(mDatas!![position], position)
-
-                }
-
-                holder.itemView.setOnClickListener {
-
                     mListener?.onItemClick(mDatas!![position], position)
 
                 }

@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.chat.AddFriendBean
+import com.igw.igw.bean.chat.BannedBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatRoomMembersContract
@@ -163,6 +164,15 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
             override fun onItemClick(bean: ChatRoomUsesBean.DataBean.RoomUsersBean, position: Int) {
                 // 跳转到 信息
 
+                val userId = LoginManager.instance.userId()
+
+                if (userId.isNotEmpty() && userId == "${bean.userId}") {
+
+                    ToastUtil.showCenterToast(this@ChatRoomMembersActivity, resources.getString(R.string.chatroomusers_myself))
+                    return;
+                }
+
+
                 PersonInfoActivity.startSelf(this@ChatRoomMembersActivity, GsonUtils.instance.toJson(bean))
 
 
@@ -182,9 +192,16 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
             }
 
             override fun onBanned(bean: ChatRoomUsesBean.DataBean.RoomUsersBean, position: Int) {
+
+
+                mPresenter.banned(targetId, "${bean.userId}", 1)
+
             }
 
             override fun onUnbanned(bean: ChatRoomUsesBean.DataBean.RoomUsersBean, position: Int) {
+
+                mPresenter.banned(targetId, "${bean.userId}", 0)
+
             }
         })
 
@@ -271,6 +288,20 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
     override fun addFriendFail(code: Int, msg: String) {
         ToastUtil.showCenterToast(this, msg)
 
+    }
+
+    override fun bannedSuccess(data: BannedBean.DataBean) {
+
+        ToastUtil.showCenterToast(this,R.string.operation_successful)
+
+        getMembersForNet("")
+
+
+    }
+
+    override fun bannedFail(code: Int, msg: String) {
+
+        ToastUtil.showCenterToast(this,msg)
     }
 
     override fun fail(o: Any?) {

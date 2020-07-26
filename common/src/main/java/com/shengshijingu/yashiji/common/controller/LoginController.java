@@ -37,10 +37,10 @@ public class LoginController extends Controller {
     /**
      * 获取国家信息
      */
-    public void getNationality(Observer observer) {
+    public void getNationality(int language, Observer observer) {
 
         Map<String, Object> params = new HashMap<>();
-        params.put("", "");
+        params.put("language", language);
 
 
         ApiSubscribe(NetApi.getApiService().getNationality(getRequestBody(params)), observer);
@@ -54,11 +54,13 @@ public class LoginController extends Controller {
      * @param countryId 国籍id
      * @param observer
      */
-    public void getCityListData(int countryId, Observer observer) {
+    public void getCityListData(int countryId, int language, Observer observer) {
 
         Map<String, Object> params = new HashMap<>();
 
         params.put("countryId", countryId);
+        params.put("language", countryId);
+
 
         ApiSubscribe(NetApi.getApiService().getCityListData(getRequestBody(params)), observer);
     }
@@ -245,10 +247,10 @@ public class LoginController extends Controller {
     }
 
 
-    public void uploadImage(File file,Observer observer){
+    public void uploadImage(File file, Observer observer) {
 
 
-        ApiSubscribe(NetApi.getApiService().upLoadImage(getAuthBody(file,"headImage.jpg")),observer);
+        ApiSubscribe(NetApi.getApiService().upLoadImage(getAuthBody(file, "headImage.jpg")), observer);
     }
 //    private fun getAuthBody(file: File, fileName: String): MultipartBody.Part {
 //
@@ -260,11 +262,11 @@ public class LoginController extends Controller {
 //
 //    }
 
-    public MultipartBody.Part  getAuthBody(File file, String fileName){
+    public MultipartBody.Part getAuthBody(File file, String fileName) {
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multiparform-data"), file);
 
-        return MultipartBody.Part.createFormData("file",fileName,requestBody);
+        return MultipartBody.Part.createFormData("file", fileName, requestBody);
     }
 
 }

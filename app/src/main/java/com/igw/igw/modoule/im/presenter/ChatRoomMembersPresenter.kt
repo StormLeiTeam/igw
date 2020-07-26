@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.im.presenter
 
 import com.igw.igw.bean.chat.AddFriendBean
+import com.igw.igw.bean.chat.BannedBean
 import com.igw.igw.bean.chat.ChatRoomUsesBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.modoule.im.ChatRoomMembersContract
@@ -99,6 +100,31 @@ class ChatRoomMembersPresenter(model: ChatRoomMembersContract.Model)
             override fun onFail(code: Int, msg: String?) {
 
                 mRootView.addFriendFail(code, msg ?: "")
+
+            }
+
+            override fun onError(msg: String?) {
+            }
+
+
+        })
+    }
+
+    /**
+     *
+     *
+     */
+    override fun banned(chatroomId: String, userId: String, blockType: Int) {
+
+
+        mModel.banned(chatroomId, userId, blockType, object : NetObserver<BannedBean.DataBean>(BannedBean.DataBean::class.java) {
+            override fun onSuccess(m: BannedBean.DataBean) {
+
+
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+
 
             }
 

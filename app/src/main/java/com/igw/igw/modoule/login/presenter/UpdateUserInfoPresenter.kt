@@ -31,10 +31,10 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
     }
 
 
-    override fun getNationalityData() {
+    override fun getNationalityData(language: Int) {
 
 
-        mModel.getNationalityData(object : NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java) {
+        mModel.getNationalityData(language, object : NetObserver<NationalityBean.DataBean>(NationalityBean.DataBean::class.java) {
             override fun onSuccess(m: NationalityBean.DataBean) {
 
 //                val toString = m?.countrys.toString()
@@ -70,10 +70,10 @@ class UpdateUserInfoPresenter(model: UpdateInfoContract.Model) :
         })
     }
 
-    override fun getCityData(countryId: Int, isLocal: Boolean) {
+    override fun getCityData(countryId: Int,language: Int, isLocal: Boolean) {
 
 
-        mModel.getCityData(countryId, object : NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java) {
+        mModel.getCityData(countryId, language, object : NetObserver<CityListBean.DataBean>(CityListBean.DataBean::class.java) {
             override fun onSuccess(m: CityListBean.DataBean) {
 
 

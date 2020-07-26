@@ -18,16 +18,15 @@ import java.io.File
 class UpdateUserInfoModel : UpdateInfoContract.Model {
 
 
-
-    override fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>) {
-        ControllerUtils.getLoginControllerInstance().getNationality(observer)
+    override fun getNationalityData(language: Int, observer: NetObserver<NationalityBean.DataBean>) {
+        ControllerUtils.getLoginControllerInstance().getNationality(language, observer)
 
 
     }
 
-    override fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>) {
+    override fun getCityData(countryId: Int, language: Int, observer: NetObserver<CityListBean.DataBean>) {
 
-        ControllerUtils.getLoginControllerInstance().getCityListData(countryId, observer)
+        ControllerUtils.getLoginControllerInstance().getCityListData(countryId, language, observer)
 
 
     }
@@ -35,12 +34,10 @@ class UpdateUserInfoModel : UpdateInfoContract.Model {
     override fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<UserInfoBean.DataBean>) {
 
 
-
-
         ControllerUtils.getLoginControllerInstance()
-                .updateUserInfo(registerBean.countryId!!,registerBean.cityId!!,registerBean.lastName,registerBean.firstName,
-                        registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.userDesc,
-                        registerBean.email,registerBean.mobilePhone,registerBean.password, registerBean.inviteCode,registerBean.headImage,observer)
+                .updateUserInfo(registerBean.countryId!!, registerBean.cityId!!, registerBean.lastName, registerBean.firstName,
+                        registerBean.sex!!, registerBean.birthday, registerBean.nickname, registerBean.agencyName, registerBean.userDesc,
+                        registerBean.email, registerBean.mobilePhone, registerBean.password, registerBean.inviteCode, registerBean.headImage, observer)
 
 
     }
@@ -48,12 +45,10 @@ class UpdateUserInfoModel : UpdateInfoContract.Model {
     override fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>) {
 
         ControllerUtils.getLoginControllerInstance()
-                .uploadImage(file,observer)
-
+                .uploadImage(file, observer)
 
 
     }
-
 
 
 }

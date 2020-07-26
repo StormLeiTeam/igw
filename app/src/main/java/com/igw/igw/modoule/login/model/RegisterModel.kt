@@ -39,9 +39,9 @@ class RegisterModel : RegisterContract.Model {
     /**
      * 获取国籍
      */
-    override fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>) {
+    override fun getNationalityData(language: Int, observer: NetObserver<NationalityBean.DataBean>) {
 
-        ControllerUtils.getLoginControllerInstance().getNationality(observer)
+        ControllerUtils.getLoginControllerInstance().getNationality(language, observer)
 
 
 //
@@ -77,9 +77,9 @@ class RegisterModel : RegisterContract.Model {
 
     }
 
-    override fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>) {
+    override fun getCityData(countryId: Int, language: Int,observer: NetObserver<CityListBean.DataBean>) {
 
-        ControllerUtils.getLoginControllerInstance().getCityListData(countryId, observer)
+        ControllerUtils.getLoginControllerInstance().getCityListData(countryId, language, observer)
 
     }
 
@@ -87,9 +87,9 @@ class RegisterModel : RegisterContract.Model {
 
 
         ControllerUtils.getLoginControllerInstance()
-                .registerUser(registerBean.countryId!!,registerBean.cityId!!,registerBean.lastName,registerBean.firstName,
-                registerBean.sex!!, registerBean.birthday,registerBean.nickname,registerBean.agencyName,registerBean.userDesc,
-                registerBean.email,registerBean.mobilePhone,registerBean.password, registerBean.inviteCode,registerBean.headImage,observer)
+                .registerUser(registerBean.countryId!!, registerBean.cityId!!, registerBean.lastName, registerBean.firstName,
+                        registerBean.sex!!, registerBean.birthday, registerBean.nickname, registerBean.agencyName, registerBean.userDesc,
+                        registerBean.email, registerBean.mobilePhone, registerBean.password, registerBean.inviteCode, registerBean.headImage, observer)
 
 
     }
@@ -98,8 +98,7 @@ class RegisterModel : RegisterContract.Model {
 
 
         ControllerUtils.getLoginControllerInstance()
-                .uploadImage(file,observer)
-
+                .uploadImage(file, observer)
 
 
     }
@@ -119,9 +118,6 @@ class RegisterModel : RegisterContract.Model {
 
 
     }
-
-
-
 
 
 }

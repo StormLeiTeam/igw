@@ -40,9 +40,9 @@ class UpdateInfoContract {
     }
 
     interface Model : IBaseModel {
-        fun getNationalityData(observer: NetObserver<NationalityBean.DataBean>)
+        fun getNationalityData(language: Int,observer: NetObserver<NationalityBean.DataBean>)
 
-        fun getCityData(countryId: Int, observer: NetObserver<CityListBean.DataBean>)
+        fun getCityData(countryId: Int,language: Int, observer: NetObserver<CityListBean.DataBean>)
 
         fun updateUserInfo(registerBean: RegisterBean, observer: NetObserver<UserInfoBean.DataBean>)
 
@@ -53,9 +53,9 @@ class UpdateInfoContract {
     interface Presenter : IBasePresenter {
 
 
-        fun getNationalityData()
+        fun getNationalityData(language: Int)
 
-        fun getCityData(countryId: Int,isLocal: Boolean)
+        fun getCityData(countryId: Int,language: Int,isLocal: Boolean)
 
         fun updateUserInfo(registerBean: RegisterBean)
 
