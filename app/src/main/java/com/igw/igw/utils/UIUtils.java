@@ -9,6 +9,8 @@ import android.view.ViewConfiguration;
 
 import java.lang.reflect.Method;
 
+import io.rong.imageloader.utils.L;
+
 /**
  * @author storm_z
  * @date @{DATE}
