@@ -24,13 +24,14 @@ public class UIUtils {
 
     /**
      * 获取顶部状态栏高度
+     *
      * @return
      */
     public static int getStatusBarHeight(Context context) {
 
-        int result = 0 ;
+        int result = 0;
 
-        int resourceId  =context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
 
             result = context.getResources().getDimensionPixelSize(resourceId);
@@ -43,6 +44,7 @@ public class UIUtils {
 
     /**
      * 底部导航栏高度
+     *
      * @param context
      * @return
      */
@@ -181,7 +183,6 @@ public class UIUtils {
     }
 
     /**
-     *
      * @param color
      * @param v
      * @return

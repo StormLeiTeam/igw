@@ -117,7 +117,7 @@ class FriendInfoActivity : BaseActivity<FriendInfoPresenter>(), FriendInfoContra
 
 
         GlideUtils.loadImage(this,
-                friendBean.friendHeadImage, iv_head_image)
+                Constants.BASE_URL + friendBean.friendHeadImage, iv_head_image)
         tv_person_name.text = friendBean.friendNickName
 
 
@@ -146,8 +146,8 @@ class FriendInfoActivity : BaseActivity<FriendInfoPresenter>(), FriendInfoContra
 
             tv_city.text = friendBean.friendCityCnName
         }
-
-
+        tv_organization_or_school.text = friendBean.friendAgencyName
+        tv_individual_resume.text = friendBean.friendUserDesc
 
         btn_del_friend.visibility = View.VISIBLE
         btn_send_msg.visibility = View.VISIBLE

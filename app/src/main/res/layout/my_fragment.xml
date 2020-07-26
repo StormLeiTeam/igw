@@ -124,7 +124,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginTop="@dimen/dp_5"
                                     android:gravity="center"
-                                    android:text="¥99.99"
+                                    android:text="¥ ~"
                                     android:textColor="@color/color333"
                                     android:textSize="@dimen/dp_24"
                                     android:textStyle="bold" />
@@ -164,7 +164,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginTop="@dimen/dp_5"
                                     android:gravity="center"
-                                    android:text="$99.99"
+                                    android:text="$ ~"
                                     android:textColor="@color/color333"
                                     android:textSize="@dimen/dp_24"
                                     android:textStyle="bold" />
