@@ -93,7 +93,7 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
             iv_sex.setBackgroundResource(R.drawable.man)
 
         } else {
-            iv_sex.setBackgroundResource(R.drawable.man)
+            iv_sex.setBackgroundResource(R.drawable.girl)
 
         }
         tv_individual_resume.text = bean.userDesc

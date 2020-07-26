@@ -72,6 +72,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     private TextView tv_my_friend;
     private TextView tv_change_lanuage;
+    private ImageView iv_sex;
 
     public static MyFragment getInstance() {
         MyFragment myFragment = new MyFragment();
@@ -121,6 +122,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_my_friend = bindView(R.id.ll_my_friend);
         tv_my_friend = bindView(R.id.tv_my_friend);
         tv_change_lanuage = bindView(R.id.tv_change_lanuage);
+        iv_sex = bindView(R.id.iv_sex);
 
         initData();
 
@@ -357,6 +359,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
         GlideUtils.INSTANCE.loadImageNormal(this.mContext, Constants.BASE_URL + mData.getHeadImage(), R.drawable.normal_headimage, iv_head_view);
 
+        iv_sex.setBackgroundResource(data.getSex() == 1 ? R.drawable.man : R.drawable.girl);
     }
 
     @Override
