@@ -126,14 +126,13 @@ public class LoginController extends Controller {
      * @param userDesc
      * @param email
      * @param mobilePhone
-     * @param password
      * @param inviteCode
      * @param headImage
      * @param observer
      */
     public void updateUserInfo(int countryId, int cityId, String lastName, String firstName,
                                int sex, String birthday, String nickname, String agencyName, String userDesc,
-                               String email, String mobilePhone, String password, String inviteCode, String headImage,
+                               String email, String mobilePhone,  String inviteCode, String headImage,
                                Observer observer) {
 
 
@@ -149,7 +148,7 @@ public class LoginController extends Controller {
         params.put("userDesc", userDesc);
         params.put("email", email);
         params.put("mobilePhone", mobilePhone);
-        params.put("password", password);
+//        params.put("password", password);
         params.put("inviteCode", inviteCode);
         params.put("headImage", headImage);
 

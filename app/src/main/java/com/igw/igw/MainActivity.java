@@ -22,6 +22,7 @@ import com.igw.igw.fragment.MyFragment;
 import com.igw.igw.modoule.im.view.ChatTypeFragment;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.modoule.login.view.LoginActivity;
+import com.igw.igw.modoule.login.view.WebActivity;
 import com.igw.igw.modoule.splash.view.SplashActivity;
 import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
@@ -138,12 +139,24 @@ public class MainActivity extends BaseActivity {
         });
 
 
+
+
+
         boolean localeEn = LocaleUtils.INSTANCE.isLocaleEn(this);
 
         if (localeEn) {
             LogUtils.d(TAG, "语言状态为英文 ");
         } else {
             LogUtils.d(TAG, "语言状态为中文");
+        }
+
+
+        String splashLink = getIntent().getStringExtra("splash_link");
+
+        if (null != splashLink) {
+
+            WebActivity.Companion.startSelf(this,splashLink);
+
         }
 
         int message_friend_add = getIntent().getIntExtra("message_friend_add", 0);

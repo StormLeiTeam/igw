@@ -27,11 +27,14 @@ import com.igw.igw.modoule.login.view.UpdateUserInfoActivity;
 import com.igw.igw.utils.GlideUtils;
 import com.igw.igw.utils.GsonUtils;
 import com.igw.igw.utils.LogUtils;
+import com.igw.igw.widget.storm.CommonDialog;
 import com.igw.igw.widget.storm.StormCircleImageView;
 import com.shengshijingu.yashiji.common.Constants;
 import com.shengshijingu.yashiji.common.util.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.locks.Condition;
 
 
 /**
@@ -230,8 +233,24 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         });
         llLoginOut.setOnClickListener(v -> {
 
-            loginOut();
-            initUserInfoForView();
+
+            new CommonDialog.Builder(mContext)
+                    .setTitle(mContext.getResources().getString(R.string.title_login_out))
+                    .setContent(mContext.getResources().getString(R.string.content_login_out))
+                    .setCancel(mContext.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    })
+                    .setCommit(mContext.getResources().getString(R.string.commit_login_out), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loginOut();
+                            initUserInfoForView();
+
+                        }
+                    })
+                    .build().show();
 
 
         });

@@ -37,7 +37,7 @@ class UpdateUserInfoModel : UpdateInfoContract.Model {
         ControllerUtils.getLoginControllerInstance()
                 .updateUserInfo(registerBean.countryId!!, registerBean.cityId!!, registerBean.lastName, registerBean.firstName,
                         registerBean.sex!!, registerBean.birthday, registerBean.nickname, registerBean.agencyName, registerBean.userDesc,
-                        registerBean.email, registerBean.mobilePhone, registerBean.password, registerBean.inviteCode, registerBean.headImage, observer)
+                        registerBean.email, registerBean.mobilePhone, registerBean.inviteCode, registerBean.headImage, observer)
 
 
     }

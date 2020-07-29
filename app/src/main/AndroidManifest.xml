@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.im.view.FriendInfoActivity"></activity>
+        <activity android:name=".modoule.login.view.WebActivity"></activity>
+        <activity android:name=".modoule.im.view.FriendInfoActivity" />
         <activity android:name=".modoule.im.view.PersonInfoActivity" />
         <activity android:name=".modoule.im.view.ChatRoomMembersActivity" />
         <activity android:name=".modoule.city.view.CompanyInfoActivity" />

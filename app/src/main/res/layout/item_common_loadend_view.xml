@@ -9,7 +9,7 @@
         android:textSize="14sp"
         android:gravity="center"
         android:textColor="@color/black_FF333333"
-        android:text="@string/item_loading_end"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="49dp"/>
 </LinearLayout>

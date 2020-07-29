@@ -127,12 +127,12 @@ class CompanyInfoActivity : BaseActivity<CompanyInfoPresenter>(), CompanyInfoCon
                 tv_intro_info.text = Html.fromHtml(dataBean.enDesc,MImageGetter(tv_intro_info,this),null); }
 
 
-            for (label in dataBean.enLabelNames) {
-
-                addLabelView(label)
-
-
-            }
+//            for (label in dataBean.enLabelNames) {
+//
+//                addLabelView(label)
+//
+//
+//            }
         } else {
             tv_city.text = dataBean.cityCnName
 
@@ -145,13 +145,13 @@ class CompanyInfoActivity : BaseActivity<CompanyInfoPresenter>(), CompanyInfoCon
 
 
 
-
-            for (label in dataBean.cnLabelNames) {
-
-                addLabelView(label)
-
-
-            }
+//
+//            for (label in dataBean.cnLabelNames) {
+//
+//                addLabelView(label)
+//
+//
+//            }
         }
 
 

@@ -118,7 +118,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     private var mInviteCode: String = "" // 邀请码
     private var mHeadImage: File? = null
 
-    private var language : Int = 1;  /// 1 中文 2 英文
+    private var language: Int = 1;  /// 1 中文 2 英文
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,16 +153,14 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         initData()
         setUpImagePicker()
         // 获取国籍信息
-        getCountryForNet()
         getLocalUserinfo()
+        getCountryForNet()
+
 
         setUpListener()
     }
 
     private fun getSystemNationality() {
-
-
-
 
 
         var locale = LocaleUtils.getUserLocale(this)
@@ -260,8 +258,6 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
                     LocaleUtils.changeLocale(this@UpdateUserInfoActivity, "user_info", GsonUtils.instance.toJson(it))
 
 
-
-
                 }
             }
 
@@ -278,7 +274,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
                 mPresenter.uploadImaga(mHeadImage!!)
 
-            }else{
+            } else {
 
                 updateUserInfoForNet()
             }
@@ -418,7 +414,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
                 } else {
 
-                    mPresenter.getCityData(mNationality!!.id, language,  false)
+                    mPresenter.getCityData(mNationality!!.id, language, false)
                     isCityClick = true
                 }
 
@@ -438,7 +434,6 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
     }
-
 
 
     private fun updateUserInfoForNet() {
@@ -501,19 +496,19 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         }
 
 
-        if (et_password.text.toString().trim().isEmpty()) {
-
-            // 为空
-            return
-        }
-
-        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())) {
-
-            // 密码不一直
-            return
-        }
-
-        mPassword = et_password.text.toString().trim()
+//        if (et_password.text.toString().trim().isEmpty()) {
+//
+//            // 为空
+//            return
+//        }
+//
+//        if (et_password.text.toString().trim().isEmpty() && !(et_password.text.toString().trim()).equals(et_password_again.text.toString().trim())) {
+//
+//            // 密码不一直
+//            return
+//        }
+//
+//        mPassword = et_password.text.toString().trim()
 
 
         mInviteCode = et_inviteCode.text.toString().trim()
@@ -533,11 +528,11 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         registerBean.userDesc = mDescription
         registerBean.email = mEmail
         registerBean.mobilePhone = mMobilePhone
-        registerBean.password = mPassword
+//        registerBean.password = mPassword
         registerBean.inviteCode = mInviteCode
 
-        if (!mImagePath.isEmpty()){
-            registerBean.headImage =  mImagePath
+        if (!mImagePath.isEmpty()) {
+            registerBean.headImage = mImagePath
 
         }
 //        mHeadImage?.let {
@@ -605,7 +600,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         //endDate.set(2020,1,1);
 
         //正确设置方式 原因：注意事项有说明
-        startDate.set(startDate.get(Calendar.YEAR)- 100, 0, 1)
+        startDate.set(startDate.get(Calendar.YEAR) - 100, 0, 1)
         endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH) + 1, endDate.get(Calendar.DAY_OF_MONTH))
 
 
@@ -647,8 +642,6 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         pvTime = pickerBuilder!!.setCancelText(resources.getString(R.string.cancel))
                 .setSubmitText(resources.getString(R.string.data_sure)).build()
-
-
 
 
         var dialog = pvTime!!.dialog
@@ -705,7 +698,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
         mUserInfo?.let {
-            mPresenter.getCityData(it.countryId, language , true)
+            mPresenter.getCityData(it.countryId, language, true)
 
         }
 
@@ -762,8 +755,8 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
             if (it.headImage != null) {
                 val headImage = it.headImage.toString()
 
-                LogUtils.d(TAG,"获取的图片地址  --> ${Constants.BASE_URL +  headImage} ")
-                GlideUtils.loadImage(this,  Constants.BASE_URL + headImage, iv_head_img)
+                LogUtils.d(TAG, "获取的图片地址  --> ${Constants.BASE_URL + headImage} ")
+                GlideUtils.loadImage(this, Constants.BASE_URL + headImage, iv_head_img)
             }
 
 
@@ -795,6 +788,10 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
         return false
     }
 
+
+    /**
+     * 获取国籍数据
+     */
     override fun onSuccessNationality(countrys: List<NationalityBean.DataBean.CountrysBean>) {
 
         this.mCountrys = countrys
@@ -870,66 +867,121 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         this.mCitys = citys
 
-        if (isLocal) {
+        // 初始化操作
+        cityPopwindow?.let {
+            it.setData(mCitys)
+
+            when (LocaleUtils.getUserLocale(this)) {
+
+                LocaleUtils.LOCALE_ENGLISH -> {
+
+                    for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+                        item.isEnglish = true
+                    }
+                }
+
+                LocaleUtils.LOCALE_CHINESE -> {
+                    for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+                        item.isEnglish = false
+                    }
+                }
+            }
+
+
+
+
+
+            it.setSelectItemPosition(0)
+
 
             for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
 
-                if (mUserInfo?.cityId == item.id) {
-                    //相等
+                if (mUserInfo?.cityId  == item.id) {
                     mCity = item
-
-                    if (LocaleUtils.isLocaleEn(this)) {
-                        tv_select_city.text = mCity?.cityEn
-                    } else {
-                        tv_select_city.text = mCity?.cityCn
-
-                    }
                 }
             }
 
-        } else {
 
-            cityPopwindow?.let {
+            mCity?.let { city ->
 
-                it.setData(mCitys)
+                if (LocaleUtils.isLocaleEn(this)) {
+                    tv_select_city.text = city.cityEn
 
-                when (LocaleUtils.getUserLocale(this)) {
+                } else {
 
-                    LocaleUtils.LOCALE_ENGLISH -> {
-
-//                    mCountrys.in
-
-                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
-
-
-                            item.isEnglish = true
-                        }
-                    }
-
-                    LocaleUtils.LOCALE_CHINESE -> {
-
-                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
-
-
-                            item.isEnglish = false
-                        }
-                    }
-
-
+                    tv_select_city.text = city.cityCn
                 }
-
-                it.setSelectItemPosition(0)
-
             }
 
-
-
-            if (cityPopwindow != null && !cityPopwindow!!.isShowing && isCityClick) {
-                cityPopwindow!!.animationStyle = R.style.pop_anim
-                cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
-            }
-
+//            if (LocaleUtils.isLocaleEn(this)) {
+//
+//                tv_select_city.text =
+//            }else{
+//
+//            }
         }
+
+
+//        if (isLocal) {
+//
+//            for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+//
+//                if (mUserInfo?.cityId == item.id) {
+//                    //相等
+//                    mCity = item
+//
+//                    if (LocaleUtils.isLocaleEn(this)) {
+//                        tv_select_city.text = mCity?.cityEn
+//                    } else {
+//                        tv_select_city.text = mCity?.cityCn
+//
+//                    }
+//                }
+//            }
+//
+//        } else {
+//
+//            cityPopwindow?.let {
+//
+//                it.setData(mCitys)
+//
+//                when (LocaleUtils.getUserLocale(this)) {
+//
+//                    LocaleUtils.LOCALE_ENGLISH -> {
+//
+////                    mCountrys.in
+//
+//                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+//
+//
+//                            item.isEnglish = true
+//                        }
+//                    }
+//
+//                    LocaleUtils.LOCALE_CHINESE -> {
+//
+//                        for (item: CityListBean.DataBean.CitysBean in mCitys!!) {
+//
+//
+//                            item.isEnglish = false
+//                        }
+//                    }
+//
+//
+//                }
+//
+//                it.setSelectItemPosition(0)
+//
+//            }
+//
+//
+//
+//            if (cityPopwindow != null && !cityPopwindow!!.isShowing && isCityClick) {
+//                cityPopwindow!!.animationStyle = R.style.pop_anim
+//                cityPopwindow!!.showAtLocation(root_main, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, UIUtils.getNavigationHeight(this))
+//            }
+//
+//        }
 
 
     }
@@ -940,12 +992,13 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     }
 
 
-    private var  mImagePath: String =  ""
+    private var mImagePath: String = ""
+
     //上传图片成功的回调
     override fun loadHeadImageSuccessful(data: HeadImageBean.DataBean) {
         this.mImagePath = data.attachmentUrl
 
-        GlideUtils.loadImage(this,Constants.BASE_URL + mImagePath,iv_head_img)
+        GlideUtils.loadImage(this, Constants.BASE_URL + mImagePath, iv_head_img)
         updateUserInfoForNet()
 
     }
@@ -953,7 +1006,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
     // 上传图片失败
     override fun loadHeadImageFail(code: Int, msg: String) {
 
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
     }
 
     override fun updateUserInfoSuccessful(data: UserInfoBean.DataBean) {
@@ -964,7 +1017,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     override fun updateUserInfoFail(code: Int, msg: String) {
         hideLoadingText()
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
 
     }
 
@@ -988,15 +1041,14 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
             )
 
-            if (mHeadImage!!.exists()){
+            if (mHeadImage!!.exists()) {
 
                 GlideUtils.loadLocalImage(this, it.image.originalPath, iv_head_img)
 //
-            }else{
+            } else {
 
-                ToastUtil.showCenterToast(this,R.string.select_headimage)
+                ToastUtil.showCenterToast(this, R.string.select_headimage)
             }
-
 
 
         }

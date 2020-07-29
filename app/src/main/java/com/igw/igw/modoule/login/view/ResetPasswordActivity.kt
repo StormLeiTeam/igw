@@ -1,5 +1,7 @@
 package com.igw.igw.modoule.login.view
 
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -38,6 +40,14 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
         val TAG = "ResetPasswordActivity"
 
         var MAX_COUNT_TIME: Long = 60
+
+
+        fun startSelf(activity: Activity) {
+
+            var intent = Intent(activity, ResetPasswordActivity::class.java)
+
+            activity.startActivity(intent)
+        }
     }
 
 

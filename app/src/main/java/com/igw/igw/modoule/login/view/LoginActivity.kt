@@ -120,6 +120,9 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
             // 忘记密码
 
+            ResetPasswordActivity.startSelf(this)
+
+
 
         }
 

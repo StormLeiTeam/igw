@@ -175,6 +175,10 @@
     <string name="toast_no_login">Before landing, please login first</string>
     <string name="operation_successful">Operation is successful</string>
     <string name="chatroomusers_myself">For me at present</string>
+    <string name="comfirm">affirm</string>
+    <string name="title_login_out">Login out</string>
+    <string name="content_login_out">"Want to log out? "</string>
+    <string name="commit_login_out">Login out</string>
 
 
 </resources>

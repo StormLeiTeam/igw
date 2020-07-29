@@ -44,6 +44,8 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
     private var countimeSubscription: Subscription? = null
 
+    private var mData: SplashBean.DataBean? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,6 +133,27 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
 
         bg_splash.setOnClickListener {
 //            /点击时跳转
+
+            if (null == mData) {
+                return@setOnClickListener
+            }
+
+
+
+            LogUtils.d(TAG,"点击跳转 ---- ")
+            if (countimeSubscription != null) {
+
+                countimeSubscription!!.unsubscribe()
+//                if (countimeSubscription!!.isUnsubscribed) {
+//                    countimeSubscription!!.unsubscribe()
+//                }
+
+
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                intent.putExtra("splash_link", mData!!.advertiseInfo.link)
+                this@SplashActivity.startActivity(intent)
+                finish()
+            }
         }
 
 
@@ -165,6 +188,8 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
     }
 
     override fun onSuccess(data: SplashBean.DataBean) {
+
+        this.mData = data
         initCountDown()
         if (data.advertiseInfo.image.isEmpty()) {
 

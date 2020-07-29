@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_update.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 
 /**
- *
+ * 修改密码
  */
 class UpdateActivity : BaseActivity<UpdatePwdPresenter>(), UpdatePwdContract.View {
 //
