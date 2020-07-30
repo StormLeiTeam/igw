@@ -175,6 +175,6 @@
     <string name="chatroomusers_myself">当前为本人</string>
     <string name="comfirm">确认</string>
     <string name="title_login_out">退出登录</string>
-    <string name="content_login_out">"要退出登录吗? "</string>
+    <string name="content_login_out">"确定退出? "</string>
     <string name="commit_login_out">退出登录</string>
 </resources>
