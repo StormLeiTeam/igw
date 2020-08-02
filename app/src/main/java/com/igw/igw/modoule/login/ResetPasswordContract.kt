@@ -20,7 +20,7 @@ class ResetPasswordContract {
 
     interface Model : IBaseModel {
 
-        fun sendEmailVerifyCode(email: String, type: Int, observer: NetObserver<VerifyBean>)
+        fun sendEmailVerifyCode(email: String, type: Int, observer: NetObserver<VerifyBean.DataBean>)
 
         fun resetPassword(email: String, verifyCode: String, password: String, observer: NetObserver<ResetPwdBean>)
 
@@ -29,6 +29,8 @@ class ResetPasswordContract {
     interface View : IBaseView {
 
         fun onFailToCode(code: Int,msg: String)
+
+        fun onSuccessToCode()
 
         fun onSuccess()
 

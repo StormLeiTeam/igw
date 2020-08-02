@@ -39,7 +39,7 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
 
         val TAG = "ResetPasswordActivity"
 
-        var MAX_COUNT_TIME: Long = 60
+        var MAX_COUNT_TIME: Long = 180
 
 
         fun startSelf(activity: Activity) {
@@ -118,7 +118,7 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
                     tv_send_code.text = "$MAX_COUNT_TIME"
 
                     val email = et_email.text.toString().trim()
-                    mPresenter.sendEmailVerifyCode(email, 1)
+                    mPresenter.sendEmailVerifyCode(email, 2)
 
                     return@Function io.reactivex.Observable.interval(1, java.util.concurrent.TimeUnit.SECONDS, io.reactivex.schedulers.Schedulers.io())
                             .take(MAX_COUNT_TIME)
@@ -212,6 +212,12 @@ class ResetPasswordActivity : BaseActivity<ResetPwdPresenter>(), ResetPasswordCo
 
         ToastUtil.showCenterToast(this,msg)
 
+
+    }
+
+    override fun onSuccessToCode() {
+
+        ToastUtil.showCenterToast(this, resources.getString(R.string.verify_code_sended))
 
     }
 

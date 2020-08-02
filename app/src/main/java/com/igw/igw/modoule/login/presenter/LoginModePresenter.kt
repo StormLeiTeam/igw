@@ -19,7 +19,7 @@ class LoginModePresenter(model: LoginContract.Model) :
         BasePresenter<LoginContract.View, LoginContract.Model>(model), LoginContract.Presenter {
 
 
-    companion object{
+    companion object {
 
         val TAG = "LoginModePresenter"
     }
@@ -37,7 +37,7 @@ class LoginModePresenter(model: LoginContract.Model) :
 
                     mRootView.loginSuccess(m)
 
-                    LogUtils.d(TAG,"账号密码登录 ->  ${m.token } 融云token --{${m.rongyunToken}}")
+                    LogUtils.d(TAG, "账号密码登录 ->  ${m.token} 融云token --{${m.rongyunToken}}")
 
 
                 }
@@ -46,22 +46,19 @@ class LoginModePresenter(model: LoginContract.Model) :
 
             override fun onFail(code: Int, msg: String?) {
 
-                LogUtils.d(TAG,"登录失败 $msg")
+                LogUtils.d(TAG, "登录失败 $msg")
                 mRootView.loginFail(code.toString(), msg!!)
 
 
             }
 
 
-
             override fun onError(msg: String?) {
 
-                LogUtils.d(TAG,"登录错误 $msg")
+                LogUtils.d(TAG, "登录错误 $msg")
 
 
             }
-
-
 
 
         })
@@ -76,20 +73,21 @@ class LoginModePresenter(model: LoginContract.Model) :
 
                 m?.let {
                     mRootView.loginSuccess(m)
-                    LogUtils.d(TAG,"邮箱密码登录 ->  ${m.token } 融云token --{${m.rongyunToken}}")
+                    LogUtils.d(TAG, "邮箱密码登录 ->  ${m.token} 融云token --{${m.rongyunToken}}")
 
                 }
 
             }
 
             override fun onFail(code: Int, msg: String?) {
-                LogUtils.d(TAG,"登录失败 $msg")
+                LogUtils.d(TAG, "登录失败 $msg")
+                mRootView.loginFail(code.toString(), msg!!)
 
 
             }
 
             override fun onError(msg: String?) {
-                LogUtils.d(TAG,"登录错误 $msg")
+                LogUtils.d(TAG, "登录错误 $msg")
 
 
             }
@@ -101,18 +99,20 @@ class LoginModePresenter(model: LoginContract.Model) :
     override fun sendEmailVerifyCode(email: String, type: Int) {
 
 
-        mModel.sendEmailVerifyCode(email, type, object : NetObserver<VerifyBean>(VerifyBean::class.java) {
-            override fun onSuccess(m: VerifyBean) {
+        mModel.sendEmailVerifyCode(email, type, object : NetObserver<VerifyBean.DataBean>(VerifyBean.DataBean::class.java) {
+            override fun onSuccess(m: VerifyBean.DataBean) {
 
-
+                mRootView.sendVerifyCodeSuccess()
             }
 
 
             override fun onError(msg: String?) {
+
+
             }
 
             override fun onFail(code: Int, msg: String?) {
-
+                mRootView.sendVerifyCodeFail(code.toString(), msg!!)
 
             }
         })

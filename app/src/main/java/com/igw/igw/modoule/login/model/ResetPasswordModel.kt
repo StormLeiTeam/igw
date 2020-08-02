@@ -22,7 +22,7 @@ class ResetPasswordModel : ResetPasswordContract.Model {
     }
 
 
-    override fun sendEmailVerifyCode(email: String, type: Int, observer: NetObserver<VerifyBean>) {
+    override fun sendEmailVerifyCode(email: String, type: Int, observer: NetObserver<VerifyBean.DataBean>) {
 
 
         ControllerUtils.getLoginControllerInstance().sendEmailVerifyCode(email, type, observer)

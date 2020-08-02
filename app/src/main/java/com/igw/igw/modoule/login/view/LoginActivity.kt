@@ -9,6 +9,7 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
@@ -23,6 +24,7 @@ import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.TextClickPrivacy
 import com.jakewharton.rxbinding2.view.RxView
+import com.shengshijingu.yashiji.common.dialog.LoadingDialog
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -46,7 +48,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
         var mode_state: Int = 1 // 默认为账号登陆模式
 
-        var MAX_COUNT_TIME: Long = 60
+        var MAX_COUNT_TIME: Long = 180
 
     }
 
@@ -230,7 +232,7 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
                     tv_send_code.text = "$MAX_COUNT_TIME"
 
                     val email = et_email.text.toString().trim()
-                    mPresenter.sendEmailVerifyCode(email, 1)
+                    mPresenter.sendEmailVerifyCode(email, 2)
 
                     return@Function Observable.interval(1, TimeUnit.SECONDS, Schedulers.io())
                             .take(MAX_COUNT_TIME)
@@ -396,7 +398,10 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
         hideLoadingText()
 
-        ToastUtil.showCenterToast(this, msg)
+
+
+        ToastUtil.showCenterToast(this, msg.toString())
+
 
         LoginManager.instance.loginOut()
 
@@ -404,11 +409,17 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
     override fun sendVerifyCodeSuccess() {
 
-        ToastUtil.showCenterToast(this, "验证码已发送")
+
+//        Toast.makeText(this, "验证码已发送", Toast.LENGTH_SHORT).show()
+
+        ToastUtil.showCenterToast(this, resources.getString(R.string.verify_code_sended))
 
     }
 
-    override fun sendVerifyCodeFail() {
+    override fun sendVerifyCodeFail(code: String, msg: String) {
+
+
+        ToastUtil.showCenterToast(this,msg)
     }
 
     override fun fail(o: Any?) {

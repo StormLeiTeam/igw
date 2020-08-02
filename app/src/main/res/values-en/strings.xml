@@ -179,6 +179,7 @@
     <string name="title_login_out">Login out</string>
     <string name="content_login_out">"Want to log out? "</string>
     <string name="commit_login_out">Login out</string>
+    <string name="verify_code_sended">The verification code has been sent</string>
 
 
 </resources>

@@ -330,7 +330,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void hideLoadingText() {
-        if (loadingDialog != null) {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+
             loadingDialog.dismiss();
         }
     }

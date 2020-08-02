@@ -27,7 +27,7 @@ interface LoginContract {
         fun loginByEmail(email: String, verifyCode: String, observer: NetObserver<LoginBean.DataBean>)
 
         // 发送验证码
-        fun sendEmailVerifyCode(email: String, type: Int,observer: NetObserver<VerifyBean>)
+        fun sendEmailVerifyCode(email: String, type: Int,observer: NetObserver<VerifyBean.DataBean>)
 
 
 
@@ -41,7 +41,8 @@ interface LoginContract {
         fun loginFail(code:String ,msg: String)
 
         fun sendVerifyCodeSuccess()
-        fun sendVerifyCodeFail()
+        fun sendVerifyCodeFail(code: String, msg: String)
+
 
 
     }
