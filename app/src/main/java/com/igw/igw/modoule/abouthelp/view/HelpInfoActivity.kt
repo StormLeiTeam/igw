@@ -1,10 +1,8 @@
 package com.igw.igw.modoule.abouthelp.view
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
+import android.text.Html
 import android.view.View
-import com.bumptech.glide.load.data.LocalUriFetcher
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.help.HelpBean
@@ -12,13 +10,10 @@ import com.igw.igw.bean.help.HelpInfoBean
 import com.igw.igw.modoule.abouthelp.HelpInfoContract
 import com.igw.igw.modoule.abouthelp.model.HelpInfoModel
 import com.igw.igw.modoule.abouthelp.presenter.HelpInfoPresenter
-import com.igw.igw.utils.GsonUtils
-import com.igw.igw.utils.LocaleUtils
-import com.igw.igw.utils.LogUtils
-import com.igw.igw.utils.StatusBarUtils
+import com.igw.igw.utils.*
 import com.igw.igw.widget.storm.StatusBarView
+import kotlinx.android.synthetic.main.activity_help_info.*
 import kotlinx.android.synthetic.main.common_status_bar.*
-import kotlinx.android.synthetic.main.status_bar_view.*
 
 /**
  * 帮助具体详情页面
@@ -68,7 +63,12 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
 
 
         mData = GsonUtils.instance.fromJson(json, HelpBean.DataBean.RowsBean::class.java)
+
+
+
         mPresenter.getHelpInfo(mData!!.id)
+
+
 
 
 
@@ -116,7 +116,21 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
 
     override fun onSuccess(bean: HelpInfoBean.DataBean) {
 
+
+
         LogUtils.d(TAG,"获取帮助详情 onSuccess")
+
+        updateView(bean)
+    }
+
+    private fun updateView(bean: HelpInfoBean.DataBean) {
+
+
+        if (null != bean && null != bean.helpContent) {
+            status_bar_main.setTitle(bean.helpTitle)
+            tv_help_info.text = Html.fromHtml(bean.helpContent, MImageGetter(tv_help_info, this), null)
+        }
+
     }
 
     override fun onFail(code: Int, msg: String) {

@@ -63,16 +63,16 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
 
             var rows = bean.rows as ArrayList
 
-            for (index in 0..15) {
-
-                var item = HelpBean.DataBean.RowsBean()
-
-                item.helpContent = "帮助内容"
-                item.helpTitle = "帮助标题"
-                item.id = 1
-                rows.add(item)
-
-            }
+//            for (index in 0..15) {
+//
+//                var item = HelpBean.DataBean.RowsBean()
+//
+//                item.helpContent = "帮助内容"
+//                item.helpTitle = "帮助标题"
+//                item.id = 1
+//                rows.add(item)
+//
+//            }
 
 
             mDatas.addAll(rows)
@@ -89,16 +89,16 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
 
             mDatas = bean.rows as ArrayList
 
-            for (index in 0..15) {
-
-                var item = HelpBean.DataBean.RowsBean()
-
-                item.helpContent = "帮助内容"
-                item.helpTitle = "帮助标题"
-                item.id = 1
-                mDatas.add(item)
-
-            }
+//            for (index in 0..15) {
+//
+//                var item = HelpBean.DataBean.RowsBean()
+//
+//                item.helpContent = "帮助内容"
+//                item.helpTitle = "帮助标题"
+//                item.id = 1
+//                mDatas.add(item)
+//
+//            }
 
             mAdapter.refreshData(mDatas)
 

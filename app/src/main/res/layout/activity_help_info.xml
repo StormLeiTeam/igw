@@ -13,10 +13,18 @@
 
 
     <RelativeLayout
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/tv_help_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:includeFontPadding="false"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 

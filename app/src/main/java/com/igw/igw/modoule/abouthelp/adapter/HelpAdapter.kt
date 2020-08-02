@@ -69,7 +69,7 @@ class HelpAdapter(context: Context,isOpenLoadMore: Boolean) :BaseAdapter<HelpBea
         var  main = rvViewHolder.getView<RelativeLayout>(R.id.rv_main)
 
         mDatas?.let {
-            content.text = "${it.get(position).helpTitle}/${it.get(position).helpContent}"
+            content.text = "${it.get(position).helpTitle}"
 
         }
 
