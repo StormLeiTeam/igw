@@ -18,19 +18,18 @@ import kotlinx.android.synthetic.main.common_status_bar.*
 /**
  * 帮助具体详情页面
  */
-class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View {
+class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(), HelpInfoContract.View {
 
 
-
-    companion object{
+    companion object {
 
         val TAG = "HelpInfoActivity"
 
 
-        public fun startSelfForData(activity: BaseActivity<*>, data:String){
+        public fun startSelfForData(activity: BaseActivity<*>, data: String) {
 
-            val intent = Intent(activity,HelpInfoActivity::class.java)
-            intent.putExtra("intent_data",data)
+            val intent = Intent(activity, HelpInfoActivity::class.java)
+            intent.putExtra("intent_data", data)
 
             activity.startActivity(intent)
 
@@ -38,7 +37,8 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
     }
 
 
-    private var mData : HelpBean.DataBean.RowsBean? = null
+    private var mData: HelpBean.DataBean.RowsBean? = null
+    private var json: String = ""
 
 
     override fun initView() {
@@ -59,7 +59,7 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
 
     private fun initIntentData() {
 
-        val json = intent.getStringExtra("intent_data") ?: return
+        json = intent.getStringExtra("intent_data") ?: return
 
 
         mData = GsonUtils.instance.fromJson(json, HelpBean.DataBean.RowsBean::class.java)
@@ -69,25 +69,23 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
         mPresenter.getHelpInfo(mData!!.id)
 
 
-
-
-
     }
 
     private fun setUpListener() {
 
 
-
-
-        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+        status_bar_main.setOnConfirmClickListener(object : StatusBarView.OnConfirmClickListener {
             override fun onClick() {
 
-                LocaleUtils.changeLocale(this@HelpInfoActivity)
+                if (json.isNotEmpty()) {
+                    LocaleUtils.changeLocale(this@HelpInfoActivity, "intent_data", json)
+
+                }
+
             }
 
 
         })
-
 
 
     }
@@ -102,23 +100,19 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
     override fun getLayoutId(): Int = R.layout.activity_help_info
 
 
-
     override fun setTitle(): String {
         return ""
     }
 
-    override fun setRightButton(): String  = ""
+    override fun setRightButton(): String = ""
 
-    override fun setStatusBarColor(): Boolean  = false
-
-
+    override fun setStatusBarColor(): Boolean = false
 
 
     override fun onSuccess(bean: HelpInfoBean.DataBean) {
 
 
-
-        LogUtils.d(TAG,"获取帮助详情 onSuccess")
+        LogUtils.d(TAG, "获取帮助详情 onSuccess")
 
         updateView(bean)
     }
@@ -127,14 +121,25 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
 
 
         if (null != bean && null != bean.helpContent) {
-            status_bar_main.setTitle(bean.helpTitle)
-            tv_help_info.text = Html.fromHtml(bean.helpContent, MImageGetter(tv_help_info, this), null)
+
+            var flag = LocaleUtils.isLocaleEn(this)
+            if (flag) {
+
+                status_bar_main.setTitle(bean.helpEnTitle)
+                tv_help_info.text = Html.fromHtml(bean.helpEnContent, MImageGetter(tv_help_info, this), null)
+
+            } else {
+                status_bar_main.setTitle(bean.helpTitle)
+                tv_help_info.text = Html.fromHtml(bean.helpTitle, MImageGetter(tv_help_info, this), null)
+
+            }
+
         }
 
     }
 
     override fun onFail(code: Int, msg: String) {
-        LogUtils.d(TAG,"获取帮助详情 onFail")
+        LogUtils.d(TAG, "获取帮助详情 onFail")
 
     }
 
@@ -146,7 +151,7 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(),HelpInfoContract.View
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView()
         }
     }

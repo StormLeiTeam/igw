@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.igw.igw.R
 import com.igw.igw.app.BaseAdapter
 import com.igw.igw.bean.help.HelpBean
+import com.igw.igw.utils.LocaleUtils
 import com.igw.igw.utils.RvViewHolder
 import java.net.ConnectException
 
@@ -27,6 +28,8 @@ class HelpAdapter(context: Context,isOpenLoadMore: Boolean) :BaseAdapter<HelpBea
 
         val TAG  = "HelpAdapter"
     }
+
+    val flag = LocaleUtils.isLocaleEn(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvViewHolder {
 
@@ -69,7 +72,11 @@ class HelpAdapter(context: Context,isOpenLoadMore: Boolean) :BaseAdapter<HelpBea
         var  main = rvViewHolder.getView<RelativeLayout>(R.id.rv_main)
 
         mDatas?.let {
-            content.text = "${it.get(position).helpTitle}"
+
+
+            content.text = if (flag) "${it[position].helpEnTitle}" else "${it[position].helpTitle}"
+
+//            content.text = "${it.get(position).help}"
 
         }
 

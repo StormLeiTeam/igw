@@ -8,10 +8,9 @@ package com.igw.igw.bean.help;
  */
 public class HelpInfoBean {
 
-
     /**
      * code : 200
-     * data : {"ctime":"2020-05-19 11:56:09","helpContent":"<p>双语聊天城是收费功能，可以进行时时的在线沟通。<\/p><p><img src=\"http://106.54.111.24:83/gameword-system-platform/upload/system/image/20200730/20200730193957_657_common.png\" style=\"width: 709px;\"><br><\/p>","helpTitle":"如何计费","id":1,"isDel":0,"sort":1,"sortWithOutOrderBy":"","sort_":""}
+     * data : {"ctime":"2020-05-19 11:56:09","helpContent":"<p>双语聊天城是收费功能，可以进行时时的在线沟通。<\/p><p><img src=\"http://106.54.111.24:83/gameword-system-platform/upload/system/image/20200730/20200730193957_657_common.png\" style=\"width: 709px;\"><br><\/p>","helpEnContent":"<p>双语聊天城是收费功能，可以进行时时的在线沟通。<\/p><p><img src=\"http://106.54.111.24:83/gameword-system-platform/upload/system/image/20200730/20200730193957_657_common.png\" style=\"width: 709px;\"><br><\/p>","helpEnTitle":"如何计费","helpTitle":"如何计费","id":1,"isDel":0,"sort":1,"sortWithOutOrderBy":"","sort_":""}
      * message : 操作成功
      */
 
@@ -47,6 +46,8 @@ public class HelpInfoBean {
         /**
          * ctime : 2020-05-19 11:56:09
          * helpContent : <p>双语聊天城是收费功能，可以进行时时的在线沟通。</p><p><img src="http://106.54.111.24:83/gameword-system-platform/upload/system/image/20200730/20200730193957_657_common.png" style="width: 709px;"><br></p>
+         * helpEnContent : <p>双语聊天城是收费功能，可以进行时时的在线沟通。</p><p><img src="http://106.54.111.24:83/gameword-system-platform/upload/system/image/20200730/20200730193957_657_common.png" style="width: 709px;"><br></p>
+         * helpEnTitle : 如何计费
          * helpTitle : 如何计费
          * id : 1
          * isDel : 0
@@ -57,6 +58,8 @@ public class HelpInfoBean {
 
         private String ctime;
         private String helpContent;
+        private String helpEnContent;
+        private String helpEnTitle;
         private String helpTitle;
         private int id;
         private int isDel;
@@ -78,6 +81,22 @@ public class HelpInfoBean {
 
         public void setHelpContent(String helpContent) {
             this.helpContent = helpContent;
+        }
+
+        public String getHelpEnContent() {
+            return helpEnContent;
+        }
+
+        public void setHelpEnContent(String helpEnContent) {
+            this.helpEnContent = helpEnContent;
+        }
+
+        public String getHelpEnTitle() {
+            return helpEnTitle;
+        }
+
+        public void setHelpEnTitle(String helpEnTitle) {
+            this.helpEnTitle = helpEnTitle;
         }
 
         public String getHelpTitle() {

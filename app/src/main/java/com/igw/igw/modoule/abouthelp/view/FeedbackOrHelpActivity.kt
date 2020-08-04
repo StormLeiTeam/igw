@@ -219,7 +219,7 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
 //        })
 
         mAdapter.onItemClickListener(object :HelpAdapter.OnItemClickListener{
-            override fun onItemClick(data: HelpBean.DataBean.RowsBean?, position: Int) {
+            override fun onItemClick(data: HelpBean.DataBean.`RowsBean`?, position: Int) {
 
 
                var json  =  GsonUtils.instance.toJson(data)
