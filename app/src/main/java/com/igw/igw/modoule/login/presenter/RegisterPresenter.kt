@@ -115,7 +115,10 @@ class RegisterPresenter(model: RegisterContract.Model)
 
 
                 LogUtils.d(TAG,"注册成功 ")
-                rootView.registerSuccess()
+                m?.let {
+                    rootView.registerSuccess(it)
+
+                }
             }
 
 

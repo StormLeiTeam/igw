@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.igw.igw.modoule.im.view.SingleChatActivity
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.MImageGetter
 import io.rong.imkit.RongIM

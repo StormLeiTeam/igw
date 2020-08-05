@@ -76,8 +76,10 @@ class LoginManager {
         (loginState as LoginInState).bindJpush("${user.id}")
 
 
-        var userInfo = UserInfo("${user.id}", user.agencyName, parse(Constants.BASE_URL + user.headImage))
-        RongIM.getInstance().refreshUserInfoCache(userInfo);
+        updateRongUserInfo("${user.id}", user.nickName, user.headImage)
+
+//        var userInfo = UserInfo("${user.id}", user.agencyName, parse(Constants.BASE_URL + user.headImage))
+//        RongIM.getInstance().refreshUserInfoCache(userInfo);
 
 //        bindJush(user)
 
@@ -145,6 +147,8 @@ class LoginManager {
                 (loginState as LoginInState).bindJpush(userId)
 
             }
+
+//            updateRongUserInfo()
 
 
         } else {

@@ -21,11 +21,9 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.GenderBean
-import com.igw.igw.bean.login.HeadImageBean
-import com.igw.igw.bean.login.RegisterBean
+import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.RegisterContract
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.modoule.login.model.RegisterModel
 import com.igw.igw.modoule.login.presenter.RegisterPresenter
 import com.igw.igw.utils.*
@@ -927,8 +925,12 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
-    override fun registerSuccess() {
+    override fun registerSuccess(data:RegisterSuccessBean.DataBean) {
+
+
         hideLoadingText()
+
+        LoginManager.instance.updateRongUserInfo("$data.id", data.nickName, data.headImage)
 
         finish()
     }

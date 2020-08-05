@@ -141,6 +141,8 @@ class LoginInState : UserState {
             }
         }, true)
 
+        RongIM.getInstance().setMessageAttachedUserInfo(true)
+
 
     }
 

@@ -14,6 +14,7 @@ import com.igw.igw.bean.chat.DelFriendBean
 import com.igw.igw.modoule.im.FriendInfoContract
 import com.igw.igw.modoule.im.model.FriendInfoModel
 import com.igw.igw.modoule.im.presenter.FriendInfoPresenter
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.GlideUtils
 import com.igw.igw.utils.GsonUtils
 import com.igw.igw.utils.LocaleUtils
@@ -151,6 +152,10 @@ class FriendInfoActivity : BaseActivity<FriendInfoPresenter>(), FriendInfoContra
 
         btn_del_friend.visibility = View.VISIBLE
         btn_send_msg.visibility = View.VISIBLE
+
+
+        LoginManager.instance.updateRongUserInfo("${friendBean.friendUserId}", friendBean.friendNickName, friendBean.friendHeadImage)
+        
 
 
     }

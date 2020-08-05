@@ -8,7 +8,19 @@ import android.widget.TextView;
 
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.bean.message.MessageCenterBean;
+import com.igw.igw.fragment.my.presenter.MyPresenter;
+import com.igw.igw.modoule.home.HomeContract;
+import com.igw.igw.modoule.home.model.HomeModel;
+import com.igw.igw.modoule.home.presenter.HomePresenter;
+import com.igw.igw.utils.LogUtils;
+import com.igw.igw.widget.storm.BadgeView;
+import com.itingchunyu.badgeview.BadgeTextView;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * 创建时间  2020/3/105:42 PM .
@@ -16,7 +28,7 @@ import com.shengshijingu.yashiji.common.base.BaseDataFragment;
  * 作者  雷雷
  */
 
-public class HomeFragment extends BaseDataFragment {
+public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements HomeContract.View {
 
 
     public static final String TAG = "HomeFragment";
@@ -26,6 +38,9 @@ public class HomeFragment extends BaseDataFragment {
 
     private RelativeLayout rv_city_chat;
     private TextView tv_language_select;
+
+    private BadgeView mBadgeView;
+    private BadgeTextView mBadgeTextView;
 
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -60,7 +75,16 @@ public class HomeFragment extends BaseDataFragment {
 
         iv_home_msg = bindView(R.id.iv_home_msg);
 
+//        mBadgeView = new BadgeView(mContext, iv_home_msg);
+//        mBadgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+//        mBadgeView.setBadgeMargin(0, 0);
+//        mBadgeView.toggle();
+//        mBadgeView.show();
 
+        mBadgeTextView = new BadgeTextView(mContext);
+        mBadgeTextView.setTargetView(iv_home_msg);
+        mBadgeTextView.setBadgeCount(0);
+        mBadgeTextView.setBadgeShown(true);
     }
 
     @Override
@@ -79,6 +103,7 @@ public class HomeFragment extends BaseDataFragment {
 
         });
 
+        getMPresenter().messageCenterList();
 
         setUpListener();
     }
@@ -87,7 +112,7 @@ public class HomeFragment extends BaseDataFragment {
 
 
         tv_language_select.setOnClickListener(v -> {
-            ((MainActivity)mContext).changeLanuage(R.id.ll_main_home);
+            ((MainActivity) mContext).changeLanuage(R.id.ll_main_home);
 
 //            LocaleUtils.INSTANCE.changeLocale((MainActivity(mContext)));
 
@@ -120,5 +145,67 @@ public class HomeFragment extends BaseDataFragment {
                     break;
             }
         }
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (!hidden) {
+            LogUtils.d(TAG,"当前fragment 显示的时候 ");
+
+            getMPresenter().messageCenterList();
+        }
+    }
+
+    @Override
+    protected void initPresenter() {
+        setMPresenter(new HomePresenter(new HomeModel()));
+        getMPresenter().attachView(this);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LogUtils.d(TAG,"刷新未读消息数据 ---- ");
+        getMPresenter().messageCenterList();
+    }
+
+    @Override
+    public void onSuccess(@NotNull List<? extends MessageCenterBean.DataBean.RowsBean> mdatas) {
+
+
+        int count = 0;
+        for (MessageCenterBean.DataBean.RowsBean mdata : mdatas) {
+
+            if (mdata.getIsRead() == 0) {
+
+                count += 1;
+            }
+        }
+
+        if (count == 0) {
+            mBadgeTextView.setBadgeShown(false);
+        } else {
+            mBadgeTextView.setBadgeShown(true);
+        }
+    }
+
+    @Override
+    public void onFail(int code, @NotNull String msg) {
+
+    }
+
+    @Override
+    public void success(Object o) {
+
+    }
+
+    @Override
+    public void fail(Object o) {
+
     }
 }

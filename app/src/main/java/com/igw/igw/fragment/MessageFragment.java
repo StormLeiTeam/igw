@@ -93,7 +93,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
         tv_title = bindView(R.id.tv_title);
         rv_main = bindView(R.id.rv_main);
         initAdapter();
-        initData();
+//        initData();
 
 
         // 请求好数据再用
@@ -159,6 +159,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
                     return;
                 }
 
+                LogUtils.d(TAG,"走已读接口");
                 getMPresenter().readMessage(bean.getId());
 
 //                getMPresenter().readedMessage(bean.getId(), 1);
@@ -210,6 +211,16 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
 
     }
 
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            initData();
+        }
+    }
+
     private void initData() {
 
 
@@ -247,6 +258,7 @@ public class MessageFragment extends BaseMvpDataFragment<MessageListPresenter> i
     @Override
     public void onSuccess(@NotNull List<? extends MessageCenterBean.DataBean.RowsBean> mdatas) {
         hideLoadingText();
+        noReadCount = 0;
 
         if (mdatas.size() > 0) {
 

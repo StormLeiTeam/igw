@@ -40,7 +40,7 @@ interface RegisterContract {
     interface View : IBaseView {
 
 
-        fun registerSuccess()
+        fun registerSuccess(data: RegisterSuccessBean.DataBean)
 
         fun registerFail(code: Int, msg: String)
 

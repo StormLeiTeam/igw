@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.igw.igw.R
 import com.igw.igw.modoule.im.MyConversationFragment
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.MorePopWindow
@@ -71,7 +72,6 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
 
             status_bar_main.setTitle(title ?: "")
         }
-
 
 
 //        var type = intent.getStringExtra("conversation")
@@ -220,7 +220,7 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
     private fun setUpFragment() {
 
 
-         conversationFragment = MyConversationFragment()
+        conversationFragment = MyConversationFragment()
 
         val ma = supportFragmentManager
 
@@ -243,7 +243,6 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
     override fun languageSelector() {
 
         LogUtils.d(TAG, "点击切换了语言 ")
-
 
 
     }

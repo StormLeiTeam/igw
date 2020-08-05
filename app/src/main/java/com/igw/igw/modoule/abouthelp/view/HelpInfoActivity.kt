@@ -130,7 +130,7 @@ class HelpInfoActivity : BaseActivity<HelpInfoPresenter>(), HelpInfoContract.Vie
 
             } else {
                 status_bar_main.setTitle(bean.helpTitle)
-                tv_help_info.text = Html.fromHtml(bean.helpTitle, MImageGetter(tv_help_info, this), null)
+                tv_help_info.text = Html.fromHtml(bean.helpContent, MImageGetter(tv_help_info, this), null)
 
             }
 

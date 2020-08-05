@@ -10,11 +10,14 @@ import com.igw.igw.modoule.im.model.ChatModel
 import com.igw.igw.modoule.im.presenter.ChatPresenter
 import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.LogUtils
+import com.itingchunyu.badgeview.BadgeTextView
+import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.fragment_chattype.*
+import kotlin.math.log
 
 
 /**
@@ -40,6 +43,10 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
         public fun getInstance(): ChatTypeFragment = ChatTypeFragment()
 
     }
+
+    private lateinit var mPublicBadge: BadgeTextView;
+    private lateinit var mBussessBadge: BadgeTextView;
+    private lateinit var mRecentBadge: BadgeTextView;
 
     override fun initPresenter() {
 
@@ -133,6 +140,20 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
 //        mPresenter?.userInfo()
 
+
+        mPublicBadge = BadgeTextView(mContext)
+        mPublicBadge.setTargetView(iv_public_chat)
+        mPublicBadge.setBadgeShown(false)
+
+        mBussessBadge = BadgeTextView(mContext)
+        mBussessBadge.setTargetView(iv_business_chat)
+        mBussessBadge.setBadgeShown(false)
+
+        mRecentBadge = BadgeTextView(mContext)
+        mRecentBadge.setTargetView(iv_recent_chat)
+        mRecentBadge.setBadgeShown(false)
+
+
     }
 
     override fun createSuccessChatRoom(type: String) {
@@ -147,7 +168,6 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
                 activity?.let {
 
                     SingleChatActivity.startSelfOfIntent(it, publicChatRoom, "公共聊天室", Conversation.ConversationType.CHATROOM)
-
 
 
 //                    GroupChatRoomActivity.startSelfOfIntent(it, publicChatRoom,"公共聊天室")
@@ -244,6 +264,99 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
         updateView(this.userType!!)
 
+
+
+
+    }
+
+    private fun setUnreadCount(roomId: String, userType: Int) {
+
+
+        when (userType) {
+            0 -> {
+
+
+                RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.CHATROOM, roomId, object : RongIMClient.ResultCallback<Int>() {
+                    override fun onSuccess(p0: Int?) {
+
+
+                        LogUtils.d(TAG, "获取的未读聊天 公共 -- $p0")
+                        p0?.let {
+                            if (it != 0) {
+                                mPublicBadge.setBadgeCount(it)
+                                mPublicBadge.setBadgeShown(true)
+
+                            } else {
+                                mPublicBadge.setBadgeShown(false)
+
+                            }
+                        }
+                    }
+
+                    override fun onError(p0: RongIMClient.ErrorCode?) {
+                    }
+
+
+                })
+
+            }
+
+
+            1 -> {
+
+
+                RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.CHATROOM, roomId, object : RongIMClient.ResultCallback<Int>() {
+                    override fun onSuccess(p0: Int?) {
+
+                        p0?.let {
+                            if (it != 0) {
+                                mBussessBadge.setBadgeCount(it)
+                                mBussessBadge.setBadgeShown(true)
+
+                            } else {
+
+                                mBussessBadge.setBadgeShown(false)
+
+                            }
+                        }
+                    }
+
+                    override fun onError(p0: RongIMClient.ErrorCode?) {
+                    }
+
+
+                })
+
+
+            }
+        }
+
+
+
+
+
+        RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int>() {
+            override fun onSuccess(p0: Int?) {
+                LogUtils.d(TAG, "获取的未读聊天 最近 -- $p0")
+
+                p0?.let {
+                    if (it != 0) {
+                        mRecentBadge.setBadgeCount(it)
+                        mRecentBadge.setBadgeShown(true)
+
+                    } else {
+                        mRecentBadge.setBadgeShown(false)
+                    }
+                }
+            }
+
+            override fun onError(p0: RongIMClient.ErrorCode?) {
+            }
+
+
+        })
+
+
     }
 
     private fun updateView(userType: Int) {
@@ -258,6 +371,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
                 ll_public_chat.visibility = View.VISIBLE
                 ll_business_chat.visibility = View.GONE
 
+
             }
 
             1 -> {
@@ -270,6 +384,8 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
 
         }
+
+
     }
 
     override fun userInfoFail(code: Int, msg: String) {

@@ -18,6 +18,7 @@ import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
 import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.UpdateInfoContract
+import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.modoule.login.model.UpdateUserInfoModel
 import com.igw.igw.modoule.login.presenter.UpdateUserInfoPresenter
 import com.igw.igw.utils.*
@@ -1011,6 +1012,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
     override fun updateUserInfoSuccessful(data: UserInfoBean.DataBean) {
         hideLoadingText()
+
+        LoginManager.instance.updateRongUserInfo("$data.id", data.nickName, data.headImage)
+
         setResult(Activity.RESULT_OK)
         finish()
     }
