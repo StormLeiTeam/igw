@@ -132,7 +132,7 @@ class LoginInState : UserState {
                          * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
                          * @param userId 用户 ID
                          */
-                        UserInfo(userId, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()))
+                        UserInfo(p0, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()))
                     }, true)
 
                 }

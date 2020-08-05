@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity {
                      */
                     @Override
                     public UserInfo getUserInfo(String userId) {
-                        UserInfo userInfo = new UserInfo(userId, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()));
+                        UserInfo userInfo = new UserInfo(userid, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()));
                         return userInfo;
                     }
 
