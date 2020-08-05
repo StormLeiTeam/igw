@@ -1,6 +1,7 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
+import android.net.Uri
 import cn.jpush.android.api.JPushInterface
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_TOKEN
 import com.igw.igw.modoule.login.loginstate.Contanct.KEY_USER_ID
@@ -8,6 +9,8 @@ import com.igw.igw.modoule.login.loginstate.Contanct.USER_INFO
 import com.igw.igw.utils.AppUtils
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.SPUtils
+import com.igw.igw.utils.SharedUtils
+import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.net.Interceptor.CommonHeaderInterceptor
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
@@ -102,7 +105,13 @@ class LoginInState : UserState {
                 override fun onSuccess(p0: String?) {
 
                     LogUtils.d(TAG, " 融云 token onSuccess  ---- ")
-
+                    RongIM.setUserInfoProvider({ userId ->
+                        /**
+                         * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
+                         * @param userId 用户 ID
+                         */
+                        UserInfo(userId, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()))
+                    }, true)
 
                 }
 
@@ -141,7 +150,7 @@ class LoginInState : UserState {
             }
         }, true)
 
-        RongIM.getInstance().setMessageAttachedUserInfo(true)
+//        RongIM.getInstance().setMessageAttachedUserInfo(true)
 
 
     }

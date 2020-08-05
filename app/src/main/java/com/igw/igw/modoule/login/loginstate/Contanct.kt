@@ -23,4 +23,7 @@ object Contanct {
 
     val KEY_USER_ID = "user_id"
 
+    val KEY_USER_NAME = "user_name"
+    val KEY_USER_HEADPIC = "user_headpic"
+
 }

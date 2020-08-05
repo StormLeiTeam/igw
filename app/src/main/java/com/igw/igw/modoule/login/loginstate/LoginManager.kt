@@ -63,7 +63,9 @@ class LoginManager {
 
         SharedUtils.setAccessToken(user.token)
         SharedUtils.setRongToken(user.rongyunToken)
+        SharedUtils.setUserName(user.userName)
 
+        SharedUtils.setHeadImg(user.headImage)
         Log.e("12345", user.rongyunToken + "===" + user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)

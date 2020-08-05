@@ -1,6 +1,7 @@
 package com.igw.igw;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,8 +30,10 @@ import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
 
+import com.shengshijingu.yashiji.common.Constants;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity {
 
@@ -129,7 +132,19 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(String userid) {
                 Log.d("12345", "--onSuccess" + userid);
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
+                    /**
+                     * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
+                     * @param userId 用户 ID
+                     */
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        UserInfo userInfo = new UserInfo(userId, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()));
+                        return userInfo;
+                    }
+
+                }, true);
             }
 
             @Override
