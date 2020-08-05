@@ -7,11 +7,13 @@ import java.util.logging.LogManager;
 import java.util.logging.LoggingMXBean;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.nfc.Tag;
+import android.os.Process;
 import android.support.design.widget.TabLayout;
 import android.util.DisplayMetrics;
 
@@ -22,6 +24,7 @@ import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.utils.ConfigUtil;
 import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
+import com.igw.igw.utils.OsUtils;
 import com.shengshijingu.yashiji.common.Constants;
 
 import cn.jpush.android.api.JPushInterface;
@@ -55,13 +58,27 @@ public class IGWApplication extends Application {
         initLanuage();
         initJpush();
         initLogConfig();
-        RongIM.init(this, "p5tvi9dspqek4");
-        LoginManager.Companion.getInstance().init();
-        LoginManager.Companion.getInstance().initLoginState();
 
 
+        String progressName = OsUtils.INSTANCE.getProgressName(this, Process.myPid());
+
+        if (progressName != null) {
+            boolean defaultProgress
+                    = progressName.equals("com.igw.igw");
+
+            if (defaultProgress) {
+                RongIM.init(this, "p5tvi9dspqek4");
+                LoginManager.Companion.getInstance().init();
+                LogUtils.d(TAG,"融云 ------------------------");
+                LoginManager.Companion.getInstance().initLoginState();
+            }
+        }
 
     }
+
+
+
+
 
     private void initLanuage() {
 
@@ -75,7 +92,7 @@ public class IGWApplication extends Application {
 //
 //        if (userLocale == null) {
 //            return;
-//        }
+//
 //        if(userLocale.equals(LocaleUtils.INSTANCE.getLOCALE_ENGLISH())) {
 //
 //            LogUtils.d(TAG,"当前保存的用户语言是 英语");

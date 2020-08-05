@@ -1015,6 +1015,9 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
         LoginManager.instance.updateRongUserInfo("$data.id", data.nickName, data.headImage)
 
+        LoginManager.instance.updateUserInfo(GsonUtils.instance.toJson(data))
+
+
         setResult(Activity.RESULT_OK)
         finish()
     }

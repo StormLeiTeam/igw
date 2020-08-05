@@ -39,11 +39,33 @@ class LoginInState : UserState {
     private var rongYunToken: String? = null
 
     private var userId: String? = null
+    public var userName: String? = null
+        get() {
+            if (field == null) {
+                field = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_NAME)
+            }
+
+            return field
+        }
+
+
+    public var userHeadImg: String? = null
+        get() {
+
+            if (field == null) {
+                field = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_USER_HEADPIC)
+
+            }
+
+            return field
+        }
+
 
     override fun CheckLoginState(context: Context) {
 
-
     }
+
+
 
 
     fun getToken(): String? {
@@ -124,37 +146,32 @@ class LoginInState : UserState {
 
                 override fun onTokenIncorrect() {
 
-                    LogUtils.d(TAG, " 融云 token 无效  ---- ")
+
                 }
 
 
             })
-
-
         }
-
-        setRongUserInfo()
-
-
     }
+
 
     private fun setRongUserInfo() {
 
 
-        RongIM.setUserInfoProvider(object : RongIM.UserInfoProvider {
-            override fun getUserInfo(p0: String?): UserInfo? {
+        RongIM.setUserInfoProvider({ id ->
 
-                LogUtils.d(TAG, "异步注册 用户信息  ")
-                return null
+            UserInfo(id, userName, Uri.parse(userHeadImg))
 
-            }
+
         }, true)
 
 //        RongIM.getInstance().setMessageAttachedUserInfo(true)
 
-
     }
 
+    /**
+     * bind jpush
+     */
     fun bindJpush(id: String) {
 
         val set: MutableSet<String> = HashSet()

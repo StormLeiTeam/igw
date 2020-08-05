@@ -2,6 +2,7 @@ package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
 import android.net.Uri.parse
+import android.os.ParcelUuid
 import android.util.Log
 import cn.jpush.android.api.JPushInterface
 import com.igw.igw.bean.login.LoginBean
@@ -9,8 +10,10 @@ import com.igw.igw.utils.*
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.Constants.userId
 import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.UserInfo
 import okhttp3.internal.publicsuffix.PublicSuffixDatabase
+import java.io.File
 
 
 /**
@@ -40,6 +43,32 @@ class LoginManager {
     }
 
 
+    public var UserName: String? = null
+        get() {
+            if (field == null) {
+
+                if (loginState is LoginInState) {
+                    field = (loginState as LoginInState).userName
+
+                }
+
+            }
+
+            return field
+        }
+
+
+    public var userHeadImage: String? = null
+        get() {
+            if (field == null) {
+                if (loginState is LoginInState) {
+                    field = (loginState as LoginInState).userHeadImg
+
+                }
+            }
+            return field
+        }
+
     public fun init() {
 
         SPUtils.getInstance(Contanct.USER_INFO)
@@ -66,6 +95,11 @@ class LoginManager {
         SharedUtils.setUserName(user.userName)
 
         SharedUtils.setHeadImg(user.headImage)
+
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_NAME, user.userName)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_HEADPIC, user.headImage)
+
+
         Log.e("12345", user.rongyunToken + "===" + user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
@@ -128,16 +162,19 @@ class LoginManager {
             state(LoginInState())
 
             // bug 用
-            var token = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_TOKEN)
+            val token = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_TOKEN)
 
             LogUtils.d(TAG, "获取的token 的值==> $token")
 //          userInfo?.let {
-            token?.let {
-                (loginState as LoginInState).initData(token)
+            token.let {
+
+                (loginState as LoginInState).initData(it!!)
+
             }
 
 
-            var rongToken = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_RONGTOKEN)
+            val rongToken = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_RONGTOKEN)
+
             rongToken?.let {
                 (loginState as LoginInState).initRongToken(rongToken)
                 (loginState as LoginInState).initRongYun()
@@ -196,7 +233,7 @@ class LoginManager {
         return token
     }
 
-   public fun userId(): String {
+    public fun userId(): String {
 
         if (loginState is
                         LoginInState) {
@@ -209,19 +246,18 @@ class LoginManager {
     }
 
 
+    fun rongYunToken(context: Context): String? {
 
-    fun rongYunToken(context: Context) {
 
-
-        var token: String? = null
+        var token: String = ""
 
         if (loginState is LoginInState) {
 
-            token = (loginState as LoginInState).getRongYunToken()
+            token = (loginState as LoginInState).getRongYunToken()!!
 
         }
 
-
+        return token
     }
 
 
@@ -230,6 +266,31 @@ class LoginManager {
         var userInfo = UserInfo(userId, nickname, parse(Constants.BASE_URL + headImg))
         RongIM.getInstance().refreshUserInfoCache(userInfo);
 
+    }
+
+
+    fun updateUserInfo(userInfo: String) {
+
+
+        var user = GsonUtils.instance.fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
+
+//        SharedUtils.setAccessToken(user.token)
+//        SharedUtils.setRongToken(user.rongyunToken)
+//        SharedUtils.setUserName(user.userName)
+//
+//        SharedUtils.setHeadImg(user.headImage)
+
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_NAME, user.userName)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_HEADPIC, user.headImage)
+
+
+        Log.e("12345", user.rongyunToken + "===" + user.token)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_ID, "${user.id}")
+
+        (loginState as LoginInState).initData(user.token)
+        (loginState as LoginInState).initRongToken(user.rongyunToken)
     }
 //    fun updateUserInfo(token: String, userinfoJson: String) {
 //
