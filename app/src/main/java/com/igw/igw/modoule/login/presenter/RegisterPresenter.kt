@@ -1,10 +1,7 @@
 package com.igw.igw.modoule.login.presenter
 
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.HeadImageBean
-import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.bean.login.RegisterSuccessBean
+import com.igw.igw.bean.login.*
 import com.igw.igw.modoule.login.RegisterContract
 import com.igw.igw.modoule.login.view.RegisterActivity
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -110,8 +107,8 @@ class RegisterPresenter(model: RegisterContract.Model)
 
     fun registerUser(registerBean: RegisterBean) {
 
-        mModel.registerUser(registerBean,object :NetObserver<RegisterSuccessBean.DataBean>(RegisterSuccessBean.DataBean::class.java){
-            override fun onSuccess(m: RegisterSuccessBean.DataBean) {
+        mModel.registerUser(registerBean,object :NetObserver<LoginBean.DataBean>(LoginBean.DataBean::class.java){
+            override fun onSuccess(m: LoginBean.DataBean) {
 
 
                 LogUtils.d(TAG,"注册成功 ")

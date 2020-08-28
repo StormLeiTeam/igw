@@ -15,9 +15,11 @@ import android.view.Gravity.BOTTOM
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import cn.jpush.android.webview.bridge.HostJsScope.startMainActivity
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
+import com.igw.igw.MainActivity
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.bean.NationalityBean
@@ -765,17 +767,7 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
         }
 
-//        if (!LocaleUtils.isLocaleEn(this)) {
-//            //ture
-//
-//            pvTime = pickerBuilder!!.setCancelText("取消")
-//                    .setSubmitText("确认").build()
-//        } else {
-//
-//            pvTime = pickerBuilder!!.setCancelText("Cancel")
-//                    .setSubmitText("Sure").build()
-//
-//        }
+
 
         pvTime = pickerBuilder!!.setCancelText(resources.getString(R.string.cancel))
                 .setSubmitText(resources.getString(R.string.data_sure)).build()
@@ -925,13 +917,29 @@ class RegisterActivity : BaseActivity<RegisterPresenter>(), RegisterContract.Vie
 
     }
 
-    override fun registerSuccess(data:RegisterSuccessBean.DataBean) {
+    override fun registerSuccess(data:LoginBean.DataBean) {
 
 
         hideLoadingText()
 
         LoginManager.instance.updateRongUserInfo("$data.id", data.nickName, data.headImage)
 
+        LoginManager.instance.loginSuccess(GsonUtils.instance.toJson(data))
+
+        startMainActivity()
+
+
+
+
+        finish()
+    }
+
+
+    private fun startMainActivity() {
+
+
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
         finish()
     }
 

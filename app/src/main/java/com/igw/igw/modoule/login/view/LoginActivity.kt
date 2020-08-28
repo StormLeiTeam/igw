@@ -163,6 +163,8 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
 
             RegisterActivity.startSelf(this)
 
+            finish()
+
         }
 
         // select lanuage  mode

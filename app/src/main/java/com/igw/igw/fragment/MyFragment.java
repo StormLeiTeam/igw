@@ -135,10 +135,22 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        LogUtils.d(TAG,"myframent -- > onresume");
+        mPresenter.userInfo();
+        mPresenter.getFriendsList();
+
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        LogUtils.d(TAG,"myframent -- > onHiddenChanged");
 
         if (!hidden) {
+            mPresenter.userInfo();
             mPresenter.getFriendsList();
         }
     }

@@ -95,7 +95,8 @@
         <activity
             android:name=".modoule.login.view.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".modoule.splash.view.SplashActivity"
             android:theme="@style/Splash_Theme">

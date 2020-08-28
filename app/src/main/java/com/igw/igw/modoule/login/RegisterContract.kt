@@ -1,10 +1,7 @@
 package com.igw.igw.modoule.login
 
 import com.igw.igw.bean.NationalityBean
-import com.igw.igw.bean.login.CityListBean
-import com.igw.igw.bean.login.HeadImageBean
-import com.igw.igw.bean.login.RegisterBean
-import com.igw.igw.bean.login.RegisterSuccessBean
+import com.igw.igw.bean.login.*
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.view.IBaseView
 import com.igw.igw.network.NetObserver
@@ -28,7 +25,7 @@ interface RegisterContract {
 
         fun getCityData(countryId: Int, language: Int,observer: NetObserver<CityListBean.DataBean>)
 
-        fun registerUser(registerBean: RegisterBean, observer: NetObserver<RegisterSuccessBean.DataBean>)
+        fun registerUser(registerBean: RegisterBean, observer: NetObserver<LoginBean.DataBean>)
 
 
         fun unloadImageFile(file: File, observer: NetObserver<HeadImageBean.DataBean>)
@@ -40,7 +37,7 @@ interface RegisterContract {
     interface View : IBaseView {
 
 
-        fun registerSuccess(data: RegisterSuccessBean.DataBean)
+        fun registerSuccess(data: LoginBean.DataBean)
 
         fun registerFail(code: Int, msg: String)
 

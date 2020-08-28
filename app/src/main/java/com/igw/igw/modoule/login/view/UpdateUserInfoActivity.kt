@@ -1019,7 +1019,7 @@ class UpdateUserInfoActivity : BaseActivity<UpdateUserInfoPresenter>(), UpdateIn
 
 
         setResult(Activity.RESULT_OK)
-        finish()
+        this.finish()
     }
 
     override fun updateUserInfoFail(code: Int, msg: String) {

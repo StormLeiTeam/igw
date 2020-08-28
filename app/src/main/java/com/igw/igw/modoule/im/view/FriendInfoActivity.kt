@@ -126,7 +126,7 @@ class FriendInfoActivity : BaseActivity<FriendInfoPresenter>(), FriendInfoContra
             iv_sex.setBackgroundResource(R.drawable.man)
 
         } else {
-            iv_sex.setBackgroundResource(R.drawable.man)
+            iv_sex.setBackgroundResource(R.drawable.girl)
 
         }
 

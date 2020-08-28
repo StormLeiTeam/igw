@@ -9,6 +9,10 @@ import java.io.PipedReader;
  * @Describe
  */
 public class RegisterSuccessBean {
+
+
+
+
     /**
      * code : 200
      * data : {"accountNonExpired":true,"accountNonLocked":true,"agencyName":"明咯咙","birthday":"2017-04-20","cityId":1,"cnBalance":0,"countryId":1,"credentialsNonExpired":true,"ctime":"2020-04-20 15:52:53","email":"578864539@qq.com","enBalance":0,"enabled":true,"firstName":"你就","hasPay":1,"headImage":"","id":1,"inviteCode":"","lastLoginIp":"219.142.145.78","lastLoginTime":"2020-04-28 14:04:34","lastName":"民","lastPasswordReset":"2020-04-28 18:32:04","mobilePhone":"18235188642","nickName":"hah\n哈哈","password":"$2a$10$/J.wl7hqBwvtNPdFqg0FmuRGGTP.8sFmMyb48lAMKezrUihhNy40u","rongyunToken":"","sex":1,"sortWithOutOrderBy":"","sort_":"","status":0,"userDesc":"我哈哈哈哈哈哈哈哈","userName":"18235188642","userType":4,"utime":"2020-04-28 18:32:03"}

@@ -31,6 +31,7 @@ import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
 
 import com.shengshijingu.yashiji.common.Constants;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -140,6 +141,7 @@ public class MainActivity extends BaseActivity {
                      */
                     @Override
                     public UserInfo getUserInfo(String userId) {
+                        LogUtils.d(TAG, "获取的userid --> " + userId);
                         UserInfo userInfo = new UserInfo(userid, SharedUtils.getUserName(), Uri.parse(Constants.BASE_URL + SharedUtils.getHeadImg()));
                         return userInfo;
                     }
@@ -152,9 +154,6 @@ public class MainActivity extends BaseActivity {
                 Log.d("12345", "--onSuccess" + errorCode);
             }
         });
-
-
-
 
 
         boolean localeEn = LocaleUtils.INSTANCE.isLocaleEn(this);
@@ -170,7 +169,7 @@ public class MainActivity extends BaseActivity {
 
         if (null != splashLink) {
 
-            WebActivity.Companion.startSelf(this,splashLink);
+            WebActivity.Companion.startSelf(this, splashLink);
 
         }
 

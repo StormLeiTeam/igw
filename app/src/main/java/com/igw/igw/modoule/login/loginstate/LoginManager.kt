@@ -6,6 +6,7 @@ import android.os.ParcelUuid
 import android.util.Log
 import cn.jpush.android.api.JPushInterface
 import com.igw.igw.bean.login.LoginBean
+import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.utils.*
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.Constants.userId
@@ -95,6 +96,7 @@ class LoginManager {
         SharedUtils.setUserName(user.userName)
 
         SharedUtils.setHeadImg(user.headImage)
+        SharedUtils.setId("${user.id}")
 
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_NAME, user.userName)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_HEADPIC, user.headImage)
@@ -272,7 +274,7 @@ class LoginManager {
     fun updateUserInfo(userInfo: String) {
 
 
-        var user = GsonUtils.instance.fromJson<LoginBean.DataBean>(userInfo, LoginBean.DataBean::class.java)
+        var user = GsonUtils.instance.fromJson<UserInfoBean.DataBean>(userInfo, UserInfoBean.DataBean::class.java)
 
 //        SharedUtils.setAccessToken(user.token)
 //        SharedUtils.setRongToken(user.rongyunToken)
@@ -284,12 +286,12 @@ class LoginManager {
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_HEADPIC, user.headImage)
 
 
-        Log.e("12345", user.rongyunToken + "===" + user.token)
-        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
+//        Log.e("12345", user.rongyunToken + "===" + user.)
+//        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, user.token)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_ID, "${user.id}")
 
-        (loginState as LoginInState).initData(user.token)
+//        (loginState as LoginInState).initData(user.token)
         (loginState as LoginInState).initRongToken(user.rongyunToken)
     }
 //    fun updateUserInfo(token: String, userinfoJson: String) {
