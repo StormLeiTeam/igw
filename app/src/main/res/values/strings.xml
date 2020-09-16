@@ -178,4 +178,9 @@
     <string name="content_login_out">"确定退出? "</string>
     <string name="commit_login_out">退出登录</string>
     <string name="verify_code_sended">验证码已发送</string>
+    <string name="member_of_public_chat_room">Member of public chat room</string>
+    <string name="banned">禁言</string>
+    <string name="unbannned">解除禁言</string>
+    <string name="add_friend">加好友</string>
+    <string name="administrator">管理员</string>
 </resources>

@@ -48,7 +48,7 @@
             android:name=".modoule.im.view.GroupChatRoomActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/chatTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="adjustResize|stateHidden|adjustPan">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.VIEW" /> -->

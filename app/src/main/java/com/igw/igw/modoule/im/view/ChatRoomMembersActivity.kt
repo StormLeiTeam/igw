@@ -69,7 +69,9 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 
         StatusBarUtils.setDarkMode(this)
 
-        status_bar_main.setTitle("公共聊天室成员(0)")
+//        status_bar_main.setTitle("公共聊天室成员(0)")
+        status_bar_main.setTitle("${resources.getString(R.string.member_of_public_chat_room)}(0)")
+
         status_bar_main.setTitleTextSize(16F)
         status_bar_main.setConfirmVisible(View.VISIBLE)
         status_bar_main.setConfirmText("中/En")
@@ -244,7 +246,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
     override fun onSuccessChatRoomUser(data: ChatRoomUsesBean.DataBean) {
 
         // 获取成功
-        status_bar_main.setTitle("公共聊天室成员(${data.roomUsers.size})")
+        status_bar_main.setTitle("${resources.getString(R.string.member_of_public_chat_room)}(${data.roomUsers.size})")
 
         mAdapter.refreshData(data.roomUsers)
         hideLoadingText()

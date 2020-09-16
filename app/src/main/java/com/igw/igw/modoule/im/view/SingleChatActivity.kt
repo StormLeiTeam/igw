@@ -2,6 +2,8 @@ package com.igw.igw.modoule.im.view
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.view.View
@@ -54,8 +56,11 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_chat)
 
-        StatusBarUtils.transparentBarOrFitSystemWindow(this)
+//        StatusBarUtils.transparentBarOrFitSystemWindow(this)
+        StatusBarUtils.setColor(this, Color.parseColor("#ffffff"))
+
         StatusBarUtils.setDarkMode(this)
+        status_bar_main.setStatusBarVisible(View.GONE)
         status_bar_main.setTitle("")
         status_bar_main.setTitleTextSize(16f)
         status_bar_main.setTitleTextColor(R.color.black_000000)

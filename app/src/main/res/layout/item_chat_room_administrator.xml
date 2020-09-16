@@ -47,7 +47,7 @@
             <Button
                 android:visibility="gone"
                 android:id="@+id/btn_banned"
-                android:text="禁言"
+                android:text="@string/banned"
                 android:textSize="12sp"
                 android:textColor="#F33A39"
                 android:layout_centerVertical="true"
@@ -58,7 +58,7 @@
             <Button
                 android:visibility="gone"
                 android:id="@+id/btn_unbanned"
-                android:text="解除禁言"
+                android:text="@string/unbannned"
                 android:textSize="12sp"
                 android:textColor="#5DCEF4"
                 android:layout_centerVertical="true"
@@ -74,7 +74,7 @@
             android:id="@+id/btn_add_friend"
             android:layout_marginStart="13dp"
             android:textSize="12sp"
-            android:text="加好友"
+            android:text="@string/add_friend"
             android:background="@drawable/bg_btn_add_friend"
             android:layout_marginEnd="11dp"
             android:layout_width="64dp"
