@@ -1,20 +1,18 @@
 package com.igw.igw.modoule.login.loginstate
 
 import android.content.Context
+import android.content.QuickViewConstants
 import android.net.Uri.parse
-import android.os.ParcelUuid
 import android.util.Log
 import cn.jpush.android.api.JPushInterface
 import com.igw.igw.bean.login.LoginBean
 import com.igw.igw.bean.login.UserInfoBean
 import com.igw.igw.utils.*
 import com.shengshijingu.yashiji.common.Constants
-import com.shengshijingu.yashiji.common.Constants.userId
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.UserInfo
-import okhttp3.internal.publicsuffix.PublicSuffixDatabase
-import java.io.File
+import kotlin.math.log
 
 
 /**
@@ -107,6 +105,7 @@ class LoginManager {
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_ID, "${user.id}")
 
+
         (loginState as LoginInState).initData(user.token)
         (loginState as LoginInState).initRongToken(user.rongyunToken)
 
@@ -120,6 +119,82 @@ class LoginManager {
 //        RongIM.getInstance().refreshUserInfoCache(userInfo);
 
 //        bindJush(user)
+
+
+        loginRongChatIM(user.roomId)
+
+//        dealWithChatRoom(user.roomId)
+
+    }
+
+    private fun dealWithChatRoom(roomId: String) {
+        var oldRoomId = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_ROOMID)
+
+        // 退出旧的
+        if (oldRoomId != null && oldRoomId.isNotEmpty()) {
+
+
+            LogUtils.d(TAG, "oldroomid --> ${oldRoomId}")
+
+            // 退出
+            RongIMClient.getInstance().quitChatRoom(oldRoomId, object : RongIMClient.OperationCallback() {
+                /**
+                 * 成功回调
+                 */
+                override fun onSuccess() {
+
+                    LogUtils.d(TAG, "退出聊天群  ")
+                    // 存储新的
+                    SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, roomId)
+                    loginRongChatIM(roomId)
+
+
+                }
+
+                /**
+                 * 失败回调
+                 * @param errorCode 错误码
+                 */
+                override fun onError(errorCode: RongIMClient.ErrorCode) {
+
+                    LogUtils.d(TAG, "退出聊天群 -----")
+                }
+            })
+
+
+        } else {
+
+            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, roomId)
+            loginRongChatIM(roomId)
+
+        }
+
+    }
+
+    private fun loginRongChatIM(roomId: String) {
+
+        // 先存起来
+        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, roomId)
+
+
+        if (roomId.isNotEmpty()) {
+
+            RongIMClient.getInstance().joinChatRoom(roomId, 50, object : RongIMClient.OperationCallback() {
+                override fun onSuccess() {
+
+                    LogUtils.d(TAG, "成功加入聊天群")
+                }
+
+                override fun onError(p0: RongIMClient.ErrorCode?) {
+                    LogUtils.d(TAG, "加入聊天群---------")
+
+
+                }
+
+            })
+
+        }
+
 
     }
 
@@ -146,7 +221,11 @@ class LoginManager {
         // 清除个人信息
         // 更改用户状态
         state(LoginOutState())
+        var oldRoomId = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_ROOMID)
+        quitChatRoom(oldRoomId!!)
         (loginState as LoginOutState).loginOut()
+//        SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, oldRoomId!!)
+
 
     }
 
@@ -189,7 +268,10 @@ class LoginManager {
 
             }
 
-//            updateRongUserInfo()
+
+            // 添加
+            var roomId = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_ROOMID)
+            loginRongChatIM(roomId!!)
 
 
         } else {
@@ -291,19 +373,54 @@ class LoginManager {
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_RONGTOKEN, user.rongyunToken)
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_ID, "${user.id}")
 
+
 //        (loginState as LoginInState).initData(user.token)
         (loginState as LoginInState).initRongToken(user.rongyunToken)
+
+
+        //先退出
+        var oldRoomId = SPUtils.getInstance(Contanct.USER_INFO).getString(Contanct.KEY_ROOMID)
+
+        if (oldRoomId!! != user.roomId) {
+            quitChatRoom(oldRoomId)
+            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, user.roomId)
+            loginRongChatIM(user.roomId)
+        }
+
     }
-//    fun updateUserInfo(token: String, userinfoJson: String) {
-//
-//        if (loginState is LoginState) {
-//
-//            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_TOKEN, token)
-//            SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_USER_INFO,userinfoJson)
-//        }
-//
-//
-//    }
+
+    private fun quitChatRoom(roomid: String) {
+
+
+        if (roomid.isNotEmpty()) {
+
+            RongIMClient.getInstance().quitChatRoom(roomid, object : RongIMClient.OperationCallback() {
+                /**
+                 * 成功回调
+                 */
+                override fun onSuccess() {
+
+                    LogUtils.d(TAG, "退出聊天群")
+                    // 存储新的
+//                    SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_ROOMID, roomId)
+//                    loginRongChatIM(roomId)
+
+
+                }
+
+                /**
+                 * 失败回调
+                 * @param errorCode 错误码
+                 */
+                override fun onError(errorCode: RongIMClient.ErrorCode) {
+
+                    LogUtils.d(TAG, "退出聊天群 -----")
+                }
+            })
+
+        }
+
+    }
 
 
 }

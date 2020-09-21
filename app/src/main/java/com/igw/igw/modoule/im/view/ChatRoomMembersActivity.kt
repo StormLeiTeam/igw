@@ -82,6 +82,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
             targetId = it
         }
 
+
         initAdapter()
         setUpListener()
         mPresenter.userInfo()
@@ -294,7 +295,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 
     override fun bannedSuccess(data: BannedBean.DataBean) {
 
-        ToastUtil.showCenterToast(this,R.string.operation_successful)
+        ToastUtil.showCenterToast(this, R.string.operation_successful)
 
         getMembersForNet("")
 
@@ -303,7 +304,7 @@ class ChatRoomMembersActivity : BaseActivity<ChatRoomMembersPresenter>(), ChatRo
 
     override fun bannedFail(code: Int, msg: String) {
 
-        ToastUtil.showCenterToast(this,msg)
+        ToastUtil.showCenterToast(this, msg)
     }
 
     override fun fail(o: Any?) {

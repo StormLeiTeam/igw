@@ -18,6 +18,7 @@ import com.igw.igw.bean.login.UserInfoBean;
 import com.igw.igw.fragment.my.MyContract;
 import com.igw.igw.fragment.my.model.MyModel;
 import com.igw.igw.fragment.my.presenter.MyPresenter;
+import com.igw.igw.modoule.abouthelp.view.AboutActivity;
 import com.igw.igw.modoule.abouthelp.view.FeedbackOrHelpActivity;
 import com.igw.igw.modoule.im.view.MyFriendActivity;
 import com.igw.igw.modoule.login.loginstate.LoginManager;
@@ -70,12 +71,13 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private LinearLayout ll_update_version;
 
     private LinearLayout ll_my_friend;
-
+    private LinearLayout ll_about;
     private UserInfoBean.DataBean mData; // 用户数据
 
     private TextView tv_my_friend;
     private TextView tv_change_lanuage;
     private ImageView iv_sex;
+
 
     public static MyFragment getInstance() {
         MyFragment myFragment = new MyFragment();
@@ -115,6 +117,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_update_info = bindView(R.id.ll_update_info);
         ll_help_or_feedback = bindView(R.id.ll_help_or_feedback);
         llLoginOut = bindView(R.id.ll_login_out);
+        ll_about = bindView(R.id.ll_about);
 
         tv_nickName = bindView(R.id.tv_my_nickName);
         tv_desc = bindView(R.id.tv_my_desc);
@@ -198,6 +201,10 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     private void setUpListener() {
 
+        ll_about.setOnClickListener(v -> {
+
+            AboutActivity.Companion.startSelf(getActivity());
+                    });
 
         tv_change_lanuage.setOnClickListener(v -> {
 

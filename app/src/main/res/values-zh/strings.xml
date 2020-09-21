@@ -183,4 +183,7 @@
     <string name="unbannned">解除禁言</string>
     <string name="add_friend">加好友</string>
     <string name="administrator">管理员</string>
+    <string name="title_about">关于我们</string>
+    <string name="title_about_activity">关于我们</string>
+
 </resources>

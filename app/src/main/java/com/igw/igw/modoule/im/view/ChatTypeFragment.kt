@@ -207,7 +207,7 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
                 activity?.let {
 
-                    SingleChatActivity.startSelfOfIntent(it, bussiessChatRoom, "商务聊天室", Conversation.ConversationType.GROUP)
+                    SingleChatActivity.startSelfOfIntent(it, bussiessChatRoom, "商务聊天室", Conversation.ConversationType.CHATROOM)
 
                 }
 

@@ -26,4 +26,7 @@ object Contanct {
     val KEY_USER_NAME = "user_name"
     val KEY_USER_HEADPIC = "user_headpic"
 
+    val KEY_ROOMID = "room_id" // 聊天室id
+
+
 }

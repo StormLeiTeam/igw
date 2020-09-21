@@ -32,7 +32,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="@string/cancel"
                 android:textColor="#88000000"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:textSize="18sp"
@@ -50,7 +50,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="@string/complete"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
@@ -63,7 +63,7 @@
             app:wv_autoFitTextSize="true"
             app:wv_curved="true"
             app:wv_normalItemTextColor="@color/gray_9FA7B5"
-            app:wv_textSize="@dimen/sp_16"
+            app:wv_textSize="18sp"
             app:wv_dividerHeight="1dp"
             app:wv_dividerType="fill"
             app:wv_lineSpacing="3dp"

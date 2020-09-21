@@ -16,6 +16,7 @@ import com.igw.igw.widget.storm.MorePopWindow
 import com.igw.igw.widget.storm.StatusBarView
 import io.rong.imkit.RongIM
 import io.rong.imkit.fragment.ConversationFragment
+import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.UserInfo
@@ -38,10 +39,29 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
             var conversationType = type
 
 
-
+//            if (type == Conversation.ConversationType.CHATROOM) {
+//                LogUtils.d(TAG,"进入聊天室 的内容  ")
+//
+//
+//                RongIMClient.getInstance().joinChatRoom(chatId,50,object :RongIMClient.OperationCallback(){
+//                    override fun onSuccess() {
+//
+//                        LogUtils.d(TAG,"进入聊天室成功 ")
+//                        RongIM.getInstance()?.startConversation(activity, conversationType, chatId, chatName)
+//
+//                    }
+//
+//                    override fun onError(p0: RongIMClient.ErrorCode?) {
+//                        LogUtils.d(TAG,"进入聊天室失败 ")
+//                    }
+//
+//                })
+//            }else{
 
             LogUtils.d(TAG, "获取  friendID $chatId he  name --> $chatName")
             RongIM.getInstance()?.startConversation(activity, conversationType, chatId, chatName)
+//            }
+
 
         }
     }
@@ -259,6 +279,28 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
 
 
         ChatRoomMembersActivity.startSelf(this, conversationFragment.targetId)
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (conversationFragment.conversationType == Conversation.ConversationType.CHATROOM) {
+            LogUtils.d(TAG,"聊天室状态")
+            RongIMClient.getInstance().joinChatRoom(conversationFragment.targetId, 50, object : RongIMClient.OperationCallback() {
+                override fun onSuccess() {
+
+                    LogUtils.d(ChatRoomMembersActivity.TAG, "进入聊天室成功 ")
+
+                }
+
+                override fun onError(p0: RongIMClient.ErrorCode?) {
+                    LogUtils.d(ChatRoomMembersActivity.TAG, "进入聊天室失败 ")
+                }
+
+            })
+        }
 
 
     }

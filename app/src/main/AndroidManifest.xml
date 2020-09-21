@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/igw_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modoule.login.view.WebActivity"></activity>
+        <activity android:name=".modoule.abouthelp.view.AboutActivity"></activity>
+        <activity android:name=".modoule.login.view.WebActivity" />
         <activity android:name=".modoule.im.view.FriendInfoActivity" />
         <activity android:name=".modoule.im.view.PersonInfoActivity" />
         <activity android:name=".modoule.im.view.ChatRoomMembersActivity" />
@@ -95,8 +96,9 @@
         <activity
             android:name=".modoule.login.view.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".modoule.splash.view.SplashActivity"
             android:theme="@style/Splash_Theme">
