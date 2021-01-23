@@ -264,6 +264,14 @@ class LoginActivity : BaseActivity<LoginModePresenter>(), LoginContract.View {
     //登陆
     private fun login() {
 
+
+        if (cb_check.isChecked == false) {
+//            "请勾选协议"
+            ToastUtil.showCenterToast(this,"请勾选协议")
+            return
+        }
+
+
 //        showLoadingText("登录中...")
 
 
