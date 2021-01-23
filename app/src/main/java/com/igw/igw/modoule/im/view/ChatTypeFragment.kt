@@ -10,6 +10,7 @@ import com.igw.igw.modoule.im.model.ChatModel
 import com.igw.igw.modoule.im.presenter.ChatPresenter
 import com.igw.igw.modoule.login.loginstate.LoginManager
 import com.igw.igw.utils.LogUtils
+import com.igw.igw.widget.storm.StatusBarView
 import com.itingchunyu.badgeview.BadgeTextView
 import com.shengshijingu.yashiji.common.Constants
 import com.shengshijingu.yashiji.common.util.ToastUtil
@@ -81,6 +82,12 @@ class ChatTypeFragment : BaseMvpDataFragment<ChatPresenter>(), ChatTypeContract.
 
     private fun setUpListener() {
 
+        status_bar_main.setOnConfirmClickListener(object :StatusBarView.OnConfirmClickListener{
+            override fun onClick() {
+
+                (mContext as MainActivity).changeLanuage(R.id.ll_main_message)
+            }
+        })
 
         // 商务聊天
         ll_business_chat.setOnClickListener {
