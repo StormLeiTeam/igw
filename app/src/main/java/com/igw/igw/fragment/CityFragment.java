@@ -37,6 +37,7 @@ import com.igw.igw.utils.ColorUtils;
 import com.igw.igw.utils.LocaleUtils;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.utils.MImageGetter;
+import com.igw.igw.utils.SPUtils;
 import com.igw.igw.utils.SharedUtils;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 import com.shengshijingu.yashiji.common.controller.Controller;
@@ -441,6 +442,8 @@ public class CityFragment extends BaseDataFragment {
                 }
 
                 LogUtils.d(TAG, "获取的城市id  -> " + cityId);
+
+                SPUtils.Companion.getInstance("cityid").put("city_id" ,cityId);
 
             }).setLayoutRes(R.layout.addresselected_dialog, v -> {
                 TextView tv_finish = v.findViewById(R.id.tv_finish);

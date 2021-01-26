@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator
 import com.igw.igw.R
 import com.igw.igw.activity.BaseActivity
 import com.igw.igw.app.BaseAdapter
+import com.igw.igw.app.IGWApplication
 import com.igw.igw.bean.help.HelpBean
 import com.igw.igw.modoule.abouthelp.HelpContract
 import com.igw.igw.modoule.abouthelp.adapter.HelpAdapter
@@ -125,6 +126,8 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
     override fun onSuccessFeedBack() {
 
         //
+
+        et_question.text.clear()
         ToastUtil.showCenterToast(this, R.string.success_feedbback)
 
     }
@@ -258,7 +261,18 @@ class FeedbackOrHelpActivity : BaseActivity<FeedbackOrHelpPresenter>(), HelpCont
             return
 
         }
-        mPresenter.saveFeedback(content)
+        var currentlocale = LocaleUtils.getCurrentlocale(this)
+        var  lanuage = 1;
+        if (currentlocale == LocaleUtils.LOCALE_ENGLISH){
+
+            lanuage - 2
+        }
+
+
+        val cityId = SPUtils.getInstance("cityid").getInt("city_id", 1)
+
+
+        mPresenter.saveFeedback(content,lanuage,cityId)
     }
 
     override fun initPresenter() {

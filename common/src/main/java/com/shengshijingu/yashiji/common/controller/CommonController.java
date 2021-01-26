@@ -38,11 +38,13 @@ public class CommonController extends Controller{
      * @param content
      * @param observer
      */
-    public void saveFeedback(String content ,Observer observer){
+    public void saveFeedback(String content,int language, int cityId, Observer observer){
 
 
         Map<String, Object> params = new HashMap<>();
         params.put("content", content);
+        params.put("language",language);
+        params.put("cityId",cityId);
 
         ApiSubscribe(NetApi.getApiService().saveFeedback(getRequestBody(params)),observer);
     }

@@ -64,9 +64,9 @@ class FeedbackOrHelpPresenter(model: HelpContract.Model) :
         })
     }
 
-    override fun saveFeedback(content: String) {
+    override fun saveFeedback(content: String,language: Int, cityId: Int) {
 
-        mModel.saveFeedback(content,object : NetObserver<CommonBean.DataBean>(CommonBean.DataBean::class.java){
+        mModel.saveFeedback(content,language, cityId,object : NetObserver<CommonBean.DataBean>(CommonBean.DataBean::class.java){
             override fun onFail(code: Int, msg: String?) {
                 LogUtils.d(TAG, "提交反馈失败 ")
 

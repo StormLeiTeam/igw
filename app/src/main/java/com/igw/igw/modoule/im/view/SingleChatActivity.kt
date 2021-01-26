@@ -6,10 +6,15 @@ import android.graphics.Color
 import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.widget.TextView
 import com.igw.igw.R
 import com.igw.igw.modoule.im.MyConversationFragment
 import com.igw.igw.modoule.login.loginstate.LoginManager
+import com.igw.igw.utils.LocaleUtils
+import com.igw.igw.utils.LocaleUtils.LOCALE_CHINESE
+import com.igw.igw.utils.LocaleUtils.LOCALE_ENGLISH
 import com.igw.igw.utils.LogUtils
 import com.igw.igw.utils.StatusBarUtils
 import com.igw.igw.widget.storm.MorePopWindow
@@ -20,6 +25,7 @@ import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.UserInfo
+import kotlinx.android.synthetic.main.cbk_dialog_pick_time.view.*
 import kotlinx.android.synthetic.main.common_status_bar.*
 import kotlinx.android.synthetic.main.status_bar_view.view.*
 
@@ -93,6 +99,7 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
         setUpFragment()
 
         intent.data?.let {
+
             val title = it.getQueryParameter("title")
 
             status_bar_main.setTitle(title ?: "")
@@ -107,6 +114,8 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
     }
 
     private fun updateStatusBarViews() {
+
+
 
 
         if (conversionType == Conversation.ConversationType.PRIVATE) {
@@ -127,6 +136,8 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
     private fun setUpListener() {
 
 
+
+
         status_bar_main.setOnShareClickListener(object : StatusBarView.OnShareClickListener {
             override fun onShare() {
 
@@ -136,6 +147,9 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
                 popWindow.showPopupWindow(status_bar_main.iv_share)
 
                 LogUtils.d(TAG, "获取 嗲积极事件 ")
+
+
+
 
 //                showPopupMenu()
             }
@@ -269,8 +283,21 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
 
         LogUtils.d(TAG, "点击切换了语言 ")
 
+//        LocaleUtils.changeLocale(this)
+        val currentlocale = LocaleUtils.getCurrentlocale(this);
+
+        if (currentlocale == LocaleUtils.LOCALE_ENGLISH){
+            LocaleUtils.saveUserLocale(this,LocaleUtils.LOCALE_CHINESE)
+            LocaleUtils.updateLocale(this,LOCALE_CHINESE)
+        }else{
+            LocaleUtils.saveUserLocale(this,LocaleUtils.LOCALE_ENGLISH)
+            LocaleUtils.updateLocale(this,LOCALE_ENGLISH)
+
+
+        }
 
     }
+
 
     override fun groupMember() {
 
@@ -278,7 +305,7 @@ class SingleChatActivity : FragmentActivity(), MorePopWindow.OnPopWindowItemClic
 
 
 
-        ChatRoomMembersActivity.startSelf(this, conversationFragment.targetId)
+        ChatRoomMembersActivity.startSelf(this@SingleChatActivity, conversationFragment.targetId)
 
 
     }

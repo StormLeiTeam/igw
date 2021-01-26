@@ -26,7 +26,7 @@ class HelpContract {
         fun onFailHelpList(code: Int, msg: String, isLoadMore: Boolean)
 
         fun onSuccessFeedBack()
-        fun onFailFeedBack(code: Int,msg: String)
+        fun onFailFeedBack(code: Int, msg: String)
 
 
     }
@@ -37,7 +37,7 @@ class HelpContract {
 
         fun getHelpList(pageNum: Int, pageSize: Int, observer: NetObserver<HelpBean.DataBean>)
 
-        fun saveFeedback(content: String, observer: NetObserver<CommonBean.DataBean>)
+        fun saveFeedback(content: String,language: Int, cityId: Int, observer: NetObserver<CommonBean.DataBean>)
 
     }
 
@@ -47,7 +47,7 @@ class HelpContract {
         fun getHelpList(pageNum: Int, pageSize: Int, isLoadMore: Boolean)
 
         // 提交反馈
-        fun saveFeedback(content: String)
+        fun saveFeedback(content: String, language: Int, cityId: Int)
 
 
     }

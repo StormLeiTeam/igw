@@ -1,5 +1,7 @@
 package com.igw.igw.app;
 
+import java.io.PipedReader;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,15 +71,12 @@ public class IGWApplication extends Application {
             if (defaultProgress) {
                 RongIM.init(this, "p5tvi9dspqek4");
                 LoginManager.Companion.getInstance().init();
-                LogUtils.d(TAG,"融云 ------------------------");
+                LogUtils.d(TAG, "融云 ------------------------");
                 LoginManager.Companion.getInstance().initLoginState();
             }
         }
 
     }
-
-
-
 
 
     private void initLanuage() {
@@ -121,7 +120,7 @@ public class IGWApplication extends Application {
 
         DisplayMetrics dm = resources.getDisplayMetrics();
 
-        configuration.locale = i==0? Locale.ENGLISH : Locale.SIMPLIFIED_CHINESE;
+        configuration.locale = i == 0 ? Locale.ENGLISH : Locale.SIMPLIFIED_CHINESE;
         resources.updateConfiguration(configuration, dm);
     }
 
@@ -213,4 +212,13 @@ public class IGWApplication extends Application {
         return context;
     }
 
+    private int cityId = 1; // 默认北京
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
 }

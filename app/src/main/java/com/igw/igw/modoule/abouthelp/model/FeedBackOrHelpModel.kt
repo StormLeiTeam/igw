@@ -22,8 +22,8 @@ class FeedBackOrHelpModel : HelpContract.Model {
         ControllerUtils.getCommonController().getHelpList(pageNum, pageSize, observer)
     }
 
-    override fun saveFeedback(content: String, observer: NetObserver<CommonBean.DataBean>) {
+    override fun saveFeedback(content: String, language: Int, cityId: Int, observer: NetObserver<CommonBean.DataBean>) {
 
-        ControllerUtils.getCommonController().saveFeedback(content,observer)
+        ControllerUtils.getCommonController().saveFeedback(content, language, cityId, observer)
     }
 }
