@@ -77,6 +77,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     private TextView tv_my_friend;
     private TextView tv_change_lanuage;
     private ImageView iv_sex;
+    private TextView tv_update_version; // 软件更新
 
 
     public static MyFragment getInstance() {
@@ -129,6 +130,8 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         tv_my_friend = bindView(R.id.tv_my_friend);
         tv_change_lanuage = bindView(R.id.tv_change_lanuage);
         iv_sex = bindView(R.id.iv_sex);
+        tv_update_version = bindView(R.id.tv_update_version);
+
 
         initData();
 
@@ -142,8 +145,12 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         super.onResume();
 
         LogUtils.d(TAG,"myframent -- > onresume");
-        mPresenter.userInfo();
-        mPresenter.getFriendsList();
+
+        boolean login = LoginManager.Companion.getInstance().isLogin();
+        if(login) {
+            mPresenter.userInfo();
+            mPresenter.getFriendsList();
+        }
 
     }
 
@@ -200,6 +207,12 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
 
     private void setUpListener() {
+
+        tv_update_version.setOnClickListener(v ->{
+
+            // 软件更新
+            updateVersion();
+        });
 
         ll_about.setOnClickListener(v -> {
 
@@ -326,6 +339,14 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     }
 
+    //软件更新
+    private void updateVersion() {
+
+        mPresenter.updateVersion();
+
+
+    }
+
 
     /**
      * 版本检测
@@ -346,6 +367,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         if (LoginManager.Companion.getInstance().isLogin()) {
 
             LoginManager.Companion.getInstance().loginOut();
+
         }
 
     }
@@ -425,6 +447,8 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     @Override
     public void versionSuccessful(@NotNull VersionBean.DataBean data) {
 
+
+
     }
 
     // 检测版本数据失败
@@ -437,11 +461,12 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (null != getMPresenter()) {
             getMPresenter().detachView();
 
         }
+        super.onDestroy();
+
     }
 
     @Override

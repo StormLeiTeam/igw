@@ -385,6 +385,7 @@
                             android:src="@mipmap/icon_my_renew" />
 
                         <TextView
+                            android:id="@+id/tv_update_version"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
