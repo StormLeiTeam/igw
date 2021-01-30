@@ -13,7 +13,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 20191231
-        versionName "1.1.1"
+        versionName "1.0.0"
         multiDexEnabled true
         flavorDimensions "default"
 

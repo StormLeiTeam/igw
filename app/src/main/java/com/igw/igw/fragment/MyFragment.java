@@ -1,7 +1,11 @@
 package com.igw.igw.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.app.IGWApplication;
 import com.igw.igw.bean.FriendBean;
 import com.igw.igw.bean.VersionBean;
 import com.igw.igw.bean.login.LoginBean;
@@ -18,6 +23,7 @@ import com.igw.igw.bean.login.UserInfoBean;
 import com.igw.igw.fragment.my.MyContract;
 import com.igw.igw.fragment.my.model.MyModel;
 import com.igw.igw.fragment.my.presenter.MyPresenter;
+import com.igw.igw.httpclient.DownLoadUtils;
 import com.igw.igw.modoule.abouthelp.view.AboutActivity;
 import com.igw.igw.modoule.abouthelp.view.FeedbackOrHelpActivity;
 import com.igw.igw.modoule.im.view.MyFriendActivity;
@@ -25,6 +31,7 @@ import com.igw.igw.modoule.login.loginstate.LoginManager;
 import com.igw.igw.modoule.login.view.LoginActivity;
 import com.igw.igw.modoule.login.view.UpdateActivity;
 import com.igw.igw.modoule.login.view.UpdateUserInfoActivity;
+import com.igw.igw.utils.AppUtils;
 import com.igw.igw.utils.GlideUtils;
 import com.igw.igw.utils.GsonUtils;
 import com.igw.igw.utils.LogUtils;
@@ -144,10 +151,10 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     public void onResume() {
         super.onResume();
 
-        LogUtils.d(TAG,"myframent -- > onresume");
+        LogUtils.d(TAG, "myframent -- > onresume");
 
         boolean login = LoginManager.Companion.getInstance().isLogin();
-        if(login) {
+        if (login) {
             mPresenter.userInfo();
             mPresenter.getFriendsList();
         }
@@ -157,7 +164,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.d(TAG,"myframent -- > onHiddenChanged");
+        LogUtils.d(TAG, "myframent -- > onHiddenChanged");
 
         if (!hidden) {
             mPresenter.userInfo();
@@ -208,7 +215,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
 
     private void setUpListener() {
 
-        tv_update_version.setOnClickListener(v ->{
+        tv_update_version.setOnClickListener(v -> {
 
             // 软件更新
             updateVersion();
@@ -217,7 +224,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
         ll_about.setOnClickListener(v -> {
 
             AboutActivity.Companion.startSelf(getActivity());
-                    });
+        });
 
         tv_change_lanuage.setOnClickListener(v -> {
 
@@ -446,39 +453,92 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
      */
     @Override
     public void versionSuccessful(@NotNull VersionBean.DataBean data) {
-
-
-
-    }
-
-    // 检测版本数据失败
-    @Override
-    public void versionFail(int code, @NotNull String msg) {
+        // 获取新版本
+        VersionBean.DataBean.ANDROIDBean android = data.getANDROID();
+        updateVersionOfIntent(android);
 
 
     }
 
+    private void updateVersionOfIntent(VersionBean.DataBean.ANDROIDBean android) {
+        if (android.isIsForcedUpdate()) {
+            //强制更新 
+
+        } else {
+            // 非强制更新 
+
+            if (!AppUtils.INSTANCE.checkVersion(IGWApplication.getContext()).equals(android.getVersion())) {
+//                new AlertDialog.Builder(mContext).builder()
+//                        .setTitle("软件更新")
+//
+//                        .setPositiveButton("更新", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                String apiurl = "https://down.qq.com/qqweb/QQ_1/android_apk/Android_6.0.3.6604_537064871.apk";
+//
+//
+////                DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, Constants.BASE_URL + android.getAppUrl(), DownLoadUtils.getApkName(android.getAppUrl()));
+//                                DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, apiurl, DownLoadUtils.getApkName(apiurl));
+//
+//
+//                            }
+//                        }).setNegativeButton("暂不更新", null).show();
+//
+//
+//            }
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("软件更新")
+                        .setMessage("新版本软件更新")
+                        .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String apiurl = "https://down.qq.com/qqweb/QQ_1/android_apk/Android_6.0.3.6604_537064871.apk";
+
+
+//                DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, Constants.BASE_URL + android.getAppUrl(), DownLoadUtils.getApkName(android.getAppUrl()));
+                                DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, apiurl, DownLoadUtils.getApkName(apiurl));
+
+
+                            }
+                        })
+                        .setNegativeButton("暂不更新", null)
+                        .show();
+
+            }
+        }
+
+    }
+
+
+        // 检测版本数据失败
+        @Override
+        public void versionFail (int code, @NotNull String msg){
+
+
+        }
 
     @Override
     public void onDestroy() {
+
         if (null != getMPresenter()) {
             getMPresenter().detachView();
 
         }
         super.onDestroy();
-
     }
 
     @Override
-    public void onSuccessFriends(@NotNull FriendBean.DataBean data) {
+        public void onSuccessFriends (@NotNull FriendBean.DataBean data){
 
-        tv_my_friend.setText(mContext.getResources().getString(R.string.my_friend) + "(" + data.getFriends().size() + ")");
+            tv_my_friend.setText(mContext.getResources().getString(R.string.my_friend) + "(" + data.getFriends().size() + ")");
 
 
+        }
+
+        @Override
+        public void onFailFriends ( int code, @NotNull String msg){
+
+        }
     }
-
-    @Override
-    public void onFailFriends(int code, @NotNull String msg) {
-
-    }
-}

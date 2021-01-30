@@ -3,6 +3,8 @@ package com.igw.igw.utils
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import com.igw.igw.app.IGWApplication
 
 /**
@@ -48,5 +50,21 @@ object AppUtils {
         return false
     }
 
+
+    public fun checkVersion(context: Context):String{
+
+        var versionName = ""
+        val pm: PackageManager = context.getPackageManager()
+
+        try {
+            val packageInfo: PackageInfo = pm.getPackageInfo(context.getPackageName(), 0)
+            LogUtils.d(TAG, "获取的版本名字" + packageInfo.versionName)
+            versionName = packageInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+        return versionName
+    }
 
 }

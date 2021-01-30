@@ -64,7 +64,7 @@ public class DownLoadUtils {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
         request.setAllowedOverRoaming(false);
-        request.setTitle("e驾照下载");
+        request.setTitle("下载");
         request.setDescription("新版本下载中");
         request.setVisibleInDownloadsUi(true);
         // SHEZHIXIAZAILUJING
