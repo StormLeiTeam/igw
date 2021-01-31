@@ -111,7 +111,6 @@ class MessageListPresenter(model: MessageContract.Model) :
                     }
 
                     override fun onError(msg: String?) {
-                        TODO("Not yet implemented")
                     }
 
 

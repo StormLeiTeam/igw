@@ -221,7 +221,8 @@ class SearchCityActivity : BaseActivity<CityPresenter>(), CityContract.View {
     override fun getLayoutId(): Int = R.layout.activity_search_city
 
     override fun setTitle(): String {
-        TODO("Not yet implemented")
+
+        return ""
     }
 
     override fun setRightButton(): String {

@@ -211,10 +211,8 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoContra
 
 
     override fun fail(o: Any?) {
-        TODO("Not yet implemented")
     }
 
     override fun success(o: Any?) {
-        TODO("Not yet implemented")
     }
 }

@@ -202,10 +202,10 @@ class CompanyInfoActivity : BaseActivity<CompanyInfoPresenter>(), CompanyInfoCon
     }
 
     override fun fail(o: Any?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun success(o: Any?) {
-        TODO("Not yet implemented")
+
     }
 }

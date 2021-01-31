@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.igw.igw.MainActivity;
 import com.igw.igw.R;
+import com.igw.igw.bean.VersionBean;
 import com.igw.igw.bean.message.MessageCenterBean;
 import com.igw.igw.fragment.my.presenter.MyPresenter;
 import com.igw.igw.modoule.home.HomeContract;
@@ -104,7 +105,6 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
         });
 
         getMPresenter().messageCenterList();
-
         setUpListener();
     }
 
@@ -206,6 +206,17 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
 
     @Override
     public void fail(Object o) {
+
+    }
+
+
+    @Override
+    public void versionSuccessful(@NotNull VersionBean.DataBean data) {
+
+    }
+
+    @Override
+    public void versionFail(int code, @NotNull String msg) {
 
     }
 }

@@ -169,7 +169,6 @@ public abstract class BaseDataFragment extends BaseOldFragment implements OnClic
         }
     }
 
-    //todo
     public void onFirstLoadNoData(String noDataTip, String addData, int imageID) {
         if (errorView == null) {
             errorView = mErrorLayoutViewStub.inflate();

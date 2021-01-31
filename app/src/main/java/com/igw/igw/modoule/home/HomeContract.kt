@@ -1,5 +1,7 @@
 package com.igw.igw.modoule.home
 
+import com.igw.igw.bean.FriendBean
+import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.message.MessageCenterBean
 import com.igw.igw.mvp.model.IBaseModel
 import com.igw.igw.mvp.presenter.IBasePresenter
@@ -21,6 +23,8 @@ class HomeContract {
     interface Presenter : IBasePresenter {
 
         fun messageCenterList()
+
+        fun updateVersion()
     }
 
 
@@ -28,6 +32,7 @@ class HomeContract {
 
         fun messageCenterList(observer: NetObserver<MessageCenterBean.DataBean>)
 
+        fun checkVersion(observer: NetObserver<VersionBean.DataBean>)
 
     }
 
@@ -36,6 +41,9 @@ class HomeContract {
         fun onSuccess(mdatas: List<MessageCenterBean.DataBean.RowsBean>)
         fun onFail(code: Int, msg: String)
 
+
+        fun versionSuccessful(data: VersionBean.DataBean)
+        fun versionFail(code: Int, msg: String)
 
     }
 }

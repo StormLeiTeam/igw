@@ -44,7 +44,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
             }
 
             override fun onError(msg: String?) {
-                TODO("Not yet implemented")
+
             }
 
 
@@ -112,7 +112,7 @@ class ChatPresenter(model:ChatTypeContract.Model):
             }
 
             override fun onError(msg: String?) {
-                TODO("Not yet implemented")
+
             }
 
 

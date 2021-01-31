@@ -183,7 +183,6 @@ class FriendInfoActivity : BaseActivity<FriendInfoPresenter>(), FriendInfoContra
     override fun setStatusBarColor(): Boolean {
 
         return false
-//        TODO("Not yet implemented")
     }
 
     override fun delFriendSuccess(data: DelFriendBean.DataBean) {

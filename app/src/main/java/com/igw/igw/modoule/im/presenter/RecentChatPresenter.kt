@@ -23,7 +23,6 @@ class RecentChatPresenter(model: RecentChatContract.Model) :
 
 
     override fun requestData() {
-        TODO("Not yet implemented")
     }
 
     override fun getFriendsList() {
@@ -78,7 +77,6 @@ class RecentChatPresenter(model: RecentChatContract.Model) :
             }
 
             override fun onError(msg: String?) {
-                TODO("Not yet implemented")
             }
 
 

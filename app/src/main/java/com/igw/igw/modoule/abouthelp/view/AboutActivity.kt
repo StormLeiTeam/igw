@@ -113,7 +113,8 @@ class AboutActivity : BaseActivity<BasePresenter<*,*>>() {
 
 
     override fun setTitle(): String {
-        TODO("Not yet implemented")
+
+        return ""
     }
 
     override fun setRightButton(): String {

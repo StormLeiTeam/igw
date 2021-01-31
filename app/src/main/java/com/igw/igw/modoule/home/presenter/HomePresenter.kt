@@ -1,6 +1,8 @@
 package com.igw.igw.modoule.home.presenter
 
+import com.igw.igw.bean.VersionBean
 import com.igw.igw.bean.message.MessageCenterBean
+import com.igw.igw.fragment.my.presenter.MyPresenter
 import com.igw.igw.modoule.home.HomeContract
 import com.igw.igw.modoule.messagemodule.presenter.MessageListPresenter
 import com.igw.igw.mvp.presenter.BasePresenter
@@ -44,6 +46,36 @@ class HomePresenter(model: HomeContract.Model) : BasePresenter<HomeContract.View
             override fun onError(msg: String?) {
 
                 LogUtils.d(MessageListPresenter.TAG, "消息中心列表 --onError ")
+
+            }
+
+
+        })
+    }
+
+    override fun updateVersion() {
+
+        mModel.checkVersion(object : NetObserver<VersionBean.DataBean>(VersionBean.DataBean::class.java){
+            override fun onSuccess(m: VersionBean.DataBean) {
+                LogUtils.d(MyPresenter.TAG,"更新版本信息 --> successful")
+
+                m?.let {
+
+                    mRootView.versionSuccessful(it)
+
+
+                }
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                LogUtils.d(MyPresenter.TAG,"更新版本信息 --> fail ")
+
+                mRootView.versionFail(code,msg!!)
+
+            }
+
+            override fun onError(msg: String?) {
+                LogUtils.d(MyPresenter.TAG,"更新版本信息 --> error  ")
 
             }
 

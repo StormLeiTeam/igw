@@ -80,10 +80,10 @@ class ShareLinkActivity : BaseActivity<ShareLinkPresenter>(), ShareLInkContract.
 
 
     override fun fail(o: Any?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun success(o: Any?) {
-        TODO("Not yet implemented")
+
     }
 }

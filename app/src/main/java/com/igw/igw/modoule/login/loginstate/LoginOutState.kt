@@ -20,8 +20,9 @@ class LoginOutState : UserState {
     fun loginOut() {
 
         // 更改用户状态
-        SPUtils.getInstance(Contanct.USER_INFO).clear()
         SPUtils.getInstance(Contanct.USER_INFO).put(Contanct.KEY_LOGIN_STATE,false)
+        SPUtils.getInstance(Contanct.USER_INFO).clear()
+
 
         SharedUtils.setRongToken("")
         SharedUtils.setAccessToken("")

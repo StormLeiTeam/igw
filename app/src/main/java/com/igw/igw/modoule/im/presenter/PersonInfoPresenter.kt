@@ -23,7 +23,6 @@ class PersonInfoPresenter(model: PersonInfoContract.Model) :
 
 
     override fun requestData() {
-        TODO("Not yet implemented")
     }
 
     override fun delFriend(friendUserId: Int) {
