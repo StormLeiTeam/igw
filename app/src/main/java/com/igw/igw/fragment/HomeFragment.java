@@ -1,5 +1,7 @@
 package com.igw.igw.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,12 +13,14 @@ import com.igw.igw.R;
 import com.igw.igw.bean.VersionBean;
 import com.igw.igw.bean.message.MessageCenterBean;
 import com.igw.igw.fragment.my.presenter.MyPresenter;
+import com.igw.igw.httpclient.DownLoadUtils;
 import com.igw.igw.modoule.home.HomeContract;
 import com.igw.igw.modoule.home.model.HomeModel;
 import com.igw.igw.modoule.home.presenter.HomePresenter;
 import com.igw.igw.utils.LogUtils;
 import com.igw.igw.widget.storm.BadgeView;
 import com.itingchunyu.badgeview.BadgeTextView;
+import com.shengshijingu.yashiji.common.Constants;
 import com.shengshijingu.yashiji.common.base.BaseDataFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -105,8 +109,14 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
         });
 
         getMPresenter().messageCenterList();
+        checkVersion();
         setUpListener();
     }
+
+    private void checkVersion() {
+        getMPresenter().updateVersion();
+    }
+
 
     private void setUpListener() {
 
@@ -153,7 +163,7 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
         super.onHiddenChanged(hidden);
 
         if (!hidden) {
-            LogUtils.d(TAG,"当前fragment 显示的时候 ");
+            LogUtils.d(TAG, "当前fragment 显示的时候 ");
 
             getMPresenter().messageCenterList();
         }
@@ -170,7 +180,7 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
     public void onResume() {
         super.onResume();
 
-        LogUtils.d(TAG,"刷新未读消息数据 ---- ");
+        LogUtils.d(TAG, "刷新未读消息数据 ---- ");
         getMPresenter().messageCenterList();
     }
 
@@ -213,6 +223,68 @@ public class HomeFragment extends BaseMvpDataFragment<HomePresenter> implements 
     @Override
     public void versionSuccessful(@NotNull VersionBean.DataBean data) {
 
+        VersionBean.DataBean.ANDROIDBean android = data.getANDROID();
+
+        updateVersionIntent(android);
+    }
+
+    private void updateVersionIntent(VersionBean.DataBean.ANDROIDBean android) {
+        boolean isForcedUpdate = android.isIsForcedUpdate();
+        if (isForcedUpdate) {
+
+            // 强制
+            new AlertDialog.Builder(mContext)
+                    .setTitle("软件更新")
+                    .setMessage("新版本软件更新")
+
+                    .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            String apiurl = "https://down.qq.com/qqweb/QQ_1/android_apk/Android_6.0.3.6604_537064871.apk";
+
+
+                            DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, Constants.BASE_URL + android.getAppUrl(), DownLoadUtils.getApkName(android.getAppUrl()));
+//                            DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, apiurl, DownLoadUtils.getApkName(apiurl));
+
+
+                        }
+                    })
+                    .setNegativeButton("不更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ((MainActivity) mContext).finish();
+
+                        }
+                    })
+                    .setCancelable(false)
+                    .create().show();
+
+        } else {
+            // 非强制
+
+            new AlertDialog.Builder(mContext)
+                    .setTitle("软件更新")
+                    .setMessage("新版本软件更新")
+                    .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            String apiurl = "https://down.qq.com/qqweb/QQ_1/android_apk/Android_6.0.3.6604_537064871.apk";
+
+
+                            DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, Constants.BASE_URL + android.getAppUrl(), DownLoadUtils.getApkName(android.getAppUrl()));
+//                            DownLoadUtils downLoadUtils = new DownLoadUtils(mContext, apiurl, DownLoadUtils.getApkName(apiurl));
+
+
+                        }
+                    })
+                    .setNegativeButton("暂不更新", null)
+                    .create()
+                    .show();
+
+
+        }
     }
 
     @Override

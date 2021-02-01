@@ -504,6 +504,7 @@ public class MyFragment extends BaseMvpDataFragment<MyPresenter> implements MyCo
                             }
                         })
                         .setNegativeButton("暂不更新", null)
+                        .create()
                         .show();
 
             }
